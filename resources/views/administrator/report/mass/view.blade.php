@@ -1,5 +1,5 @@
 @extends('../layout/app')
-@section('title','Create Record')
+@section('title','Dashboard')
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">
@@ -17,7 +17,7 @@
                            <div class="row">
                                 <div class="col-md-6 mt-4">
                                     <label for="">Request By</label>
-                                    <input type="text" class="form-control" required name="request_by">
+                                    <input type="text" class="form-control" required name="request_by" value="{{ $mass->request_by }}">
                                 </div>
                            </div>
                             <div class="form-row mt-4">

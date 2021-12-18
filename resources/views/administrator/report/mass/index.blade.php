@@ -35,8 +35,6 @@
                                     <thead>
                                         <tr>
                                            <th>Fullname</th>
-                                           <th>Address</th>
-                                           <th>Gender</th>
                                            <th>Scheduled Date</th>
                                            <th>Time From & to</th>
                                            <th width="15%">Action</th>
@@ -55,8 +53,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Fullname</th>
-                                                <th>Address</th>
-                                                <th>Gender</th>
                                                 <th>Scheduled Date</th>
                                                 <th>Time From & to</th>
                                                 <th width="15%">Action</th>
@@ -97,15 +93,10 @@
             {
                  data: null,
                  render:function(data){
-                     return data.burial_first_name+' '+data.burial_middle_name +'. '+data.burial_last_name   
+                     return data.request_by
                  }
             },
-            {
-                 data: "burial_complete_address"
-            },
-            {
-                 data: "burial_gender"
-            },
+         
             {
                  data: 'start_date'
             
@@ -139,15 +130,10 @@
             {
                  data: null,
                  render:function(data){
-                     return data.burial_first_name+' '+data.burial_middle_name +'. '+data.burial_last_name   
+                     return data.request_by
                  }
             },
-            {
-                 data: "burial_complete_address"
-            },
-            {
-                 data: "burial_gender"
-            },
+       
             {
                  data: 'start_date'
             
