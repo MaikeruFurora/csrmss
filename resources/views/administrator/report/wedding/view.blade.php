@@ -3,9 +3,7 @@
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">
-  <div class="section-header ">
-    <h1 class="lead">WEDDING REGISTRATION FORM</h1>
-</div>
+<h2 class="section-title">WEDDING REGISTRATION FORM</h2>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -74,15 +72,15 @@
                             <div class="form-row">
                               <div class="col-md-3 mb-3">
                                 <label >Date Selected</label>
-                                <input type="text" id="datepicker" class="form-control"  required name="scheduled_date" value="{{ $wedding->scheduled_date }}">
+                                <input type="text" id="datepicker" class="form-control"  required name="scheduled_date" value="{{ $wedding->start_date }}">
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label >Time from</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_form" value="{{ $wedding->scheduled_time_form }}">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_form" value="{{ $wedding->start_time }}">
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label >Time to</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_to" value="{{ $wedding->scheduled_time_to }}">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_to" value="{{ $wedding->end_time }}">
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label >Married</label>

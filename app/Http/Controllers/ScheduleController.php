@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Baptism;
 use App\Models\Burial;
+use App\Models\Confirmation;
+use App\Models\Mass;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +33,8 @@ class ScheduleController extends Controller
     $output1 = array();
     $output2 = array();
     $output3 = array();
+    $output4 = array();
+    $output5 = array();
 
     $wedding=Wedding::select('bride_first_name','groom_first_name','start_date','end_date','start_time','end_time')->get();
     foreach ($wedding as $key => $value) {
@@ -64,8 +68,30 @@ class ScheduleController extends Controller
         $output3[]=$arr3;
     }
 
+    $mass=Mass::select('request_by','start_date','end_date','start_time','end_time')->get();
+    foreach ($mass as $key => $value) {
+        $arr4=array();
+        $arr4['title'] =  'Mass of '.$value->request_by;
+        $arr4['color'] =  'green';
+        $arr4['textColor'] =  'white';
+        $arr4['start'] =  $value->start_date . ' ' . $value->start_time;
+        $arr4['end'] =  $value->end_date . ' ' . $value->end_time;
+        $output4[]=$arr4;
+    }
 
-    $output = array_merge($output1,$output2,$output3);
+    $confirmation=Confirmation::select('confirmation_first_name','start_date','end_date','start_time','end_time')->get();
+    foreach ($confirmation as $key => $value) {
+        $arr5=array();
+        $arr5['title'] =  'Confirmationk of '.$value->confirmation_first_name;
+        $arr5['color'] =  'violet';
+        $arr5['textColor'] =  'white';
+        $arr5['start'] =  $value->start_date . ' ' . $value->start_time;
+        $arr5['end'] =  $value->end_date . ' ' . $value->end_time;
+        $output5[]=$arr5;
+    }
+
+
+    $output = array_merge($output1,$output2,$output3,$output4,$output5);
     return response()->json($output);
 
     // $lastDayOfMonth = $this->days_in_month(strval($month), date("Y"));

@@ -76,6 +76,16 @@
                                             <td><span class="badge text-white" style="background: gray">Gray</span></td>
                                             <td>Burial</td>
                                         </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td><span class="badge text-white" style="background: green">Green</span></td>
+                                            <td>Mass</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td><span class="badge text-white" style="background: violet">Violet</span></td>
+                                            <td>Confirmation</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

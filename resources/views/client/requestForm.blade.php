@@ -69,7 +69,7 @@
                          </tr>
                      @empty
                      <tr>
-                      <td class="text-center">No data</td>
+                      <td colspan="2" class="text-center">No data</td>
                     </tr>
                      @endforelse
                     </table>

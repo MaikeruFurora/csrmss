@@ -32,6 +32,7 @@
                                     <table class="table table-bordered table-striped" id="registerClientPending" style="font-size: 13px">
                                         <thead>
                                             <tr>
+                                                <th>Trans. No</th>
                                                 <th>FullName</th>
                                                 <th>Address</th>
                                                 <th>Contact No.</th>
@@ -54,6 +55,7 @@
                                 <table style="width: 100%;font-size:13px" class="table table-bordered table-striped" id="baptismTableApproved">
                                     <thead>
                                         <tr>
+                                            <th>Trans. No</th>
                                             <th>FullName</th>
                                             <th>Address</th>
                                             <th>Contact No.</th>
@@ -93,6 +95,7 @@
               destroy: true,
               ajax: "/admin/registered/client/list/pending",
               columns: [
+                 { data:'transaction_no' },
                  { data:'fullname' },
                  { data:'address' },
                  { data:'contact_no' },
@@ -122,6 +125,7 @@
               destroy: true,
               ajax: "/admin/registered/client/list/approved",
               columns: [
+                { data:'transaction_no' },
                  { data:'fullname' },
                  { data:'address' },
                  { data:'contact_no' },

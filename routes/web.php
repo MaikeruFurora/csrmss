@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaptismController;
 use App\Http\Controllers\BurialController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ConfirmationController;
 use App\Http\Controllers\MassController;
 use App\Http\Controllers\PriestController;
 use App\Http\Controllers\RegisterServiceController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\RegisterServicesController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingController;
+use App\Models\Confirmation;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,7 @@ Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefi
     Route::get('/',[ClientController::class,'index'])->name('home');
     Route::get('register/form/{type}',[ClientController::class,'registerForm'])->name('registerForm');
     Route::post('register/store',[ClientController::class,'registerStore'])->name('registerStore');
+    Route::get('register/slip/{registerService}',[ClientController::class,'registerSlip'])->name('registerSlip');
     Route::get('request',[ClientController::class,'requestClient'])->name('requestClient');
     Route::get('request/list',[ClientController::class,'requestList'])->name('requestList');
 });
@@ -125,6 +128,17 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
         Route::delete('/report/mass/delete/{mass}',[MassController::class,'destroy']);
         Route::get('/report/mass/pending',[MassController::class,'pending']);
       Route::get('/report/mass/approved',[MassController::class,'approved']);
+
+
+      Route::get('/report/confirmation',[ConfirmationController::class,'index'])->name('confirmation');
+        Route::get('/report/confirmation/create',[ConfirmationController::class,'create'])->name('confirmation.create');
+        Route::post('/report/confirmation/store',[ConfirmationController::class,'store']);
+        Route::get('/report/confirmation/view/{confirmation}',[ConfirmationController::class,'view']);
+        Route::post('/report/confirmation/change/status/{confirmation}/{status}',[ConfirmationController::class,'yesApproved']);
+        Route::delete('/report/confirmation/delete/{confirmation}',[ConfirmationController::class,'destroy']);
+        Route::get('/report/confirmation/pending',[ConfirmationController::class,'pending']);
+        Route::get('/report/confirmation/print/{confirmation}/{priest}',[ConfirmationController::class,'print']);
+      Route::get('/report/confirmation/approved',[ConfirmationController::class,'approved']);
 });
 
 Route::get('/clear', function () { //-> tawagin mo to url sa browser -> 127.0.0.1:8000/clear

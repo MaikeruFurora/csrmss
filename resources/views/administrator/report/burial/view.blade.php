@@ -3,9 +3,7 @@
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">
-  <div class="section-header ">
-    <h1 class="lead">BURIAL REGISTRATION FORM</h1>
-</div>
+<h2 class="section-title">BURIAL REGISTRATION FORM<</h2>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -73,15 +71,15 @@
                             <div class="form-row">
                               <div class="col-md-4 mb-3">
                                 <label for="">Date Selected</label>
-                                <input type="text" id="datepicker" class="form-control"   required name="scheduled_date" value="{{ $burial->scheduled_date }}">
+                                <input type="text" id="datepicker" class="form-control"   required name="scheduled_date" value="{{ $burial->start_date }}">
                               </div>
                               <div class="col-md-4 mb-3">
                                 <label for="">Time from</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_form" value="{{ $burial->scheduled_time_form }}">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_form" value="{{ $burial->start_time }}">
                               </div>
                               <div class="col-md-4 mb-3">
                                 <label for="">Time to</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_to" value="{{ $burial->scheduled_time_to }}">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_to" value="{{ $burial->end_time }}">
                               </div>
                             </div>
 

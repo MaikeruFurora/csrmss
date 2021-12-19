@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Baptism;
 use App\Models\Burial;
+use App\Models\Confirmation;
 use App\Models\Mass;
 use App\Models\SystemProfile;
 use App\Models\Wedding;
@@ -38,7 +39,12 @@ class AdminController extends Controller
         ->groupBy('status')
         ->first();
 
-        return view('administrator/dashboard',compact('baptismStat','weddingStat','burialStat','massStat'));
+        $confirmationStat = Confirmation::select(DB::raw("COUNT(if (status='Pending',1,NULL)) as Pending"), DB::raw("COUNT(if (status='Approved',1,NULL)) as Approved"))
+        ->orderBy('status', 'asc')
+        ->groupBy('status')
+        ->first();
+
+        return view('administrator/dashboard',compact('baptismStat','weddingStat','burialStat','massStat','confirmationStat'));
     }
 
     public function registerClient(){

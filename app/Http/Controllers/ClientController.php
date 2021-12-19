@@ -32,7 +32,7 @@ class ClientController extends Controller
     public function registerStore(Request $request){
          RegisterService::create([
             'client_id'=>$request->client_id,
-            'transaction_no'=>rand(99,100).'-'.rand(99,100),
+            'transaction_no'=>rand(100,999).'-'.rand(100,999),
             'service'=>$request->service,
             'schedule_date'=>$request->schedule_date,
         ]);
@@ -42,10 +42,14 @@ class ClientController extends Controller
 
     public function requestList(){
         return response()->json(
-            RegisterService::select('transaction_no','service','schedule_date','status','register_services.created_at')
+            RegisterService::select('register_services.id','transaction_no','service','schedule_date','status','register_services.created_at')
             ->join('clients','register_services.client_id','clients.id')
             ->where('clients.id',auth()->user()->id)
             ->get()
         );
+    }
+    
+    public function registerSlip(RegisterService $registerService){
+        return view('client/slip',compact('registerService'));
     }
 }

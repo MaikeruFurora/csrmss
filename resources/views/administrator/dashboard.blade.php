@@ -72,7 +72,39 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12">
+
+        
+        {{-- <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                   <h4> Financial Report</h4>
+                   <div class="card-header-action">
+                       <select name="" id="" class="custom-select">
+                           <option value="">Select Services</option>
+                           <option value="Baptism">Baptism</option>
+                           <option value="Wedding">Wedding</option>
+                           <option value="Burial">Burial</option>
+                       </select>
+                   </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="card card-statistic-2">
                     <div class="card-stats">
                     <div class="card-stats-title">Mass Statistics</div>
@@ -105,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="card card-statistic-2">
                     <div class="card-stats">
                     <div class="card-stats-title">Burial Statistics</div>
@@ -119,7 +151,7 @@
                             <div class="card-stats-item-label">-</div>
                         </div>
                         <div class="card-stats-item">
-                            <div class="card-stats-item-count">{{ $burialStat->Approved }}</div>
+                            <div class="card-stats-item-count">{{ $burialStat->Approved ?? '0'}}</div>
                             <div class="card-stats-item-label">Completed</div>
                         </div>
                     </div>
@@ -137,37 +169,42 @@
                     </div>
                 </div>
             </div>
-        
-        {{-- <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                   <h4> Financial Report</h4>
-                   <div class="card-header-action">
-                       <select name="" id="" class="custom-select">
-                           <option value="">Select Services</option>
-                           <option value="Baptism">Baptism</option>
-                           <option value="Wedding">Wedding</option>
-                           <option value="Burial">Burial</option>
-                       </select>
-                   </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Date</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                        </table>
+
+
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card card-statistic-2">
+                    <div class="card-stats">
+                    <div class="card-stats-title">Confirmation Statistics</div>
+                    <div class="card-stats-items">
+                        <div class="card-stats-item">
+                            <div class="card-stats-item-count">{{ $confirmationStat->Pending ?? '0'}}</div>
+                            <div class="card-stats-item-label">Pending</div>
+                        </div>
+                        <div class="card-stats-item">
+                            <div class="card-stats-item-count">-</div>
+                            <div class="card-stats-item-label">-</div>
+                        </div>
+                        <div class="card-stats-item">
+                            <div class="card-stats-item-count">{{ $confirmationStat->Approved ??'0' }}</div>
+                            <div class="card-stats-item-label">Completed</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card-icon shadow-primary bg-secondary">
+                    <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>Total Orders</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ intval($confirmationStat->Pending ?? 0) + intval($confirmationStat->Approved ?? 0) }}
+                    </div>
                     </div>
                 </div>
             </div>
-        </div> --}}
+            
         </div>
-        
     </div>
 </section>
 @endsection

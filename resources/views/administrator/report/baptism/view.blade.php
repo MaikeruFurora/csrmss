@@ -160,15 +160,15 @@
                             <div class="form-row">
                               <div class="col-md-3 mb-3">
                                 <label >Date Selected</label>
-                                <input type="text" class="form-control"  id="datepicker"  required name="scheduled_date" value="{{ $baptism->scheduled_date }}">
+                                <input type="text" class="form-control"  id="datepicker"  required name="scheduled_date" value="{{ $baptism->start_date }}">
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label >Time from</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_form" value="{{ $baptism->scheduled_time_form }}">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_form" value="{{ $baptism->start_time }}">
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label >Time to</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_to" value="{{ $baptism->scheduled_time_to }}">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"   required name="scheduled_time_to" value="{{ $baptism->end_time }}">
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label >Date Baptized</label>

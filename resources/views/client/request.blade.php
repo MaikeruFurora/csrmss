@@ -20,6 +20,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Transaction No.</th>
                                     <th>Service</th>
                                     <th>Date</th>
                                     <th>Status</th>
@@ -67,6 +68,9 @@
                     requestList+=`
                         <tr>
                             <td>
+                                ${element.transaction_no}
+                            </td>
+                            <td>
                                 ${element.service}
                             </td>
                             <td>
@@ -81,7 +85,13 @@
                                 ${element.created_at.split("T")[0]}
                             </td>
                             <td>
-                                <button class="btn btn-danger">Delete</button>
+                                ${
+                                    element.status=="Pending"?
+                                    `<button class="btn btn-danger">Delete</button>
+                                     <a target="_blank" href="register/slip/${element.id}" class="btn btn-info">Trans. slip</a>`
+                                    :''
+                                }
+                                
                             </td>
                         </tr>
                     `

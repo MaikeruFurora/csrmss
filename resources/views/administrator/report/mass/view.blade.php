@@ -20,52 +20,56 @@
                                     <input type="text" class="form-control" required name="request_by" value="{{ $mass->request_by }}">
                                 </div>
                            </div>
-                            <div class="form-row mt-4">
-                              <div class="col-md-3 mb-3">
-                                <label for="">First name</label>
-                                <input type="text" class="form-control"  required name="mass_first_name[]">
-                              </div>
-                              <div class="col-md-3 mb-3">
-                                <label for="">Middle name</label>
-                                <input type="text" class="form-control"   name="mass_middle_name[]">
-                              </div>
-                              <div class="col-md-3 mb-3">
-                                <label for="">Last name</label>
-                                <input type="text" class="form-control"  required name="mass_last_name[]">
-                              </div>
-                              <div class="col-md-3 mb-3">
-                                  <label for="">Select option</label>
-                                <div class="input-group">
-                                    <select required name="mass_option[]" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                        <option value="">-- Choose --</option>
-                                        <option value="Birthday">Birthday</option>
-                                        <option value="Health">Health</option>
-                                        <option value="Thanksgiving">Thanksgiving</option>
-                                        <option value="Death Anniversary">Death Anniversary</option>
-                                        <option value="Special Intensions">Special Intensions</option>
-                                    </select>
-                                    <div class="input-group-append">
-                                      <button class="btn btn-info pl-5 pr-5 btnplus" type="button"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                              
-                              </div>
-                            
+                           @foreach ($mass->mass_first_name as $key => $item)
+                           <div class="form-row mt-4">
+                            <div class="col-md-3 mb-3">
+                              <label for="">First name</label>
+                              <input type="text" class="form-control"  required name="mass_first_name[]" value="{{ $item }}">
                             </div>
+                            <div class="col-md-3 mb-3">
+                              <label for="">Middle name</label>
+                              <input type="text" class="form-control"   name="mass_middle_name[]" value="{{ $mass->mass_middle_name[$key] }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                              <label for="">Last name</label>
+                              <input type="text" class="form-control"  required name="mass_last_name[]" value="{{ $mass->mass_last_name[$key] }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="">Select option</label>
+                              <div class="input-group">
+                                  <select required name="mass_option[]" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                      <option value="">-- Choose --</option>
+                                      <option  {{ $mass->mass_option[$key]=="Birthday" ? 'selected': ''}} value="Birthday">Birthday</option>
+                                      <option  {{ $mass->mass_option[$key]=="Health" ? 'selected': ''}} value="Health">Health</option>
+                                      <option  {{ $mass->mass_option[$key]=="Thanksgiving" ? 'selected': ''}} value="Thanksgiving">Thanksgiving</option>
+                                      <option  {{ $mass->mass_option[$key]=="Death Anniversary" ? 'selected': ''}} value="Death Anniversary">Death Anniversary</option>
+                                      <option  {{ $mass->mass_option[$key]=="Special Intensions" ? 'selected': ''}} value="Special Intensions">Special Intensions</option>
+                                  </select>
+                                  <div class="input-group-append">
+                                    @if ($key==0)
+                                    <button class="btn btn-info pl-5 pr-5 btnplus" type="button"><i class="fa fa-plus"></i></button>
+                                    @else
+                                    <button class="btn btn-danger pl-5 pr-5 btnminus" type="button"><i class="fa fa-minus"></i></button>
+                                    @endif
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                           @endforeach
                             <div class="show"></div>
                             <h4>Schedule Date & Time</h4>
                             <div class="form-row">
                               <div class="col-md-4 mb-3">
                                 <label for="">Date Selected</label>
-                                <input type="text" id="datepicker" class="form-control"  required name="scheduled_date">
+                                <input type="text" id="datepicker" class="form-control"  required name="scheduled_date" value="{{ $mass->start_date }}">
                               </div>
                               <div class="col-md-4 mb-3">
                                 <label for="">Time from</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_form">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_form" value="{{ $mass->start_time }}">
                               </div>
                               <div class="col-md-4 mb-3">
                                 <label for="">Time to</label>
-                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_to">
+                                <input type="time"  step='1' min="00:00:00" max="20:00:00" class="form-control"  required name="scheduled_time_to" value="{{ $mass->end_time }}">
                               </div>
                             </div>
                            

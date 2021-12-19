@@ -3,9 +3,7 @@
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">
-  <div class="section-header ">
-    <h1 class="lead">WEDDING REGISTRATION FORM</h1>
-</div>
+<h2 class="section-title">WEDDING REGISTRATION FORM</h2>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">

@@ -25,6 +25,7 @@
             <li  class="{{ request()->is('admin/report/wedding') || request()->is('admin/report/wedding/create')?'active':'' }}"><a class="nav-link" href="{{ route('admin.wedding') }}"> <i class="fas fa-female"></i> <span>Wedding</span> </a></li>
             <li  class="{{ request()->is('admin/report/burial')  || request()->is('admin/report/burial/create')?'active':'' }}"><a class="nav-link" href="{{ route('admin.burial') }}"><i class="fas fa-cross"></i> <span>Burial</span> </a></li>
             <li  class="{{ request()->is('admin/report/mass')  || request()->is('admin/report/mass/create')?'active':'' }}"><a class="nav-link" href="{{ route('admin.mass') }}"><i class="fas fa-church"></i> <span>Mass</span> </a></li>
+            <li  class="{{ request()->is('admin/report/confirmation')  || request()->is('admin/report/confirmation/create')?'active':'' }}"><a class="nav-link" href="{{ route('admin.confirmation') }}"><i class="fas fa-sun"></i> <span>Confirmation</span> </a></li>
          
             {{-- <li class="{{ request()->is('admin/report')?'active':'' }}"><a class="nav-link" href="{{ route('admin.profile') }}"><i class="fas fa-file-word"></i> <span>Report</span></a></li>
             <li class="menu-header">Information</li> --}}
