@@ -1,5 +1,5 @@
 @extends('../layout/app')
-@section('title','Dashboard')
+@section('title','Manage Priest')
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">

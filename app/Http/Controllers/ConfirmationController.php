@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Confirmation;
 use App\Models\Priest;
 use Illuminate\Http\Request;
+use PDF;
 
 class ConfirmationController extends Controller
 {
@@ -64,5 +65,16 @@ class ConfirmationController extends Controller
 
     public function print(Confirmation $confirmation,$priest){
         return view('administrator/report/confirmation/print',compact('confirmation','priest'));
+    }
+
+    public function generateReport($from,$to){
+        $startDate = date('Y-m-d', strtotime($from));
+        $endDate = date('Y-m-d', strtotime($to));
+        $confirmation = Confirmation::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+      
+        $pdf = PDF::loadView('administrator/report/confirmation/pdf',compact('confirmation'));
+        return $pdf->download('CONFIRMATION-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+      
+        // return view('administrator/report/baptism/pdf',compact('baptism'));
     }
 }

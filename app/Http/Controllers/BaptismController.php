@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Baptism;
 use App\Models\Priest;
 use Illuminate\Http\Request;
+use PDF;
 
 class BaptismController extends Controller
 {
@@ -91,6 +92,17 @@ class BaptismController extends Controller
     public function updateBaptize(Baptism $baptism){
         $baptism->baptized=date("Y m d");
         return $baptism->save();
+    }
+
+    public function generateReport($from,$to){
+        $startDate = date('Y-m-d', strtotime($from));
+        $endDate = date('Y-m-d', strtotime($to));
+        $baptism = Baptism::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+      
+        $pdf = PDF::loadView('administrator/report/baptism/pdf',compact('baptism'));
+        return $pdf->download('BAPTISM-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+      
+        // return view('administrator/report/baptism/pdf',compact('baptism'));
     }
 
 

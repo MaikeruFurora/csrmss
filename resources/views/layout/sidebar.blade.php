@@ -19,7 +19,10 @@
             <li class="{{ request()->is('admin/user')?'active':'' }}"><a class="nav-link" href="{{ route('admin.user') }}"><i class="fas fa-users"></i> <span>Users</span></a></li>
             <li class="{{ request()->is('admin/registered/client')?'active':'' }}"><a class="nav-link" href="{{ route('admin.registered.client') }}"><i class="fas fa-registered"></i> <span>Client Request</span></a></li>
             <li class="{{ request()->is('admin/profile')?'active':'' }}"><a class="nav-link" href="{{ route('admin.profile') }}"><i class="fas fa-users"></i> <span>System Profile</span></a></li>
-           
+            
+            <li class="menu-header">Financial Report</li>
+            <li class="{{ request()->is('admin/finance')?'active':'' }}"><a class="nav-link" href="{{ route('admin.finance') }}"><i class="fas fa-users"></i> <span>Financial Report</span></a></li>
+
             <li class="menu-header">System Report</li>
             <li  class="{{ request()->is('admin/report/baptism') || request()->is('admin/report/baptism/create')?'active':'' }}"><a class="nav-link" href="{{ route('admin.baptism') }}"><i class="fas fa-baby"></i> <span>Baptism</span> </a></li>
             <li  class="{{ request()->is('admin/report/wedding') || request()->is('admin/report/wedding/create')?'active':'' }}"><a class="nav-link" href="{{ route('admin.wedding') }}"> <i class="fas fa-female"></i> <span>Wedding</span> </a></li>

@@ -36,7 +36,10 @@
                         </div>
                         <div class="form-group col-6">
                           <h6 for="" class="pl-3">Reminder</h6>
-                          <p class="pl-3" style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas rerum provident totam alias aut, inventore consequatur blanditiis vitae eos saepe, quasi modi, reiciendis eius maxime? Sint velit asperiores saepe error!</p>
+                          <p class="pl-3" style="text-align: justify;">
+                            Your appointment schedule is valid only for 3 days. If you do not appear on the said schedule,
+                             your appointment will expire in 3 days.
+                          </p>
                         </div>
                       </div>
                       </form>

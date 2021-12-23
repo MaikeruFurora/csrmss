@@ -88,8 +88,8 @@
                               </div>
                             </div>
 
-                            <button class="btn btn-info mt-5 btnSave" type="submit">Update record</button>
-                            <a href="{{ url()->previous() }}" class="btn btn-warning mt-5 pl-3 pr-3">Cancel</a>
+                            <button class="btn btn-info mt-5 btnSave" type="submit">Update Record</button>
+                            <a href="{{ url()->previous() }}" class="btn btn-warning mt-5 pl-3 pr-3">Back</a>
                         </form>  
                     </div>
                 </div>
@@ -134,11 +134,11 @@
                 document.getElementById("weddingForm").reset();
                 getToast("success", "Done", "Successsfuly Save new record");
                 $("input[name='id']").val("");
-                $(".btnSave").html("Register").attr("disabled", false);
+                $(".btnSave").html("Update Record").attr("disabled", false);
             })
             .fail(function (jqxHR, textStatus, errorThrown) {
                 getToast("error", "Eror", errorThrown);
-                $(".btnSave").html("Register").attr("disabled", false);
+                $(".btnSave").html("Update Record").attr("disabled", false);
             });
     })
     </script>

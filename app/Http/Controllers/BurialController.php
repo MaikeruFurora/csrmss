@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Burial;
 use App\Models\Priest;
 use Illuminate\Http\Request;
-
+use PDF;
 class BurialController extends Controller
 {
     public function index(){
@@ -65,6 +65,17 @@ class BurialController extends Controller
 
     public function print(Burial $burial,$priest){
         return view('administrator/report/burial/print',compact('burial','priest'));
+    }
+
+    public function generateReport($from,$to){
+        $startDate = date('Y-m-d', strtotime($from));
+        $endDate = date('Y-m-d', strtotime($to));
+        $burial = Burial::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+      
+        $pdf = PDF::loadView('administrator/report/burial/pdf',compact('burial'));
+        return $pdf->download('BURIAL-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+      
+        // return view('administrator/report/baptism/pdf',compact('burial'));
     }
    
 }

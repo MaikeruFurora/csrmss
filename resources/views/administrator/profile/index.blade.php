@@ -1,5 +1,5 @@
 @extends('../layout/app')
-@section('title','Dashboard')
+@section('title','System Profile')
 @section('content')
 <section class="section">
   <h2 class="section-title">System Profile</h2>

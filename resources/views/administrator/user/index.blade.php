@@ -1,5 +1,5 @@
 @extends('../layout/app')
-@section('title','Users')
+@section('title','Manage User')
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">

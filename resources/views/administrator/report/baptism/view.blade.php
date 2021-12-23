@@ -3,9 +3,7 @@
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">
-  <div class="section-header ">
-    <h1 class="lead">BAPTISM REGISTRATION FORM</h1>
-</div>
+<h2 class="section-title">BAPTISM REGISTRATION FORM</h2>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -177,7 +175,7 @@
                             </div>
 
                             <button class="btn btn-info mt-5 btnSave" type="submit">Update record</button>
-                            <a href="{{ url()->previous() }}" class="btn btn-warning mt-5 ml-2">Cancel</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-warning mt-5 ml-2 pl-4 pr-4">Back</a>
                         </form>  
                     </div>
                 </div>
@@ -222,11 +220,11 @@ $("#baptismForm").on('submit',function(e){
             document.getElementById("baptismForm").reset();
             getToast("success", "Done", "Successsfuly Save new record");
             $("input[name='id']").val("");
-            $(".btnSave").html("Register").attr("disabled", false);
+            $(".btnSave").html("Update Record").attr("disabled", false);
         })
         .fail(function (jqxHR, textStatus, errorThrown) {
             getToast("error", "Eror", errorThrown);
-            $(".btnSave").html("Register").attr("disabled", false);
+            $(".btnSave").html("Update Record").attr("disabled", false);
         });
 })
 

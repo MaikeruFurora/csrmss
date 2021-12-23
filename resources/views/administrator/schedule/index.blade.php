@@ -117,9 +117,11 @@
         events: '/admin/schedule/list/available',
        eventClick:function(arg){
            console.log(arg);
+           let dstart=arg.start.toString()
+           let dend=arg.end.toString()
         $(".titleEvent").text(arg.title)
-        $(".dateEvent").text(arg.start)
-        $(".timeEvent").text(arg.end)
+        $(".dateEvent").html("<b>Date from</b> "+dstart.toString().split(" GTM+0000")[0])
+        $(".timeEvent").html("<b>Date to</b> "+dend.toString().split(" GTM+0000")[0])
         $("#staticBackdrop").modal("show")
        }
     })

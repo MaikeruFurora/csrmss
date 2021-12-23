@@ -73,7 +73,7 @@
                             <input id="" class="form-control" type="password" name="password" required placeholder="Enter your  password">
                         </div>
                         <div class="card-footer p-1">
-                            <button type="submit" class="btn btn-block btn-primary btn-lg btnSave">Register</button>
+                            <button type="submit" class="btn btn-block btn-primary btn-lg btnSave">Login</button>
                         </div>
                             </div>
                         </div></form>

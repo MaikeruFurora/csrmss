@@ -43,9 +43,9 @@ class RegisterServiceController extends Controller
                                 ->join('clients','register_services.client_id','clients.id')
                                 ->where('register_services.id',$id)->first();
         if ($status=='Pending') {
-            $bodyMessage="Hi,".$data1->fullname." your request was ".strtolower($status)." please sorry your schedule was not available";
+            $bodyMessage="Hi,".$data1->fullname." Your request is pending for approval. Please standby for updates.";
         } else {
-            $bodyMessage="Hi,".$data1->fullname." your request was ".strtolower($status)." please proceed to office for verification and details";
+            $bodyMessage="Hi,".$data1->fullname." Your request is approved. Please proceed to the office for the processing of your request";
         }
         
        $data['for']='client';

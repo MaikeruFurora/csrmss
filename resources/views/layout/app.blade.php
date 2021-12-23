@@ -8,7 +8,7 @@
 <title>
     CSRMSS &mdash; @yield('title')
 </title>
-<link rel="shortcut icon" href="{{ asset('asset/img/logo.png') }}">
+<link rel="shortcut icon" href="{{ asset('image/'.$church_logo) }}">
 <!-- General CSS Files -->
 <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mass;
 use App\Models\Priest;
 use Illuminate\Http\Request;
+use PDF;
 
 class MassController extends Controller
 {
@@ -61,6 +62,17 @@ class MassController extends Controller
 
     public function print(Mass $mass,$priest){
         return view('administrator/report/mass/print',compact('mass','priest'));
+    }
+
+    public function generateReport($from,$to){
+        $startDate = date('Y-m-d', strtotime($from));
+        $endDate = date('Y-m-d', strtotime($to));
+        $mass = Mass::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+      
+        $pdf = PDF::loadView('administrator/report/mass/pdf',compact('mass'));
+        return $pdf->download('MASS-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+      
+        // return view('administrator/report/mass/pdf',compact('mass'));
     }
 
 }

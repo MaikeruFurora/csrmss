@@ -87,7 +87,7 @@
                             <td>
                                 ${
                                     element.status=="Pending"?
-                                    `<button class="btn btn-danger">Delete</button>
+                                    `<button class="btn btn-danger">Decline</button>
                                      <a target="_blank" href="register/slip/${element.id}" class="btn btn-info">Trans. slip</a>`
                                     :''
                                 }

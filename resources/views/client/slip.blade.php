@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>PNOP &mdash;</title>
+    <title>CSRMSS &mdash; Slip</title>
 
 <!-- General CSS Files -->
 <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -71,7 +71,7 @@
                                                 <div class="media-body">
                                                    
                                                     <div class="media-title">{{ auth()->user()->fullname  }}</div>
-                                                    <div class="text-muted text-small">Fullname</div>
+                                                    <div class="text-muted text-small">Name</div>
                                                 </div>
                                             </li>
                                             <li class="media">
@@ -85,13 +85,14 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                           
                                             <li class="media">
                                                 <a href="#">
                                                     <i class="mr-3 rounded fas fa-calendar mr-4 " style="font-size: 23px"></i>
                                                 </a>
                                                 <div class="media-body">
-                                                 <div class="media-title">{{ $registerService->schedule_date}}</div>
-                                                    <div class="text-muted text-small">Date Scheduled
+                                                 <div class="media-title">{{ $registerService->service}} & {{ $registerService->schedule_date}}</div>
+                                                    <div class="text-muted text-small">Service & Date Scheduled
                                                     </div>
                                                 </div>
                                             </li>

@@ -9,4 +9,8 @@ class Burial extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public function getFullnameAttribute()
+    {
+        return ucwords("{$this->burial_first_name} {$this->burial_middle_name} {$this->burial_last_name}");
+    }
 }

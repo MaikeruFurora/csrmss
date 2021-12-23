@@ -36,6 +36,7 @@
                                                 <th>FullName</th>
                                                 <th>Address</th>
                                                 <th>Contact No.</th>
+                                                <th>Service</th>
                                                 <th>Scheduled date</th>
                                                 <th>Date registered</th>
                                                 <th>Action</th>
@@ -99,6 +100,7 @@
                  { data:'fullname' },
                  { data:'address' },
                  { data:'contact_no' },
+                 { data:'service' },
                  { data:'schedule_date' },
                   {
                        data: null,
@@ -129,6 +131,7 @@
                  { data:'fullname' },
                  { data:'address' },
                  { data:'contact_no' },
+                 { data:'service' },
                  { data:'schedule_date' },
                   {
                        data: null,

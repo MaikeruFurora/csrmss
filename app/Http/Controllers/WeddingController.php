@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Priest;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
+use PDF;
 
 class WeddingController extends Controller
 {
@@ -70,5 +71,16 @@ class WeddingController extends Controller
     public function yesApproved(Wedding $wedding,$status){
          $wedding->status=$status;
          return $wedding->save();
+    }
+    
+    public function generateReport($from,$to){
+        $startDate = date('Y-m-d', strtotime($from));
+        $endDate = date('Y-m-d', strtotime($to));
+        $wedding = Wedding::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+      
+        $pdf = PDF::loadView('administrator/report/wedding/pdf',compact('wedding'));
+        return $pdf->download('WEDDING-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+      
+        // return view('administrator/report/baptism/pdf',compact('baptism'));
     }
 }

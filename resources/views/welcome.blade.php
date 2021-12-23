@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Webpixels">
     <title>CSRMSS</title>
-    <link rel="shortcut icon" href="{{ asset('asset/img/logo.png') }}">
+    <link rel="shortcut icon" href="{{ asset('image/'.$church_logo) }}">
     <!-- Preloader -->
     <style>
         @keyframes hidePreloader {
@@ -64,166 +64,7 @@
 </head>
 
 <body>
-    <!-- Modal -->
-        {{-- <div class="modal fade bd-example-modal-xl" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title lead" id="staticBackdropLabel">Services</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body"> --}}
-                
-            {{-- <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="card" >
-                        <div class="card-header">
-                            <h4 class="lead">Baptism</h4>
-                        </div>
-                        <div class="card-body">
-            <div class="p-3 d-flex"> --}}
-                                        {{-- <div>
-                                            <div class="icon icon-shape rounded-circle bg-warning text-white mr-4">
-                                             
-                                                <i class="fas fa-baby"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="h6">100% Responsive</span>
-                                            <p class="text-sm text-muted mb-0">
-                                                Built to be customized.
-                                            </p>
-                                        </div>
-                                    </div>
-                        </div>
-                        <div class="card-footer p-1">
-                            <a href="{{ route('register','baptism') }}" class="btn btn-secondary btn-sm btn-block btn-icon">Proceed
-                            <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="lead">Wedding</h4>
-                        </div>
-                        <div class="card-body">
-                        <div class="p-3 d-flex">
-                                        <div>
-                                            <div class="icon icon-shape rounded-circle bg-info text-white mr-4">
-                                                <i class="fas fa-female"></i>
-                                                <i class="fas fa-male"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="h6">100% Responsive</span>
-                                            <p class="text-sm text-muted mb-0">
-                                                Built to be customized.
-                                            </p>
-                                        </div>
-                                    </div>    
-                        </div>
-                        <div class="card-footer p-1">
-                            <a href="{{ route('register','wedding') }}" class="btn btn-secondary btn-sm btn-block btn-icon">Proceed
-                            <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="card" style="background-image: url('{{ asset("landing_asset/img/brand/favicon.png") }}')">
-                        <div class="card-header">
-                            <h4 class="lead">Cofirmation</h4>
-                        </div>
-                        <div class="card-body">
-                        <div class="p-3 d-flex">
-                                        <div>
-                                            <div class="icon icon-shape rounded-circle bg-success text-white mr-4">
-                                                <i class="fas fa-hands"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="h6">100% Responsive</span>
-                                            <p class="text-sm text-muted mb-0">
-                                                Built to be customized.
-                                            </p>
-                                        </div>
-                                    </div>    
-                        </div>
-                        <div class="card-footer p-1">
-                            <a href="{{ route('register','confirmation') }}" class="btn btn-secondary btn-sm btn-block btn-icon">Proceed
-                            <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="lead">Mass</h4>
-                        </div>
-                        <div class="card-body">
-                        <div class="p-3 d-flex">
-                                        <div>
-                                            <div class="icon icon-shape rounded-circle bg-danger text-white mr-4">
-                                                <i class="fas fa-church"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="h6">100% Responsive</span>
-                                            <p class="text-sm text-muted mb-0">
-                                                Built to be customized.
-                                            </p>
-                                        </div>
-                                    </div>    
-                        </div>
-                        <div class="card-footer p-1">
-                            <a href="{{ route('register','mass') }}" class="btn btn-secondary btn-sm btn-block btn-icon">Proceed
-                            <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="lead">Burial</h4>
-                        </div>
-                        <div class="card-body">
-                        <div class="p-3 d-flex">
-                                        <div>
-                                            <div class="icon icon-shape rounded-circle bg-info text-white mr-4">
-                                                <i class="fas fa-cross"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="h6">100% Responsive</span>
-                                            <p class="text-sm text-muted mb-0">
-                                                Built to be customized.
-                                            </p>
-                                        </div>
-                                    </div>    
-                        </div>
-                        <div class="card-footer p-1">
-                            <a href="{{ route('register','burial') }}" class="btn btn-secondary btn-sm btn-block btn-icon">Proceed
-                            <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div> --}}
-            {{-- </div>
-
-                </div>
-                <div class="modal-footer p-1">
-                <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            </div>
-        </div> --}}
-    <!-- Preloader -->
+ 
     <div class="preloader">
         <div class="spinner-border text-primary" role="status">
             <span class="sr-only">Loading...</span>
@@ -240,7 +81,7 @@
                 </div>
                 <div class="col-12 col-md-7 col-lg-6 order-md-1 pr-md-5">
                     <!-- Heading -->
-                    <img src="{{ asset('asset/img/logo.png') }}" class="img-fluid" style="height: 100px;" alt="Illustration" />
+                    <img src="{{ asset('image/'.$church_logo) }}" class="img-fluid" style="height: 100px;" alt="Illustration" />
                     <h1 class=" text-center text-md-left mb-3 mt-2">
                         <strong class="text-primary">CSRMSS:</strong>
                         Church Services Record Management and Scheduling System
@@ -269,67 +110,7 @@
             </div>
         </div>
     </section>
-    {{-- <section class="slice slice-lg pt-lg-6 pb-0 pb-lg-6 bg-section-secondary" id="missionVision">
-        <div class="container">
-            <!-- Title -->
-            <!-- Section title -->
-            <div class="row mb-5 justify-content-center text-center">
-                <div class="col-lg-6">
-                   
-                    <h2 class=" mt-4">Our Services</h2>
-                    <!-- <div class="mt-2">
-                        <p class="lead lh-180">sa</p>
-                    </div> -->
-                </div>
-            </div>
-            <!-- Card -->
-            <div class="row mt-5">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body pb-5">
-                            <div class="pt-4 pb-5">
-                                <img src="{{asset('landing_asset/img/svg/illustrations/illustration-5.svg')}}" class="img-fluid img-center" style="height: 150px;" alt="Illustration" />
-                            </div>
-                            <h5 class="h4 lh-130 mb-3">Baptism</h5>
-                            <p class="text-muted mb-0">
-                                To protect and promote the right of every Filipino to quality, equitably, culture-based, and complete basic education where:
-                                <ul>
-                                    <li>Students learn in a child-friendly, gender-sensitive, safe, and motivating environment</li>
-                                    <li>Teachers facilitate learning and constantly nurture every learner</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body pb-5">
-                            <div class="pt-4 pb-5">
-                                <img src="{{asset('landing_asset/img/svg/illustrations/illustration-6.svg')}}" class="img-fluid img-center" style="height: 150px;" alt="Illustration" />
-                            </div>
-                            <h5 class="h4 lh-130 mb-3">Wedding</h5>
-                            <p class="text-muted mb-0">
-                                We dream of Filipinos who passionately love their country and whose values and competencies enable them to realize their full potential and contribute meaningfully to building the nation. As a learner-centered public institution, the Department of Education continuously improves itself to better serve its stakeholders.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body pb-5">
-                            <div class="pt-4 pb-5">
-                                <img src="{{asset('landing_asset/img/svg/illustrations/illustration-6.svg')}}" class="img-fluid img-center" style="height: 150px;" alt="Illustration" />
-                            </div>
-                            <h5 class="h4 lh-130 mb-3">Comfirmation</h5>
-                            <p class="text-muted mb-0">
-                                We dream of Filipinos who passionately love their country and whose values and competencies enable them to realize their full potential and contribute meaningfully to building the nation. As a learner-centered public institution, the Department of Education continuously improves itself to better serve its stakeholders.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
+  
     <section class="slice slice-lg pt-lg-6 pb-0 pb-lg-6 bg-section-secondary" id="pnhsHistory">
         <div class="container">
             <div class="py-6">

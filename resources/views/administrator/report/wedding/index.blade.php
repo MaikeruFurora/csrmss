@@ -1,5 +1,5 @@
 @extends('../layout/app')
-@section('title','Dashboard')
+@section('title','Report Wedding')
 @section('moreCss')
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
@@ -10,6 +10,7 @@
 @include('administrator/partial/weddingModal')
 @include('administrator/partial/approvedConfirmation')
 @include('administrator/partial/DeleteConfirmation')
+@include('administrator/partial/generateModal')
 <section class="section">
     <h2 class="section-title">Report Wedding</h2>
     
@@ -21,14 +22,15 @@
                       
                        <div class="card-header-action">
                         {{-- <div class="btn"> --}}
-                            <a href="{{ route('admin.wedding.create') }}" class="btn btn-info delete">Create record</a>
-                        {{-- </div> --}}
+                            <a href="{{ route('admin.wedding.create') }}" class="btn btn-info delete">SHEDULE WEDDING</a>
+                            <button type="submit" class="btn btn-primary" id="btnGenerate"><i class="far fa-file-alt"></i> Generate Report</button>
+                      {{-- </div> --}}
                       </div>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab2" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home" aria-selected="true">Pending</a></li>
-                            <li class="nav-item"><a class="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-selected="false">Approved</a></li>
+                            <li class="nav-item"><a class="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home" aria-selected="true">UPCOMING</a></li>
+                            <li class="nav-item"><a class="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-selected="false">COMPLETED</a></li>
                         </ul>
                         <div class="tab-content tab-bordered" id="myTab3Content">
                             <div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
@@ -84,6 +86,52 @@
   <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
   <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
   <script>
+       $("#btnGenerate").on('click',function(e){
+            $("#generateModal").modal("show")
+        })
+
+        $("#generatePDF").submit(function(e){
+            e.preventDefault()
+            let from = $("input[name='from']").val();
+            let to = $("input[name='to']").val();
+            if (to!="") {
+                window.open(`wedding/pdf/${from}/${to}`,'_blank')
+                $("input[name='from']").val('');
+                $("input[name='to']").val('');
+            }else{
+               getToast("error", "Eror", "Something went wrong");
+            }
+        })
+
+        var currentDate = new Date();
+      $('#datepicker1').datepicker({
+        dateFormat: "yy-mm-dd",
+            autoclose:true,
+            endDate: "currentDate",
+            maxDate: currentDate
+      }).on('changeDate', function (ev) {
+         $(this).datepicker('hide');
+      });
+      $('#datepicker1').keyup(function () {
+         if (this.value.match(/[^0-9]/g)) {
+            this.value = this.value.replace(/[^0-9^-]/g, '');
+         }
+      });
+
+      $('#datepicker2').datepicker({
+        dateFormat: "yy-mm-dd",
+            autoclose:true,
+            endDate: "currentDate",
+            maxDate: currentDate
+      }).on('changeDate', function (ev) {
+         $(this).datepicker('hide');
+      });
+      $('#datepicker2').keyup(function () {
+         if (this.value.match(/[^0-9]/g)) {
+            this.value = this.value.replace(/[^0-9^-]/g, '');
+         }
+      });
+        
     let weddingTablePending = $("#weddingTablePending").DataTable({
         pageLength: 5,
         lengthMenu: [ 5,10, 25, 50, 75, 100 ],
@@ -119,10 +167,10 @@
                     return `
                     <button class="btn btn-sm btn-success changeStatus"  value="${data.id}_Approved">Approve</button>
                     <a href="/admin/report/wedding/view/${data.id}" class="btn btn-sm btn-info view">View</a>
-                    <button class="btn btn-sm btn-danger delete_pending" value="${data.id}">Delete</button>
                     `;
                  }
             },
+                    // <button class="btn btn-sm btn-danger delete_pending" value="${data.id}">Delete</button>
 
         ],
     });
@@ -215,10 +263,10 @@
         $("#approvedModal").modal("show");
         $(".yesApproved").val($(this).val())
         if ($(this).val().split("_")[1]=="Pending") {
-            $(".modal-body").text(" Are you sure you want to reject this record?")
+            $(".showText").text(" Are you sure you want to reject this record?")
             $(".yesApproved").text('Reject')
         }else{
-            $(".modal-body").text(" Are you sure you want to approve this record?")
+            $(".showText").text(" Are you sure you want to approve this record?")
             $(".yesApproved").text('Approve')
         }
     })

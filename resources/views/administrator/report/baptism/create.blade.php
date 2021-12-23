@@ -3,10 +3,9 @@
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 <section class="section">
-  <div class="section-header ">
-    <h1 class="lead">BAPTISM REGISTRATION FORM</h1>
-</div>
-    <div class="section-body">
+<div class="section-body">
+      <h2 class="section-title">BAPTISM REGISTRATION FORM</h2>
+      
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card">
@@ -189,9 +188,9 @@
 @section('moreJs')
 <script>
     $( "#datepicker" ).datepicker({
-    dateFormat: "yy-mm-dd",
-    minDate: +1,  
-  });
+      dateFormat: "yy-mm-dd",
+      minDate: +1,  
+    });
 </script>
 <script>
 $("#baptismForm").on('submit',function(e){

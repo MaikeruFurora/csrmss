@@ -1,6 +1,6 @@
 
 <title>CSRMSS &mdash; Print Certificate</title>
-<link rel="shortcut icon" href="{{ asset('asset/img/logo.png') }}">
+<link rel="shortcut icon" href="{{ asset('image/'.$church_logo) }}">
    {{-- <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}"> --}}
    <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
 
@@ -81,9 +81,9 @@
     <div class="element">
     <div class="containers content2">
         <p class="headerr">
-                    Archdiocese of Caceres <br>
-            The Roman Catholic Parish of the St. Paul The Apostle <br>
-            Buhi, Camarines Sur <br> 
+            Archdiocese of Caceres <br>
+            The Roman Catholic Parish of the {{ $church_name ?? 'no church name' }} <br>
+            {{ $church_address ?? 'no church address'}}
         </p>
             
             <div style="text-align: center">

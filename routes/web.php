@@ -99,6 +99,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
         Route::get('/report/baptism/approved',[BaptismController::class,'approved']);
         Route::get('/report/baptism/print/{baptism}/{register}/{page}/{priest}',[BaptismController::class,'print']);
       Route::post('/report/baptism/baptized',[BaptismController::class,'updateBaptize']);
+      Route::get('/report/baptism/pdf/{from}/{to}',[BaptismController::class,'generateReport']);
       
       Route::get('/report/wedding',[WeddingController::class,'index'])->name('wedding');
         Route::get('/report/wedding/create',[WeddingController::class,'create'])->name('wedding.create');
@@ -109,6 +110,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
         Route::get('/report/wedding/pending',[WeddingController::class,'pending']);
         Route::get('/report/wedding/approved',[WeddingController::class,'approved']);
       Route::get('/report/wedding/print/{wedding}/{priest}',[WeddingController::class,'print']);
+      Route::get('/report/wedding/pdf/{from}/{to}',[WeddingController::class,'generateReport']);
 
       Route::get('/report/burial',[BurialController::class,'index'])->name('burial');
         Route::get('/report/burial/create',[BurialController::class,'create'])->name('burial.create');
@@ -119,6 +121,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
         Route::get('/report/burial/pending',[BurialController::class,'pending']);
         Route::get('/report/burial/approved',[BurialController::class,'approved']);
       Route::get('/report/burial/print/{burial}/{priest}',[BurialController::class,'print']);
+      Route::get('/report/burial/pdf/{from}/{to}',[BurialController::class,'generateReport']);
 
       Route::get('/report/mass',[MassController::class,'index'])->name('mass');
         Route::get('/report/mass/create',[MassController::class,'create'])->name('mass.create');
@@ -128,6 +131,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
         Route::delete('/report/mass/delete/{mass}',[MassController::class,'destroy']);
         Route::get('/report/mass/pending',[MassController::class,'pending']);
       Route::get('/report/mass/approved',[MassController::class,'approved']);
+      Route::get('/report/mass/pdf/{from}/{to}',[MassController::class,'generateReport']);
 
 
       Route::get('/report/confirmation',[ConfirmationController::class,'index'])->name('confirmation');
@@ -139,6 +143,10 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
         Route::get('/report/confirmation/pending',[ConfirmationController::class,'pending']);
         Route::get('/report/confirmation/print/{confirmation}/{priest}',[ConfirmationController::class,'print']);
       Route::get('/report/confirmation/approved',[ConfirmationController::class,'approved']);
+      Route::get('/report/confirmation/pdf/{from}/{to}',[ConfirmationController::class,'generateReport']);
+
+      // financial report
+      Route::get('/finance/report',[AdminController::class,'finance'])->name('finance');
 });
 
 Route::get('/clear', function () { //-> tawagin mo to url sa browser -> 127.0.0.1:8000/clear
