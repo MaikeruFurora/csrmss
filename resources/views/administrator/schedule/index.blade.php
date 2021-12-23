@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Event Detail</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Event Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -118,10 +118,10 @@
        eventClick:function(arg){
            console.log(arg);
            let dstart=arg.start.toString()
-           let dend=arg.end.toString()
+           let dend=arg.end==null?'':arg.end.toString()
         $(".titleEvent").text(arg.title)
-        $(".dateEvent").html("<b>Date from</b> "+dstart.toString().split(" GTM+0000")[0])
-        $(".timeEvent").html("<b>Date to</b> "+dend.toString().split(" GTM+0000")[0])
+        $(".dateEvent").html("<b>Date from</b> <em>"+dstart+"</em>")
+        $(".timeEvent").html("<b>Date to</b> <em>"+dend+"</em>")
         $("#staticBackdrop").modal("show")
        }
     })

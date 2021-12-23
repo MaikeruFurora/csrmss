@@ -9,7 +9,7 @@
             <div class="col-lg-8 col-md-8 col-sm-12">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="card card-statistic-2">
+                        <div class="card card-statistic-2 shadow">
                             <div class="card-stats">
                             <div class="card-stats-title">Baptism Statistics</div>
                             <div class="card-stats-items">
@@ -42,7 +42,7 @@
                     </div>
                    
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="card card-statistic-2">
+                        <div class="card card-statistic-2 shadow">
                             <div class="card-stats">
                             <div class="card-stats-title">Wedding Statistics</div>
                             <div class="card-stats-items">
@@ -76,8 +76,8 @@
         
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="card card-statistic-2">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card card-statistic-2 shadow">
                             <div class="card-stats">
                             <div class="card-stats-title">Mass Statistics</div>
                             <div class="card-stats-items">
@@ -109,8 +109,8 @@
                         </div>
                     </div>
         
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="card card-statistic-2">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card card-statistic-2 shadow">
                             <div class="card-stats">
                             <div class="card-stats-title">Burial Statistics</div>
                             <div class="card-stats-items">
@@ -141,10 +141,11 @@
                             </div>
                         </div>
                     </div>
-        
-        
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="card card-statistic-2">
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card card-statistic-2 shadow">
                             <div class="card-stats">
                             <div class="card-stats-title">Confirmation Statistics</div>
                             <div class="card-stats-items">
@@ -175,22 +176,22 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header">
-                        <h4>Upcoming Scheduled</h4>
+                        <h4>Upcoming Schedule</h4>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled list-unstyled-border">
                             @forelse ($event as $item)
+                            {{-- {{ $item['original'] }} --}}
                             <li class="media">
                                 <div class="media-body">
-                                    <div class="float-right">Sample</div>
-                                    <div class="media-title">SAmple again</div>
-                                    <span class="text-small text-muted">Sample sapmple sapmple</span>
+                                    <div class="float-right"> <i style="font-size: 20px" class="fas {{ $item['icon'] }}"></i></div>
+                                    <div class="media-title">{{ $item['name'] }}  <span class="badge badge-warning">{{ date("F j, Y",strtotime($item['start'])) }}</span></div>
+                                    <span class="text-small text-muted">Time: {{ $item['time'] }}</span>
                                 </div>
                             </li>
                             @empty
