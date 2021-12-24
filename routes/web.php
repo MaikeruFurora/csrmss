@@ -158,6 +158,8 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
       Route::post('/finance/report/{type}',[AdminController::class,'financeResult']);
       //print
       Route::get('/finance/report/print/{type}',[AdminController::class,'financialReport']);
+
+      Route::get('/archive',[AdminController::class,'archive'])->name('archive');
 });
 
 Route::get('/clear', function () { //-> tawagin mo to url sa browser -> 127.0.0.1:8000/clear

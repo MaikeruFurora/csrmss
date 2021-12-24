@@ -302,4 +302,8 @@ class AdminController extends Controller
         // }
     }
 
+    public function archive(){
+        return view('administrator/archives/index');
+    }
+
 }
