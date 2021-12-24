@@ -42,6 +42,7 @@
                        <div class="card-header-action">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-default">Color Legend</button>
+                            <button type="button" class="btn text-white" style="background: red">Church event</button>
                             <button type="button" class="btn text-white" style="background: orange">Wedding</button>
                             <button type="button" class="btn text-white" style="background: blue">&nbsp;Baptism&nbsp;</button>
                             <button type="button" class="btn text-white" style="background: gray">&nbsp;&nbsp;Burial&nbsp;&nbsp;</button>
@@ -52,42 +53,51 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-7">
                                 <div class="fc-overflow">
                                     <div id="myEvent"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                                 <h5>Reminder</h5>
                                 <p class="mt-2">
                                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt ad facilis ipsum fuga dolorum recusandae
-                                    , et porro magnam quaerat accusantium reprehenderit ducimus quae molestiae animi dignissimos 
-                                    nihil reiciendis eius quam.
+                                    , et porro magnam quaerat accusantium reprehenderit ducimus quae molestiae anim
                                 </p>
                                 <div class="card shadow card-info">
                                     <div class="card-body pb-3">
-                                        <form class="mb-5">
+                                        <form class="mb-4" id="eventForm">@csrf
+                                            <input type="hidden" name="id">
                                             <div class="form-group">
-                                              <label for="exampleInputEmail1">Church event name</label>
-                                              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                              <label>Church event name</label>
+                                              <input type="text" name="event" class="form-control" required>
                                              </div>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text">Date Range</span>
                                                     </div>
-                                                    <input type="text" id="datepicker1" class="form-control">
-                                                    <input type="text" id="datepicker2" class="form-control">
+                                                    <input type="text" id="datepicker1" class="form-control" required name="date_from">
+                                                    <input type="text" id="datepicker2" class="form-control" name="date_to">
                                                   </div>
                                             </div>
+                                            <div class="form-group">
+                                                <select name="status" required class="custom-select">
+                                                    <option value="">-- Choose status --</option>
+                                                    <option value="1">Enable</option>
+                                                    <option value="0">Disable</option>
+                                                </select>
+                                            </div>
                                            
-                                            <button type="submit" class="btn btn-block btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-block btn-primary btnSave">Save</button>
+                                            <button type="button" class="btn btn-block btn-warning btn-lg btnCancel">Cancel</button>
                                           </form><hr>
                                           <table class="table table-bordered" id="eventTable">
                                               <thead>
                                                   <tr>
                                                       <th>Event</th>
-                                                      <th width="20%">Date</th>
+                                                      <th width="40%">Date</th>
+                                                      <th width="10%">Status</th>
                                                       <th width="20%">Action</th>
                                                   </tr>
                                               </thead>
@@ -104,7 +114,6 @@
           
         </div>
     </div>
-    
 
 </section>
 @endsection
@@ -138,11 +147,184 @@
        }
     })
 
-    $("#eventTable").DataTable({
-        lengthChange: false,
+   
+
+    $("#datepicker1").datepicker({
+        dateFormat: "MM dd",
+    });
+    $("#datepicker2").datepicker({
+        dateFormat: "MM dd",
+    });
+    $(".btnCancel").hide();
+    $(".btnCancel").on("click", function () {
+        $(this).hide();
+        document.getElementById("eventForm").reset();
+        $(".btnSave").html("Save");
+        $("input[name='id']").val("");
+    });
+    $("#eventForm").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+        url: "/admin/schedule/event/store",
+        type: "POST",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        cache: false,
+        beforeSend: function () {
+            $(".btnSave")
+                .html(
+                    `Saving ...
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>`
+                )
+                .attr("disabled", true);
+        },
+    })
+        .done(function (data) {
+            document.getElementById("eventForm").reset();
+            $("input[name='id']").val("");
+            $(".btnSave").html("Save").attr("disabled", false);
+            $(".btnCancel").hide();
+            eventTable.ajax.reload();
+            $('#myEvent').fullCalendar('refetchEvents');
+        })
+        .fail(function (jqxHR, textStatus, errorThrown) {
+            getToast("error", "Eror", errorThrown);
+            $(".btnSave").html("Save").attr("disabled", false);
+        });
     })
 
-    $('#datepicker1').datepicker()
-    $('#datepicker2').datepicker()
+    let eventTable = $("#eventTable").DataTable({
+    pageLength: 5,
+    lengthMenu: [ 5,10, 25, 50, 75, 100 ],
+    // lengthChange: false,
+    processing: true,
+    language: {
+        processing: `
+            <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>`,
+    },
+    ajax: "/admin/schedule/event/list",
+    columns: [
+        { data: "event" },
+        {
+            data: null,
+            render: function (data) {
+                if (data.date_to == null) {
+                    return `${data.date_from}`;
+                } else {
+                    return `${data.date_from}-${
+                        data.date_to.split(" ")[1]
+                    }`;
+                }
+            },
+        },
+        {
+            data: null,
+            render: function (data) {
+               if (data.status=='1') {
+                   return `<span class="badge badge-success pt-1 pb-1">Enabled</span>`;
+                } else {
+                   return `<span class="badge badge-warning text-dark pt-1 pb-1">Disabled</span>`;
+               }
+            },
+        },
+        {
+            data: null,
+            render: function (data) {
+                return `
+                <div class="btn-group" role="group" aria-label="Button group">
+                    <button class="btn pl-3 pr-3 btn-sm btn-info btnEdit btnload_${data.id}" value="${data.id}"><i class="far fa-edit"></i></button>
+                    <button class="btn pl-3 pr-3 btn-sm btn-danger btnDelete btnDLoad_${data.id}" value="${data.id}"><i class="far fa-trash-alt"></i></button>
+                </div>
+                `;
+            },
+        },
+    ],
+});
+
+$(document).on("click", ".btnEdit", function () {
+    let id = $(this).val();
+    $.ajax({
+        url: "/admin/schedule/event/edit/" + $(this).val(),
+        type: "GET",
+        dataType: "json",
+        beforeSend: function () {
+            $(".btnload_" + id)
+                .html(
+                    `
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>`
+                )
+                .attr("disabled", true);
+        },
+    })
+        .done(function (response) {
+            $(".btnload_" + id)
+                .html(`<i class="far fa-edit"></i>`)
+                .attr("disabled", false);
+            $('input[name="id"]').val(response.id);
+            $('input[name="date_from"]').val(response.date_from);
+            $('input[name="date_to"]').val(response.date_to);
+            $('input[name="event"]').val(response.event);
+            $('select[name="status"]').val(response.status==1?'1':'0');
+            // $("#holidayModal").modal("show");
+            // $("#myEvent").fullCalendar("refetchResources");
+        })
+        .fail(function (jqxHR, textStatus, errorThrown) {
+            $(".btnload_" + id)
+                .html("Save")
+                .attr("disabled", false);
+            console.log(jqxHR, textStatus, errorThrown);
+            getToast("error", "Eror", errorThrown);
+        });
+});
+
+
+$(document).on("click", ".btnDelete", function () {
+    let id = $(this).val();
+    $("#deleteModal").modal("show")
+    $(".yesConfirm").val(id)
+   
+});
+
+
+$('.yesConfirm').on('click', function () {
+    $.ajax({
+        url: "/admin/schedule/event/delete/" + $(this).val(),
+        type: "DELETE",
+        data: { _token: $('input[name="_token"]').val() },
+        beforeSend: function () {
+            $(".yesConfirm")
+                .html(
+                    `
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>`
+                )
+                .attr("disabled", true);
+        },
+    })
+        .done(function (response) {
+            $(".yesConfirm")
+                .html(`<i class="far fa-trash-alt"></i>`)
+                .attr("disabled", false);
+                eventTable.ajax.reload();
+            $("#deleteModal").modal("hide")
+            // window.location.reload()
+            
+        })
+        .fail(function (jqxHR, textStatus, errorThrown) {
+            $(".yesConfirm")
+                .html("Save")
+                .attr("disabled", false);
+            console.log(jqxHR, textStatus, errorThrown);
+            getToast("error", "Eror", errorThrown);
+        });
+})
 </script>
 @endsection

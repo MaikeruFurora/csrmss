@@ -6,6 +6,7 @@ use App\Http\Controllers\BaptismController;
 use App\Http\Controllers\BurialController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConfirmationController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\MassController;
 use App\Http\Controllers\PriestController;
 use App\Http\Controllers\RegisterServiceController;
@@ -83,7 +84,14 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
      //manage schedule
      Route::get('/schedule',[AdminController::class,'schedule'])->name('schedule');
      Route::get('/schedule/list/available',[ScheduleController::class,'getAvailableList']);
- 
+     
+     //manage event
+     Route::post('/schedule/event/store',[EventController::class,'store']);
+     Route::get('/schedule/event/list',[EventController::class,'list']);
+     Route::get('/schedule/event/edit/{event}',[EventController::class,'edit']);
+     Route::delete('/schedule/event/delete/{event}',[EventController::class,'destroy']);
+     
+
      //manage profile
       Route::get('/profile',[AdminController::class,'profile'])->name('profile');
       Route::post('/profile/store',[AdminController::class,'profileStore'])->name('profile.store');

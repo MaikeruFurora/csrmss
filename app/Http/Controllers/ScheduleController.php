@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Baptism;
 use App\Models\Burial;
 use App\Models\Confirmation;
+use App\Models\Event;
 use App\Models\Mass;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class ScheduleController extends Controller
     $output3 = array();
     $output4 = array();
     $output5 = array();
+    $output6 = array();
 
     $wedding=Wedding::select('bride_first_name','groom_first_name','start_date','end_date','start_time','end_time')->get();
     foreach ($wedding as $key => $value) {
@@ -90,8 +92,24 @@ class ScheduleController extends Controller
         $output5[]=$arr5;
     }
 
+    $evenDate = Event::select("date_from", "date_to", "event")->where('status',1)->get();
+    foreach ($evenDate as  $value) {
+        $arr6 = array();
+        $dateFrom = strval($value->date_from . ' ' . date("Y"));
+        $dateTo = strval($value->date_to . ' ' . date("Y"));
+        $arr6['start'] = date('Y-m-d', strtotime($dateFrom));
+        if ($value->date_to != null) {
+            $arr6['end'] =  date('Y-m-d', strtotime($dateTo . '+1 days'));
+        }
+        $arr6['title'] = $value->event;
+        // $arr6['backgroundColor'] = "#9999ff";
+        $arr6['color'] = "red";
+        $arr6['textColor'] = "white";
+        // $arr6['className'] = "holiday";
+        $output6[] = $arr6;
+    }
 
-    $output = array_merge($output1,$output2,$output3,$output4,$output5);
+    $output = array_merge($output1,$output2,$output3,$output4,$output5,$output6);
     return response()->json($output);
 
     // $lastDayOfMonth = $this->days_in_month(strval($month), date("Y"));
