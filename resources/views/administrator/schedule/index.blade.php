@@ -3,6 +3,9 @@
 @section('content')
 @section('moreCss')
     <link rel="stylesheet" href="{{ asset('css/fullcalendar/fullcalendar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 @endsection
 @include('administrator/partial/DeleteConfirmation')
 <!-- Modal -->
@@ -33,9 +36,19 @@
         <h2 class="section-title">Manage Schedule</h2>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                        <h4> Manage Schedule</h4>
+                       <div class="card-header-action">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-default">Color Legend</button>
+                            <button type="button" class="btn text-white" style="background: orange">Wedding</button>
+                            <button type="button" class="btn text-white" style="background: blue">&nbsp;Baptism&nbsp;</button>
+                            <button type="button" class="btn text-white" style="background: gray">&nbsp;&nbsp;Burial&nbsp;&nbsp;</button>
+                            <button type="button" class="btn text-white" style="background: green">&nbsp;&nbsp;Mass&nbsp;&nbsp;</button>
+                            <button type="button" class="btn text-white" style="background: violet">Confirmation</button>
+                          </div>
+                       </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -46,48 +59,43 @@
                             </div>
                             <div class="col-lg-4">
                                 <h5>Reminder</h5>
-                                <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nulla quis doloremque, error eligendi fugiat facere? Hic voluptate 
-                                    quidem, aut laboriosam, blanditiis placeat ducimus error repellendus modi corrupti reprehenderit. Sequi.
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora necessitatibus illum perferendis voluptatem sequi
-                                     sunt perspiciatis ab, inventore, doloribus architecto neque maiores facilis aut laudantium voluptatibus placeat quam. Consectetur, velit?
+                                <p class="mt-2">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt ad facilis ipsum fuga dolorum recusandae
+                                    , et porro magnam quaerat accusantium reprehenderit ducimus quae molestiae animi dignissimos 
+                                    nihil reiciendis eius quam.
                                 </p>
-                                <h6 class="mt-5">Color legend</h6>
-                                <table class="table table-bordered table-striped ">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Color</th>
-                                            <th>Event</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><span class="badge text-white" style="background: orange">Orange</span> </td>
-                                            <td>Wedding</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><span class="badge text-white" style="background: blue">Blue</span> </td>
-                                            <td>Baptism</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td><span class="badge text-white" style="background: gray">Gray</span></td>
-                                            <td>Burial</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td><span class="badge text-white" style="background: green">Green</span></td>
-                                            <td>Mass</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td><span class="badge text-white" style="background: violet">Violet</span></td>
-                                            <td>Confirmation</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="card shadow card-info">
+                                    <div class="card-body pb-3">
+                                        <form class="mb-5">
+                                            <div class="form-group">
+                                              <label for="exampleInputEmail1">Church event name</label>
+                                              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                             </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                      <span class="input-group-text">Date Range</span>
+                                                    </div>
+                                                    <input type="text" id="datepicker1" class="form-control">
+                                                    <input type="text" id="datepicker2" class="form-control">
+                                                  </div>
+                                            </div>
+                                           
+                                            <button type="submit" class="btn btn-block btn-primary">Save</button>
+                                          </form><hr>
+                                          <table class="table table-bordered" id="eventTable">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Event</th>
+                                                      <th width="20%">Date</th>
+                                                      <th width="20%">Action</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody></tbody>
+                                          </table>
+                                    </div>
+                                </div>
+                              
                             </div>
                         </div>
                     </div>
@@ -103,6 +111,10 @@
 
 @section('moreJs')
 <script src="{{ asset('js/fullcalendar/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 <script>
     $("#myEvent").fullCalendar({
         header:{
@@ -126,5 +138,11 @@
        }
     })
 
+    $("#eventTable").DataTable({
+        lengthChange: false,
+    })
+
+    $('#datepicker1').datepicker()
+    $('#datepicker2').datepicker()
 </script>
 @endsection

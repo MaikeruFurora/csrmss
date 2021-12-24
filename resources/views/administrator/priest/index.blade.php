@@ -7,7 +7,7 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                        <h4>Priest</h4>
                     </div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-8 col-sm-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h4>Priest Form</h4>
                     </div>

@@ -16,7 +16,7 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                        <div class="card-header-action">
                         {{-- <div class="btn"> --}}
@@ -56,7 +56,7 @@
                             <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
                                {{-- tab two --}}
                                
-                               <div class="table-responsive mt-4">
+                               <div class="table-responsive">
                                 <table style="width: 100%;font-size:10px" class="table table-bordered table-striped" id="baptismTableApproved">
                                     <thead>
                                         <tr>

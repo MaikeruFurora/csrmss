@@ -8,7 +8,7 @@
       
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                        <h4>&nbsp;&nbsp; </h4>
                     </div>
@@ -172,7 +172,7 @@
                             </div>
 
                             <button class="btn btn-info mt-5 btnSave" type="submit">Register</button>
-                            <a href="{{ url()->previous() }}" class="btn btn-warning mt-5 ml-2">Cancel</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-warning mt-5 ml-2 pl-4 pr-4">Back</a>
                         </form>  
                     </div>
                 </div>

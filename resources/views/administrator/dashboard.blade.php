@@ -14,7 +14,7 @@
                             <div class="card-stats-title">Baptism Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $baptismStat->Pending ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $baptismStat[1]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -22,7 +22,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $baptismStat->Approved ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $baptismStat[0]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 <h4>Total No.</h4>
                             </div>
                             <div class="card-body">
-                                {{ intval($baptismStat->Pending ?? 0) + intval($baptismStat->Approved ?? 0) }}
+                                {{ intval($baptismStat[0]['total'] ?? 0) + intval($baptismStat[1]['total'] ?? 0) }}
                             </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                             <div class="card-stats-title">Wedding Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $weddingStat->Pending ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $weddingStat[1]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -55,7 +55,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $weddingStat->Approved ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $weddingStat[0]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                 <h4>Total No.</h4>
                             </div>
                             <div class="card-body">
-                                {{ intval($weddingStat->Pending ?? 0) + intval($weddingStat->Approved ?? 0) }}
+                                {{ intval($weddingStat[0]['total'] ?? 0) + intval($weddingStat[1]['total'] ?? 0) }}
                             </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             <div class="card-stats-title">Mass Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $massStat->Pending ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $massStat[1]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -90,7 +90,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $massStat->Approved ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $massStat[0]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                 <h4>Total No.</h4>
                             </div>
                             <div class="card-body">
-                                {{ intval($massStat->Pending ?? 0) + intval($massStat->Approved ?? 0) }}
+                                {{ intval($massStat[0]['total'] ?? 0) + intval($massStat[1]['total'] ?? 0) }}
                             </div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                             <div class="card-stats-title">Burial Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $burialStat->Pending ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $burialStat[1]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -123,7 +123,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $burialStat->Approved ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $burialStat[0]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                                 <h4>Total Orders</h4>
                             </div>
                             <div class="card-body">
-                                {{ intval($burialStat->Pending ?? 0) + intval($burialStat->Approved ?? 0) }}
+                                {{ intval($burialStat[0]['total'] ?? 0) + intval($burialStat[1]['total'] ?? 0) }}
                             </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                             <div class="card-stats-title">Confirmation Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $confirmationStat->Pending ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $confirmationStat[1]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -158,7 +158,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $confirmationStat->Approved ??'0' }}</div>
+                                    <div class="card-stats-item-count">{{ $confirmationStat[0]['total'] ??'0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                                 <h4>Total Orders</h4>
                             </div>
                             <div class="card-body">
-                                {{ intval($confirmationStat->Pending ?? 0) + intval($confirmationStat->Approved ?? 0) }}
+                                {{ intval($confirmationStat[1]['total'] ?? 0) + intval($confirmationStat[0]['total'] ?? 0) }}
                             </div>
                             </div>
                         </div>

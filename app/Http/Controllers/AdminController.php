@@ -9,6 +9,7 @@ use App\Models\Mass;
 use App\Models\SystemProfile;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -19,30 +20,30 @@ class AdminController extends Controller
     }
 
     public function index(){
-        $baptismStat = Baptism::select(DB::raw("COUNT(if (status='Pending',1,NULL)) as Pending"), DB::raw("COUNT(if (status='Approved',1,NULL)) as Approved"))
+         $baptismStat = Baptism::select('status',DB::raw('count(status) as total'))
         ->orderBy('status', 'asc')
         ->groupBy('status')
-        ->first();
+        ->get();
 
-        $weddingStat = Wedding::select(DB::raw("COUNT(if (status='Pending',1,NULL)) as Pending"), DB::raw("COUNT(if (status='Approved',1,NULL)) as Approved"))
+        $weddingStat = Wedding::select('status',DB::raw('count(status) as total'))
         ->orderBy('status', 'asc')
         ->groupBy('status')
-        ->first();
+        ->get();
 
-        $burialStat = Burial::select(DB::raw("COUNT(if (status='Pending',1,NULL)) as Pending"), DB::raw("COUNT(if (status='Approved',1,NULL)) as Approved"))
+        $burialStat = Burial::select('status',DB::raw('count(status) as total'))
         ->orderBy('status', 'asc')
         ->groupBy('status')
-        ->first();
+        ->get();
 
-        $massStat = Mass::select(DB::raw("COUNT(if (status='Pending',1,NULL)) as Pending"), DB::raw("COUNT(if (status='Approved',1,NULL)) as Approved"))
+        $massStat = Mass::select('status',DB::raw('count(status) as total'))
         ->orderBy('status', 'asc')
         ->groupBy('status')
-        ->first();
+        ->get();
 
-        $confirmationStat = Confirmation::select(DB::raw("COUNT(if (status='Pending',1,NULL)) as Pending"), DB::raw("COUNT(if (status='Approved',1,NULL)) as Approved"))
+        $confirmationStat = Confirmation::select('status',DB::raw('count(status) as total'))
         ->orderBy('status', 'asc')
         ->groupBy('status')
-        ->first();
+        ->get();
 
         // $startDate = date('Y-m-d', strtotime($from));
         // $endDate = date('Y-m-d', strtotime($to));
@@ -61,6 +62,7 @@ class AdminController extends Controller
 
     $wedding=Wedding::select('bride_first_name','groom_first_name','start_date','end_date','start_time','end_time')
     ->where('start_date','>=', date('Y-m-d'))
+    ->where('status','Pending')
     ->get();
     foreach ($wedding as $key => $value) {
         $arr1=array();
@@ -73,6 +75,7 @@ class AdminController extends Controller
     }
     $burial=Burial::select('burial_first_name','start_date','end_date','start_time','end_time')
     ->where('start_date','>=', date('Y-m-d'))
+    ->where('status','Pending')
     ->get();
     foreach ($burial as $key => $value) {
         $arr2=array();
@@ -86,6 +89,7 @@ class AdminController extends Controller
 
     $baptism=Baptism::select('child_first_name','child_last_name','child_middle_name','start_date','end_date','start_time','end_time')
     ->where('start_date','>=', date('Y-m-d'))
+    ->where('status','Pending')
     ->get();
     foreach ($baptism as $key => $value) {
         $arr3=array();
@@ -99,6 +103,7 @@ class AdminController extends Controller
 
     $mass=Mass::select('request_by','start_date','end_date','start_time','end_time')
     ->where('start_date','>=', date('Y-m-d'))
+    ->where('status','Pending')
     ->get();
     foreach ($mass as $key => $value) {
         $arr4=array();
@@ -112,6 +117,7 @@ class AdminController extends Controller
 
     $confirmation=Confirmation::select('confirmation_first_name','start_date','end_date','start_time','end_time')
     ->where('start_date','>=', date('Y-m-d'))
+    ->where('status','Pending')
     ->get();
     foreach ($confirmation as $key => $value) {
         $arr5=array();
@@ -184,4 +190,116 @@ class AdminController extends Controller
     public function finance(){
         return view('administrator/finance/index',);
     }
+
+    public function financeResult(Request $request,$type){
+       switch ($type) {
+           case 'Monthly':
+                    return $this->monthlyFinance($request);
+               break;
+           case 'Annually':
+                    return $this->annuallyFinance($request);
+               break;
+           case 'Date_Range':
+                    return $this->dateRangeFinance($request);
+                break;
+           default:
+                    return false;
+               break;
+       }
+    }
+
+    public function monthlyFinance($request){
+        $monthCount=array();
+        $bap = Baptism::selectRaw('COUNT(*) as count, MONTH(start_date) month')
+        ->groupBy('month')->where('status','Approved')->get();
+        $wed = Wedding::selectRaw('COUNT(*) as count, MONTH(start_date) month')
+        ->groupBy('month')->where('status','Approved')->get();
+        $con = Confirmation::selectRaw('COUNT(*) as count, MONTH(start_date) month')
+        ->groupBy('month')->where('status','Approved')->get();
+        $bur = Burial::selectRaw('COUNT(*) as count, MONTH(start_date) month')
+        ->groupBy('month')->where('status','Approved')->get();
+        $mas = Mass::selectRaw('COUNT(*) as count, MONTH(start_date) month')
+        ->groupBy('month')->where('status','Approved')->get();
+        
+
+        $monthCount['baptism']=$this->whatMonth($bap,$request->month);
+        $monthCount['wedding']=$this->whatMonth($wed,$request->month);
+        $monthCount['confirmation']=$this->whatMonth($con,$request->month);
+        $monthCount['burial']=$this->whatMonth($bur,$request->month);
+        $monthCount['mass']=$this->whatMonth($mas,$request->month);
+        return response()->json($monthCount);
+    }
+
+    public function annuallyFinance($request){
+        $yearCount=array();
+        $bap = Baptism::selectRaw('COUNT(*) as count, YEAR(start_date) year')
+        ->groupBy('year')->where('status','Approved')->get();
+        $wed = Wedding::selectRaw('COUNT(*) as count, YEAR(start_date) year')
+        ->groupBy('year')->where('status','Approved')->get();
+        $con = Confirmation::selectRaw('COUNT(*) as count, YEAR(start_date) year')
+        ->groupBy('year')->where('status','Approved')->get();
+        $bur = Burial::selectRaw('COUNT(*) as count, YEAR(start_date) year')
+        ->groupBy('year')->where('status','Approved')->get();
+        $mas = Mass::selectRaw('COUNT(*) as count, YEAR(start_date) year')
+        ->groupBy('year')->where('status','Approved')->get();
+        
+
+        $yearCount['baptism']=$this->whatYear($bap,$request->year);
+        $yearCount['wedding']=$this->whatYear($wed,$request->year);
+        $yearCount['confirmation']=$this->whatYear($con,$request->year);
+        $yearCount['burial']=$this->whatYear($bur,$request->year);
+        $yearCount['mass']=$this->whatYear($mas,$request->year);
+        return response()->json($yearCount);
+    }
+
+    public function dateRangeFinance($request){
+        $startDate = date('Y-m-d', strtotime($request->from));
+        $endDate = date('Y-m-d', strtotime($request->to));
+        $dataRangeCount=array();
+        $bap = Baptism::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+        $wed = Wedding::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+        $con = Confirmation::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+        $bur = Burial::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+        $mas = Mass::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
+        
+
+        $dataRangeCount['baptism']=$bap->count();
+        $dataRangeCount['wedding']=$wed->count();
+        $dataRangeCount['confirmation']=$con->count();
+        $dataRangeCount['burial']=$bur->count();
+        $dataRangeCount['mass']=$mas->count();
+        return response()->json($dataRangeCount);
+    }
+
+    public function whatMonth($array,$month){
+        foreach ($array as $value) {
+            if ($value->month==$month) {
+                return $value->count;
+            }
+        }   
+    }
+
+    public function whatYear($array,$year){
+        foreach ($array as $value) {
+            if ($value->year==$year) {
+                return $value->count;
+            }
+        }   
+    }
+
+    public function financialReport($type){
+        return view('administrator/finance/bap');
+        // switch ($type) {
+        //     case 'Monthly':
+        //         break;
+        //     case 'Annually':
+        //         break;
+        //     case 'Date_Range':
+        //          break;
+        //     default:
+        //              return false;
+        //         break;
+        // }
+    }
+
 }

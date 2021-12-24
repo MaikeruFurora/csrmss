@@ -19,7 +19,7 @@
               
                 <div class="row">
                   <div class="col-lg-8">
-                    <div class="card">
+                    <div class="card card-primary">
                   
                       <div class="card-body pt-4">
                            <form id="profileForm" enctype="multipart/form-data" method="POST" action="{{ route('admin.profile.store') }}">@csrf
@@ -64,7 +64,7 @@
                      </div>
                    </div>
                    <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card card-primary">
                    
                       <div class="card-body text-center">
                         <label for=""><b>Current Logo</b></label>
