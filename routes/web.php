@@ -79,6 +79,8 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
      Route::post('user/store',[UserController::class,'store']);
      Route::get('user/edit/{user}',[UserController::class,'edit']);
      Route::delete('user/delete/{user}',[UserController::class,'destroy']);
+     Route::post('user/update/profile/{user}',[UserController::class,'updateProfile']);
+     Route::post('user/change/password',[UserController::class,'changePassword']);
  
  
      //manage schedule

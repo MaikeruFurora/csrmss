@@ -2,9 +2,12 @@
 @section('title','Manage User')
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
+@include('administrator/partial/UpdateUserProfile')
+@include('administrator/partial/changeUserPassword')
 <section class="section">
     <h2 class="section-title">Manage User</h2>
     <div class="section-body">
+        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12">
                 <div class="card card-primary">
@@ -35,7 +38,7 @@
                         <h4>User Form</h4>
                     </div>
                     <div class="card-body">
-                       <form id="priestForm"> @csrf
+                       <form id="userForm"> @csrf
                         <input type="hidden" name="id">
                         <div class="form-group">
                             <label >Fullname</label>
@@ -73,7 +76,8 @@
 @endsection
 
 @section('moreJs')
-    <script>
+<script>
+        let user_id = $("input[name='user_id']").val();
         let tableUser=()=>{
             let meHOld='';
             $.ajax({
@@ -102,13 +106,26 @@
                                <td>${element.email}</td>
                                <td>${element.username}</td>
                                <td>
-                                    <button value="${element.id}" class="btn btn-info edit edit_${element.id}">Edit</button>
-                                    <button value="${element.id}" class="btn btn-danger delete delete_${element.id}">Delete</button>
+                                ${ (element.id==user_id)?
+                                `
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn pl-4 pr-4 btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="far fa-edit"></i> Edit 
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item edit" id="${element.id}" style="cursor: pointer"> <i class="far fa-edit"></i> Update Profile</a>
+                                        <a class="dropdown-item change change_${element.id}" id="${element.id}" style="cursor: pointer"> <i class="fas fa-key"></i> Change Password</a>
+                                       
+                                    </div>
+                                </div>
+                                ` :
+                                        '-- Restricted --'
+                                    }
                                 </td>
                             </tr>
                         `;
                     });
-                    
+                    //<a class="dropdown-item delete delete_${element.id}" id="${element.id}" style="cursor: pointer">Delete</a>
                 }else{
                     meHOld=`<tr>
                             <td colspan="5" class="text-center">
@@ -125,102 +142,194 @@
 
         tableUser();
 
-$("#priestForm").submit(function (e) {
-    e.preventDefault();
-    $.ajax({
-        url: "/user/store",
-        type: "POST",
-        data: new FormData(this),
-        processData: false,
-        contentType: false,
-        cache: false,
-        beforeSend: function () {
-            $(".btnSave")
-                .html(
-                    `Saving ...
-                    <div class="spinner-border spinner-border-sm" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>`
-                )
-                .attr("disabled", true);
-        },
-    })
-        .done(function (data) {
-            document.getElementById("priestForm").reset();
-            $("input[name='id']").val("");
-            $(".btnSave").html("Add user").attr("disabled", false);
-            $(".btnCancel").hide();
-            tableUser();
+    $("#userForm").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "user/store",
+            type: "POST",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function () {
+                $(".btnSave")
+                    .html(
+                        `Saving ...
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`
+                    )
+                    .attr("disabled", true);
+            },
         })
-        .fail(function (jqxHR, textStatus, errorThrown) {
-            getToast("error", "Eror", errorThrown);
-            $(".btnSave").html("Add user").attr("disabled", false);
-        });
-});
-$(".btnCancel").hide();
-$(".btnCancel").on("click", function (e) {
-    e.preventDefault();
-    $(this).hide();
-    document.getElementById("priestForm").reset();
-    $(".btnSave").html("Add user");
-    $("input[name='id']").val("");
-});
+            .done(function (data) {
+                document.getElementById("userForm").reset();
+                $("input[name='id']").val("");
+                $(".btnSave").html("Add user").attr("disabled", false);
+                $(".btnCancel").hide();
+                tableUser();
+            })
+            .fail(function (jqxHR, textStatus, errorThrown) {
+                getToast("error", "Eror", errorThrown);
+                $(".btnSave").html("Add user").attr("disabled", false);
+            });
+    });
+    $(".btnCancel").hide();
+    $(".btnCancel").on("click", function (e) {
+        e.preventDefault();
+        $(this).hide();
+        document.getElementById("userForm").reset();
+        $(".btnSave").html("Add user");
+        $("input[name='id']").val("");
+    });
 
-$(document).on("click", ".edit", function () {
-    let id= $(this).val()
-    $.ajax({
-        url: "user/edit/" + id,
-        type: "GET",
-        data: { _token: $('input[name="_token"]').val() },
-        beforeSend: function () {
-            $(".edit_" + id).html(`
-            <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>`);
-        },
-    })
-        .done(function (data) {
-            $(".btnCancel").show();
-            $(".edit_" + id).html(`Edit`);
-            $(".btnSave").html("Update user");
-            $("input[name='id']").val(data.id);
-            $("input[name='name']").val(data.name);
-            $("input[name='email']").val(data.email);
-            $("input[name='username']").val(data.username);
+    $(document).on("click", ".edit", function () {
+        let id= $(this).attr("id")
+        $.ajax({
+            url: "user/edit/" + id,
+            type: "GET",
+            data: { _token: $('input[name="_token"]').val() },
+            // beforeSend: function () {
+            //     $(".edit_" + id).html(`
+            //     <div class="spinner-border spinner-border-sm" role="status">
+            //         <span class="sr-only">Loading...</span>
+            //     </div>`);
+            // },
         })
-        .fail(function (jqxHR, textStatus, errorThrown) {
-            console.log(jqxHR, textStatus, errorThrown);
-            getToast("error", "Eror", errorThrown);
-        });
-});
+            .done(function (data) {
+                $("#updateProfileModal").modal("show")
+                // $(".btnCancel").show();
+                // $(".edit_" + id).html(`<i class="far fa-edit"></i>`);
+                $(".btnSave").html("Update user");
+                $("input[name='update_id']").val(data.id);
+                $("input[name='update_name']").val(data.name);
+                $("input[name='update_email']").val(data.email);
+                $("input[name='update_username']").val(data.username);
+            })
+            .fail(function (jqxHR, textStatus, errorThrown) {
+                console.log(jqxHR, textStatus, errorThrown);
+                getToast("error", "Eror", errorThrown);
+            });
+    });
 
-$(document).on('click','.delete',function(){
-    $("#deleteModal").modal("show")
-    $(".yesConfirm").val($(this).val())
-})
-
-$(".yesConfirm").on('click',function(){
-    $.ajax({
-        url: "user/delete/" + $(this).val(),
-        type: "DELETE",
-        data: { _token: $('input[name="_token"]').val() },
-        beforeSend: function () {
-            $(".yesConfirm").html(`
-            <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>`);
-        },
+    $(document).on('click','.delete',function(){
+        let id=$(this).attr("id");
+        $("#deleteModal").modal("show")
+        $(".yesConfirm").val(id)
     })
-        .done(function (response) {
-            $(".yesConfirm").html("Delete");
-            getToast("success", "Success", "deleted one record");
-            tableUser();
-            $("#deleteModal").modal("hide")
+
+    $(".yesConfirm").on('click',function(){
+        $.ajax({
+            url: "user/delete/" + $(this).val(),
+            type: "DELETE",
+            data: { _token: $('input[name="_token"]').val() },
+            beforeSend: function () {
+                $(".yesConfirm").html(`
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>`);
+            },
         })
-        .fail(function (jqxHR, textStatus, errorThrown) {
-            console.log(jqxHR, textStatus, errorThrown);
-            getToast("error", "Eror", errorThrown);
-        });
-})
-    </script>
+            .done(function (response) {
+                $(".yesConfirm").html("Delete");
+                getToast("success", "Success", "deleted one record");
+                tableUser();
+                $("#deleteModal").modal("hide")
+            })
+            .fail(function (jqxHR, textStatus, errorThrown) {
+                console.log(jqxHR, textStatus, errorThrown);
+                getToast("error", "Eror", errorThrown);
+            });
+    })
+
+    $("#updateProfile").submit(function(e){
+        e.preventDefault();
+        let id=$("input[name='update_id']").val();
+        $.ajax({
+            url: "user/update/profile/"+id,
+            type: "POST",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function () {
+                $(".btnUpdateProfile")
+                    .html(
+                        `Saving ...
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`
+                    )
+                    .attr("disabled", true);
+            },
+        })
+            .done(function (data) {
+                $('.btnUpdateProfile').html('Save changes').attr("disabled", false)
+                // document.getElementById("updateProfile").reset();
+                if (data.msg) {
+                    getToast("warning", "Warning", data.msg);
+                } else {
+                    $("input[name='update_id']").val("");
+                    getToast("info", "Done", "Successfuly updated your record");
+
+                    tableUser();
+                    $("#updateProfileModal").modal("hide")
+                }
+            })
+            .fail(function (jqxHR, textStatus, errorThrown) {
+                getToast("error", "Eror", errorThrown);
+                $(".btnUpdateProfile").html("Save changes").attr("disabled", false);
+            });
+    })
+
+    $(document).on('click','.change',function(){
+        $("#chagepasswordModal").modal("show");
+    })
+
+    $("#changePasswordForm").submit(function(e){
+        e.preventDefault();
+        let change_new_password = $("input[name='change_new_password']").val();
+        let change_confirm_password = $("input[name='change_confirm_password']").val();
+
+        if (change_new_password==change_confirm_password) {     
+            $.ajax({
+                url: "user/change/password",
+                type: "POST",
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function () {
+                    $(".btnChangePassword")
+                        .html(
+                            `Saving ...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`
+                        )
+                        .attr("disabled", true);
+                },
+            })
+                .done(function (data) {
+                    $('.btnChangePassword').html('Change Password').attr("disabled", false)
+                    // document.getElementById("updateProfile").reset();
+                    if (data.msg) {
+                        getToast("warning", "Warning", data.msg);
+                    } else {
+                        $("input[name='update_id']").val("");
+                        getToast("info", "Done", "Successfuly updated your record");
+                        tableUser();
+                        $("#chagepasswordModal").modal("hide")
+                    }
+                })
+                .fail(function (jqxHR, textStatus, errorThrown) {
+                    getToast("error", "Eror", errorThrown);
+                    $(".btnChangePassword").html("Change Password").attr("disabled", false);
+                });
+        } else {
+            getToast("warning", "Warning", 'Confirm password did not match');
+        }
+      
+    })
+</script>
 @endsection

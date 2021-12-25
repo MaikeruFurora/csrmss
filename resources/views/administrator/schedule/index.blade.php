@@ -183,6 +183,7 @@
         },
     })
         .done(function (data) {
+            $(".btnSave").text('Save')
             document.getElementById("eventForm").reset();
             $("input[name='id']").val("");
             $(".btnSave").html("Save").attr("disabled", false);
@@ -197,7 +198,7 @@
     })
 
     let eventTable = $("#eventTable").DataTable({
-    pageLength: 5,
+    pageLength: 3,
     lengthMenu: [ 5,10, 25, 50, 75, 100 ],
     // lengthChange: false,
     processing: true,
@@ -264,6 +265,8 @@ $(document).on("click", ".btnEdit", function () {
         },
     })
         .done(function (response) {
+            $(".btnCancel").show();
+            $(".btnSave").text('Update')
             $(".btnload_" + id)
                 .html(`<i class="far fa-edit"></i>`)
                 .attr("disabled", false);
