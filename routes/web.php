@@ -166,6 +166,11 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
       Route::get('/archive/retrive/priest',[ArchiveController::class,'archivePriest']);
       Route::get('/archive/restore/priest/{priest}',[ArchiveController::class,'archivePriestRestore']);
       Route::delete('/archive/delete/priest/{priest}',[ArchiveController::class,'archivePriestDelete']);
+
+      // system log
+      Route::get('/systemlog',[AdminController::class,'systemlog'])->name('systemlog');
+      Route::get('/activity/log/{from}/{to}', [AdminController::class, 'searchByDate']);
+
 });
 
 Route::get('/clear', function () { //-> tawagin mo to url sa browser -> 127.0.0.1:8000/clear

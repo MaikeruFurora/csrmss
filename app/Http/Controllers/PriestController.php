@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Priest;
 use Illuminate\Http\Request;
 
@@ -19,12 +20,14 @@ class PriestController extends Controller
     }
 
     public function store(Request $request){
+        Helper::myLog('create','priest',$request->fullname);
         return Priest::updateorcreate(['id'=>$request->id],[
             'fullname'=>$request->fullname
         ]);
     }
 
     public function destroy(Priest $priest){
+        Helper::myLog('archive','priest',$priest->fullname);
         return $priest->delete();
     }
 

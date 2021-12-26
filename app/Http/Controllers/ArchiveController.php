@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Priest;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,11 @@ class ArchiveController extends Controller
     }
 
     public function archivePriestRestore($priest){
+        Helper::myLog('restore','priest');
         return Priest::whereId($priest)->withTrashed()->first()->restore();
     }
     public function archivePriestDelete($priest){
+        Helper::myLog('delete','priest');
         return Priest::whereId($priest)->withTrashed()->first()->forceDelete();
     }
 }

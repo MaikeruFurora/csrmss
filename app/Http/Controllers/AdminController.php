@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
+use App\Models\ActivityLog;
 use App\Models\Baptism;
 use App\Models\Burial;
 use App\Models\Confirmation;
@@ -292,13 +294,13 @@ class AdminController extends Controller
 
     public function financialPDFReport($type,$logic){
 
-      
         switch ($type) {
             case 'Monthly':
                     $requestMonth=new Request();
                     $requestMonth->replace(['month'=>$logic]);
                     $data = json_decode($this->monthlyFinance($requestMonth)->getContent());
                     $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    Helper::myLog('export','financial monthly report');
                     return $pdf->download('MONTHLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
             case 'Annually':
@@ -306,6 +308,7 @@ class AdminController extends Controller
                     $requestYear->replace(['year'=>$logic]);
                     $data = json_decode($this->annuallyFinance($requestYear)->getContent());
                     $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    Helper::myLog('export','financial yearly report');
                     return $pdf->download('ANUALLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
             case 'Date_Range':
@@ -314,6 +317,7 @@ class AdminController extends Controller
                      $requestDateRange->replace(['from'=>$data[0],'to'=>$data[1]]);
                     $data = json_decode($this->dateRangeFinance($requestDateRange)->getContent());
                     $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    Helper::myLog('export','financial date selecteed');
                     return $pdf->download('DATE-RANGE-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                  break;
             default:
@@ -324,6 +328,45 @@ class AdminController extends Controller
 
     public function archive(){
         return view('administrator/archives/index');
+    }
+
+    public function systemlog(){
+        return view('administrator/systemlog/index');
+    }
+
+    public function searchByDate($from,$to){
+
+        $data = array();
+        if ($from=='null') {
+            
+            $sqlData = ActivityLog::get();
+            foreach ($sqlData as $key => $value) {
+                $arr = array();
+                $arr['id'] = ++$key;
+                $arr['log'] = $value->log;
+                $arr['date'] = $value->created_at->diffForHumans();
+                $data[] = $arr;
+            }
+            return response()->json(
+               [ "data"=>$data]
+            );
+        } else {
+            $startDate = date('Y-m-d', strtotime($from));
+            $endDate = date('Y-m-d', strtotime($to));
+            $sqlData = ActivityLog::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->get();
+            foreach ($sqlData as $key => $value) {
+                $arr = array();
+                $arr['id'] = ++$key;
+                $arr['log'] = $value->log;
+                $arr['date'] = $value->created_at->diffForHumans();
+                $data[] = $arr;
+            }
+            return response()->json(
+                ["data"=>$data]
+            );
+        }
+        
+       
     }
 
 }
