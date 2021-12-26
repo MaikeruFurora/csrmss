@@ -105,33 +105,33 @@ $("#btnGenerate").on('click',function(e){
         })
 
         var currentDate = new Date();
-      $('#datepicker1').datepicker({
-        dateFormat: "yy-mm-dd",
-            autoclose:true,
-            endDate: "currentDate",
-            maxDate: currentDate
-      }).on('changeDate', function (ev) {
-         $(this).datepicker('hide');
-      });
-      $('#datepicker1').keyup(function () {
-         if (this.value.match(/[^0-9]/g)) {
-            this.value = this.value.replace(/[^0-9^-]/g, '');
-         }
-      });
+        $('#datepicker1').datepicker({
+            dateFormat: "yy-mm-dd",
+                autoclose:true,
+                endDate: "currentDate",
+                maxDate: currentDate,
+                beforeShow: function() {
+                    $(this).datepicker('option', 'maxDate', $('#datepicker2').val());
+                }
+        }).on('changeDate', function (ev) {
+            $(this).datepicker('hide');
+        });
+        $('#datepicker1').keyup(function () {
+            if (this.value.match(/[^0-9]/g)) {
+                this.value = this.value.replace(/[^0-9^-]/g, '');
+            }
+        });
+        $('#datepicker1').on('click',function () {
+            $('#datepicker2').val('')
+        });
 
-      $('#datepicker2').datepicker({
-        dateFormat: "yy-mm-dd",
-            autoclose:true,
-            endDate: "currentDate",
-            maxDate: currentDate
-      }).on('changeDate', function (ev) {
-         $(this).datepicker('hide');
-      });
-      $('#datepicker2').keyup(function () {
-         if (this.value.match(/[^0-9]/g)) {
-            this.value = this.value.replace(/[^0-9^-]/g, '');
-         }
-      });
+        $('#datepicker2').datepicker({
+            dateFormat: "yy-mm-dd",
+            beforeShow: function() {
+            $(this).datepicker('option', 'minDate', $('#datepicker1').val());
+                if ($('#datepicker1').val() === '') $(this).datepicker('option', 'minDate', 0);                             
+            }
+        })
 
 
     let massTablePending = $("#massTablePending").DataTable({

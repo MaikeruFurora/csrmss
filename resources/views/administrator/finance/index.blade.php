@@ -7,7 +7,7 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="card card-primary">
+                <div class="card card-primary shadow">
                    
                     <div class="card-body">
                          <table class="table table-striped mt-4 table-bordered text-center">
@@ -18,7 +18,7 @@
                                      <th>Amount</th>
                                      <th>Total</th>
                                      <th>Total Amount</th>
-                                     <th>Report</th>
+                                     {{-- <th>Report</th> --}}
                                  </tr>
                              </thead>
                              <tbody>
@@ -28,7 +28,7 @@
                                      <td><span class="badge badge-danger">₱ 250.00</span></td>
                                      <td><span class="badge badge-primary showTotalBaptism"></span></td>
                                      <td><span class="badge badge-info showAmountBaptism"></span></td>
-                                     <td><button class="btn btn-warning btnBaptism">Generate</button></td>
+                                     {{-- <td><button class="btn btn-warning btnBaptism">Generate</button></td> --}}
                                      
                                  </tr>
                                  <tr>
@@ -37,7 +37,7 @@
                                     <td><span class="badge badge-danger">₱ 150.00</span></td>
                                     <td><span class="badge badge-primary showTotalConfirmation"></span></td>
                                     <td><span class="badge badge-info showAmountConfirmation"></span></td>
-                                     <td><button class="btn btn-warning btnConfirmation">Generate</button></td>
+                                     {{-- <td><button class="btn btn-warning btnConfirmation">Generate</button></td> --}}
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -45,7 +45,7 @@
                                     <td><span class="badge badge-danger">₱ 500.00</span></td>
                                     <td><span class="badge badge-primary showTotalWedding"></span></td>
                                     <td><span class="badge badge-info showAmountWedding"></span></td>
-                                     <td><button class="btn btn-warning btnWedding">Generate</button></td>
+                                     {{-- <td><button class="btn btn-warning btnWedding">Generate</button></td> --}}
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -53,7 +53,7 @@
                                     <td><span class="badge badge-danger">₱ 100.00</span></td>
                                     <td><span class="badge badge-primary showTotalMass"></span></td>
                                     <td><span class="badge badge-info showAmountMass"></span></td>
-                                     <td><button class="btn btn-warning btnMass">Generate</button></td>
+                                     {{-- <td><button class="btn btn-warning btnMass">Generate</button></td> --}}
                                 </tr>
                                 <tr>
                                     <td>5</td>
@@ -61,13 +61,13 @@
                                     <td><span class="badge badge-danger">₱ 100.00</span></td>
                                     <td><span class="badge badge-primary showTotalBurial"></span></td>
                                     <td><span class="badge badge-info showAmountBurial"></span></td>
-                                     <td><button class="btn btn-warning btnBurial">Generate</button></td>
+                                     {{-- <td><button class="btn btn-warning btnBurial">Generate</button></td> --}}
                                 </tr>
                                 <tr class="bg-secondary">
                                     <td colspan="3" class="text-right text-dark"><b>TOTAL</b></td>
                                     <td><span class="badge badge-dark showTotal"></span></td>
                                     <td><span class="badge badge-dark showAmount"></span></td>
-                                    <td></td>
+                                    {{-- <td></td> --}}
                                 </tr>
                              </tbody>
                          </table>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-primary">
+                <div class="card card-primary shadow">
                     <div class="card-header">
                         <h4>Filter Report</h4>
                     </div>
@@ -101,8 +101,16 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-block btn-info mt-4 btnSave">Generate</button>
+                            
                         </div>
                     </form>
+                </div>
+                <div class="card mt-2 shadow cardPDF">
+                    <div class="card-body">
+                        <span class="badge badge-secondary text-dark toBePrint"></span>
+                        <span class="badge badge-secondary text-dark text-right"><b>Generate</b>: {{ date("F j, Y"); }}</span><hr>
+                        <button type="submit" class="btn btn-block btn-success mt-2 gPDF"><i class="far fa-file-pdf"></i> Download report (PDF format) </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,6 +128,7 @@
             const d = new Date();
             let year = d.getFullYear();
         // alert($(this).val())
+        
         switch ($(this).val()) {
             case 'Monthly':
                     hold= `
@@ -146,12 +155,7 @@
                     $(".show").html(hold)
                 break;
             case 'Annually':
-            
-            for(let i = 2021; i <= year; i++) {
-                
-                makeYear+=`<option value="${i}">${i}</option>`
-                
-            }
+             for(let i = 2021; i <= year; i++) { makeYear+=`<option value="${i}">${i}</option>`}
             hold= `
                     <div class="form-group">
                         <label>Select Year</label>
@@ -172,7 +176,10 @@
                     dateFormat: "yy-mm-dd",
                         autoclose:true,
                         endDate: "currentDate",
-                        maxDate: currentDate
+                        maxDate: currentDate,
+                        beforeShow: function() {
+                            $(this).datepicker('option', 'maxDate', $('#datepicker2').val());
+                        }
                 }).on('changeDate', function (ev) {
                     $(this).datepicker('hide');
                 });
@@ -181,20 +188,28 @@
                         this.value = this.value.replace(/[^0-9^-]/g, '');
                     }
                 });
+                $('#datepicker1').on('click',function () {
+                    $('#datepicker2').val('')
+                });
 
                 $('#datepicker2').datepicker({
                     dateFormat: "yy-mm-dd",
-                        autoclose:true,
-                        endDate: "currentDate",
-                        maxDate: currentDate
-                }).on('changeDate', function (ev) {
-                    $(this).datepicker('hide');
-                });
-                $('#datepicker2').keyup(function () {
-                    if (this.value.match(/[^0-9]/g)) {
-                        this.value = this.value.replace(/[^0-9^-]/g, '');
-                    }
-                });
+                    // autoclose:true,
+                    // endDate: "currentDate",
+                    // maxDate: currentDate,
+                    beforeShow: function() {
+                    $(this).datepicker('option', 'minDate', $('#datepicker1').val());
+                    if ($('#datepicker1').val() === '') $(this).datepicker('option', 'minDate', 0);                             
+                            }
+                })
+                // .on('changeDate', function (ev) {
+                //     $(this).datepicker('hide');
+                // });
+                // $('#datepicker2').keyup(function () {
+                //     if (this.value.match(/[^0-9]/g)) {
+                //         this.value = this.value.replace(/[^0-9^-]/g, '');
+                //     }
+                // });
                 break;
         
             default:
@@ -226,9 +241,11 @@
                         .attr("disabled", true);
                 },
            }) .done(function (data) {
+                toBeText($('select[name="type"]').val())
                 // document.getElementById("formFinance").reset();
                 $(".btnSave").html("Generate").attr("disabled", false);
                 MainFunction(data);
+                $('.cardPDF').show();
             })
             .fail(function (jqxHR, textStatus, errorThrown) {
                 getToast("error", "Eror", errorThrown);
@@ -236,11 +253,12 @@
             });
        })
 
-        $('.btnBaptism').hide();
-        $('.btnConfirmation').hide();
-        $('.btnWedding').hide();
-        $('.btnMass').hide();
-        $('.btnBurial').hide();
+        // $('.btnBaptism').hide();
+        // $('.btnConfirmation').hide();
+        // $('.btnWedding').hide();
+        // $('.btnMass').hide();
+        // $('.btnBurial').hide();
+        $('.cardPDF').hide();
 
        let MainFunction = (data) =>{
            let total = '';
@@ -252,7 +270,7 @@
             $(".showAmount").text(!isNaN(amount)?'₱ '+amount.toString()+'.00':'N/A')
 
             if (data.baptism==null || data.baptism==0) {
-                $('.btnBaptism').hide();
+                // $('.btnBaptism').hide();
                 $('.showTotalBaptism').text('N/A')
                 $('.showAmountBaptism').text('N/A')
             } else {
@@ -270,7 +288,7 @@
             }
 
             if (data.confirmation==null || data.confirmation==0) {
-                $('.btnConfirmation').hide();
+                // $('.btnConfirmation').hide();
                 $('.showTotalConfirmation').text('N/A')
                 $('.showAmountConfirmation').text('N/A')
             } else {
@@ -281,7 +299,7 @@
 
             if (data.wedding==null || data.wedding==0) {
                 $('.showTotalWedding').text('N/A')
-                $('.btnWedding').hide();
+                // $('.btnWedding').hide();
                 $('.showAmountWedding').text('N/A')
             } else {
                 $('.showTotalWedding').text(data.wedding)
@@ -291,7 +309,7 @@
 
             if (data.mass==null || data.mass==0) {
                 $('.showTotalMass').text('N/A')
-                $('.btnMass').hide();
+                // $('.btnMass').hide();
                 $('.showAmountMass').text('N/A')
             } else {
                 $('.showTotalMass').text(data.mass)
@@ -301,7 +319,7 @@
 
             if (data.burial==null || data.burial==0) {
                 $('.showTotalBurial').text('N/A')
-                $('.btnBurial').hide();
+                // $('.btnBurial').hide();
                 $('.showAmountBurial').text('N/A')
             } else {
                 $('.showTotalBurial').text(data.burial)
@@ -311,6 +329,65 @@
 
             
        }
+
+       let toBeText=(type)=>{
+           let tobePrint = '';
+            switch (type) {
+                case 'Monthly':
+                    tobePrint='<b>Month</b>: '+$('select[name="month"] option:selected').text()
+                    break;
+                case 'Annually':
+                    tobePrint='<b>Year</b>: '+$('select[name="year"]').val()
+                    break;
+                case 'Date_Range':
+                    tobePrint='<b>Date</b>: '+$('input[name="from"]').val()+'-'+$('input[name="to"]').val()
+                    break;
+                default:
+                    break;
+            }
+            $('.toBePrint').html(tobePrint);
+       }
+
+       $(".gPDF").on('click',function(e){
+           e.preventDefault();
+           let myData='';
+           let type=$('select[name="type"]').val();
+            switch ($('select[name="type"]').val()) {
+                case 'Monthly':
+                    myData=$('select[name="month"]').val();
+                    break;
+                case 'Annually':
+                    myData=$('select[name="year"]').val();
+                    break;
+                case 'Date_Range':
+                    myData=$('input[name="from"]').val()+'_'+$('input[name="to"]').val();
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+           $.ajax({
+                url:'report/pdf/'+type+"/"+myData,
+                type:'GET',
+                beforeSend: function () {
+                    $(".gPDF")
+                        .html(
+                            `Donwloading ...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`
+                        )
+                        .attr("disabled", true);
+                },
+           }) .done(function (data) {
+                $(".gPDF").html("Download report (PDF format)").attr("disabled", false);
+             
+            })
+            .fail(function (jqxHR, textStatus, errorThrown) {
+                // getToast("error", "Eror", errorThrown);
+                $(".gPDF").html("Download report (PDF format)").attr("disabled", false);
+            });
+       })
 
     </script>
 @endsection

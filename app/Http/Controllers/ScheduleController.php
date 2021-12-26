@@ -52,7 +52,7 @@ class ScheduleController extends Controller
     foreach ($burial as $key => $value) {
         $arr2=array();
         $arr2['title'] =  'Burial Mass of '.$value->burial_first_name;
-        $arr2['color'] =  'gray';
+        $arr2['color'] =  '#804000';
         $arr2['textColor'] =  'white';
         $arr2['start'] =  $value->start_date . ' ' . $value->start_time;
         $arr2['end'] =  $value->end_date . ' ' . $value->end_time;

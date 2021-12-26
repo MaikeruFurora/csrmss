@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+    <style>
+        .fc-today {
+            background: #f2d9d9 !important;
+            /* color: white; */
+        } 
+    </style>
 @endsection
 @include('administrator/partial/DeleteConfirmation')
 <!-- Modal -->
@@ -45,7 +51,7 @@
                             <button type="button" class="btn text-white" style="background: red">Church event</button>
                             <button type="button" class="btn text-white" style="background: orange">Wedding</button>
                             <button type="button" class="btn text-white" style="background: blue">&nbsp;Baptism&nbsp;</button>
-                            <button type="button" class="btn text-white" style="background: gray">&nbsp;&nbsp;Burial&nbsp;&nbsp;</button>
+                            <button type="button" class="btn text-white" style="background: #804000">&nbsp;&nbsp;Burial&nbsp;&nbsp;</button>
                             <button type="button" class="btn text-white" style="background: green">&nbsp;&nbsp;Mass&nbsp;&nbsp;</button>
                             <button type="button" class="btn text-white" style="background: violet">Confirmation</button>
                           </div>
@@ -144,7 +150,24 @@
         $(".dateEvent").html("<b>Date from</b> <em>"+dstart+"</em>")
         $(".timeEvent").html("<b>Date to</b> <em>"+dend+"</em>")
         $("#staticBackdrop").modal("show")
-       }
+       },
+       dayRender: function (date, cell) {
+
+        let today = new Date();
+        let end = new Date();                
+        end.setDate(today.getDate());                 
+
+
+        if( date < end) {
+        cell.css("background-color", "#eeeedd");
+        } // this is for previous date 
+
+        //   if(date > today) {
+        //     cell.css("background-color", "blue");
+        //   }
+
+
+        }
     })
 
    
@@ -318,6 +341,7 @@ $('.yesConfirm').on('click', function () {
                 .attr("disabled", false);
                 eventTable.ajax.reload();
             $("#deleteModal").modal("hide")
+            $('#myEvent').fullCalendar('refetchEvents');
             // window.location.reload()
             
         })

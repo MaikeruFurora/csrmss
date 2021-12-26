@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaptismController;
 use App\Http\Controllers\BurialController;
@@ -44,7 +45,7 @@ Route::middleware(['guest'])->group(function(){
 });
 
 //safe route ---------
-Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
 Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefix('client/')->group(function () {
     Route::get('/',[ClientController::class,'index'])->name('home');
@@ -159,9 +160,12 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
       Route::get('/finance/report',[AdminController::class,'finance'])->name('finance');
       Route::post('/finance/report/{type}',[AdminController::class,'financeResult']);
       //print
-      Route::get('/finance/report/print/{type}',[AdminController::class,'financialReport']);
+      Route::get('/finance/report/pdf/{type}/{logic}',[AdminController::class,'financialPDFReport']);
 
       Route::get('/archive',[AdminController::class,'archive'])->name('archive');
+      Route::get('/archive/retrive/priest',[ArchiveController::class,'archivePriest']);
+      Route::get('/archive/restore/priest/{priest}',[ArchiveController::class,'archivePriestRestore']);
+      Route::delete('/archive/delete/priest/{priest}',[ArchiveController::class,'archivePriestDelete']);
 });
 
 Route::get('/clear', function () { //-> tawagin mo to url sa browser -> 127.0.0.1:8000/clear

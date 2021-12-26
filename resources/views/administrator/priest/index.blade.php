@@ -1,7 +1,7 @@
 @extends('../layout/app')
 @section('title','Manage Priest')
 @section('content')
-@include('administrator/partial/DeleteConfirmation')
+@include('administrator/partial/archiveModal')
 <section class="section">
     <h2 class="section-title">Manage Priest</h2>
     <div class="section-body">
@@ -82,8 +82,8 @@
                                <td>${++i}</td>
                                <td>${element.fullname}</td>
                                <td>
-                                    <button value="${element.id}" class="btn btn-info edit edit_${element.id}">Edit</button>
-                                    <button value="${element.id}" class="btn btn-danger delete delete_${element.id}">Delete</button>
+                                    <button value="${element.id}" class="btn btn-info edit edit_${element.id}"><i class="far fa-edit"></i> Edit</button>
+                                    <button value="${element.id}" class="btn btn-warning delete delete_${element.id}"><i class="far fa-folder-open"></i> Archive</button>
                                 </td>
                             </tr>
                         `;
@@ -173,7 +173,7 @@ $(document).on("click", ".edit", function () {
 });
 
 $(document).on('click','.delete',function(){
-    $("#deleteModal").modal("show")
+    $("#archiveModal").modal("show")
     $(".yesConfirm").val($(this).val())
 })
 
@@ -190,10 +190,10 @@ $(".yesConfirm").on('click',function(){
         },
     })
         .done(function (response) {
-            $(".yesConfirm").html("Delete");
+            $(".yesConfirm").html("Yes, Move to archive");
             getToast("success", "Success", "deleted one record");
             tablePriest();
-            $("#deleteModal").modal("hide")
+            $("#archiveModal").modal("hide")
         })
         .fail(function (jqxHR, textStatus, errorThrown) {
             console.log(jqxHR, textStatus, errorThrown);

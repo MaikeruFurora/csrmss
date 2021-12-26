@@ -14,5 +14,16 @@
         <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div></a>
         
     </li>
+    <li class="dropdown"><a  href="{{ route('logout') }}"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+         class="nav-link  nav-link-lg nav-link-user">
+        {{-- <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> --}}
+        <div class="d-sm-none d-lg-inline-block"><i class="fas fa-sign-out-alt text-danger"></i></div>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>   
+    </a>
+   
+    </li>
     </ul>
 </nav>

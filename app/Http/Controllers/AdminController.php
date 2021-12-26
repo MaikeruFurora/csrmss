@@ -11,6 +11,7 @@ use App\Models\Wedding;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -287,19 +288,36 @@ class AdminController extends Controller
         }   
     }
 
-    public function financialReport($type){
-        return view('administrator/finance/bap');
-        // switch ($type) {
-        //     case 'Monthly':
-        //         break;
-        //     case 'Annually':
-        //         break;
-        //     case 'Date_Range':
-        //          break;
-        //     default:
-        //              return false;
-        //         break;
-        // }
+    public function financialPDFReport($type,$logic){
+
+      
+        switch ($type) {
+            case 'Monthly':
+                    $requestMonth=new Request();
+                    $requestMonth->replace(['month'=>$logic]);
+                    $data = json_decode($this->monthlyFinance($requestMonth)->getContent());
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data'));
+                    return $pdf->download('REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+                break;
+            case 'Annually':
+                    $requestYear=new Request();
+                    $requestYear->replace(['year'=>$logic]);
+                    $data = json_decode($this->annuallyFinance($requestYear)->getContent());
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data'));
+                    return $pdf->download('REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+                break;
+            case 'Date_Range':
+                     $data = explode("_",$logic);
+                     $requestDateRange=new Request();
+                     $requestDateRange->replace(['from'=>$data[0],'to'=>$data[1]]);
+                    $data = json_decode($this->dateRangeFinance($requestDateRange)->getContent());
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data'));
+                    return $pdf->download('REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+                 break;
+            default:
+                     return false;
+                break;
+        }
     }
 
     public function archive(){

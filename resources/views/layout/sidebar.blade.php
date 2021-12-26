@@ -36,8 +36,12 @@
             {{-- <li class="{{ request()->is('admin/report')?'active':'' }}"><a class="nav-link" href="{{ route('admin.profile') }}"><i class="fas fa-file-word"></i> <span>Report</span></a></li>
             <li class="menu-header">Information</li> --}}
            
-            <li><a class="nav-link text-danger" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
-        </ul>
+            <li><a class="nav-link text-danger" href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>   
+            </ul>
       
     </aside>
 </div>

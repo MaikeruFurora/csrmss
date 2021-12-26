@@ -50,9 +50,13 @@
                 </a>
             </li>
             <li class="dropdown">
-                <a  href="{{ route('logout') }}" class="nav-link text-danger">
+                <a  href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>   
             </li>
         </ul>
     </div>
