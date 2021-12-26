@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-sm-4 text-left">
                 <img class="mt-2" src="{{ asset('image/'.$church_logo) }}" alt="" width="80">
-                <h2 class="mt-">Report<small>2021</small></h2>
+                <h2 class="mt-">Report<small>{{ date('Y') }}</small></h2>
             </div>
             <div class="col-sm-4 offset-sm-4 text-right"  style="float: right">
                 <p class="lead" class="mt-5" style="font-size:16px;margin-top: 15px">{{ $church_name }}</p>
@@ -28,15 +28,29 @@
         </div>
       </div>
       <table style="margin-top: -5px" width="100%" class="table table-borderless">
-         
-          <tr>
+        <tr>
               <td width="15%" class="text-left"><b>Report No. :</b></td>
               <td  class="text-left">{{ rand(100,500)."-".rand(10000,50000) }}</span></td>
          
             <td width="20%" class="text-right"><b>Date:</b></td>
             <td  class="text-left">{{ date("F j,Y") }}</span></td>
         </tr>
-
+        @if ($type=="Monthly")
+        <tr>
+            <td width="15%" class="text-left"><b>Month :</b></td>
+            <td  class="text-left">{{ date("F", mktime(0, 0, 0, $logic, 10)); }}</span></td>
+        </tr>
+        @elseif($type=="Annually")
+        <tr>
+            <td width="15%" class="text-left"><b>Year :</b></td>
+            <td  class="text-left">{{ $logic }}</span></td>
+        </tr>
+        @else
+        <tr>
+            <td width="15%" class="text-left"><b>Date range:</b></td>
+            <td  class="text-left">{{ explode("_",$logic)[0] }} | {{ explode("_",$logic)[1] }}</span></td>
+        </tr>
+        @endif
       </table>
       <table width="100%" class="table mt-4 table-borderless">
         <thead class="border">
@@ -99,8 +113,8 @@
         </tbody>
       </table>
       <div class="text-center">
-        <img class="mt-4" src="{{ asset('image/'.$church_logo) }}" alt="" width="50">
-        <h6 class="">Report<small>2021</small></h6>
+        <img class="mt-4 mb-1" src="{{ asset('image/'.$church_logo) }}" alt="" width="50">
+        <h6 class="">Report<small>{{ date('Y') }}</small></h6>
         <small>If you have any enqueries concerning this <br> report, please contact us!</small>
       </div>
 </body>

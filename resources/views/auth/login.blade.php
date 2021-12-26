@@ -51,33 +51,39 @@
     <div id="app">
         <section class="section">
             <div class="container mt-2 center-screen">
-                <div class="col-lg-6 offset-lg-3">
+                <div class="col-lg-8 offset-lg-2">
+                    {{-- <div class="card mb-3">
+                        <div class="card-body pb-1 text-center">
+                            <h4>{{ $church_name }}</h4>
+                        </div>
+                    </div> --}}
                     <form method="POST" action="{{ route('auth.login.post') }}">@csrf
-                        <div class="card card-hero">
-                            <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-church"></i>
-                            </div>
-                            <h5>SIGN IN</h5>
-                            <div class="card-description"> <small>{{ date('M d, Y') }}</small></div>
-                            <span>{{ $church_name }}</span>
-                            </div>
+                    <div class="card shadow">
+                        <div class="row no-gutters">
+                          <div class="col-md-4 p-3 bg-info">
+                            <img src="{{ asset('image/'.$church_logo) }}" class="card-img" alt="background">
+                          </div>
+                          <div class="col-md-8">
                             <div class="card-body">
-                           
-                        <div class="form-group">
-                            <label for="">Username</label>
-                            <input id="" class="form-control" type="text" value="{{ old('username') }}" name="username" required placeholder="Enter your username">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Password</label>
-                            <input id="" class="form-control" type="password" name="password" required placeholder="Enter your  password">
-                        </div>
-                        <div class="card-footer p-1">
-                            <button type="submit" class="btn btn-block btn-primary btn-lg btnSave">Login</button>
-                        </div>
+                              <h5 class="card-title text-dark">SIGN IN</h5>
+                              <div class="card-description"> <small>{{ date('M d, Y') }}</small></div>
+                              {{-- <span>{{ $church_name }}</span> --}}
+                              <div class="input-group mt-3">
+                                {{-- <div class="input-group-prepend">
+                                  <span class="input-group-text">First and last name</span>
+                                </div> --}}
+                                <input type="text" name="username" value="{{ old('username') }}" class="form-control" required placeholder="Username">
+                                <input type="password" name="password" class="form-control" required placeholder="Password">
+                              </div>
+                              <button class="btn btn-block btn-info mb-3 mt-2">Login</button>
+                              <a href="{{ route('auth.register') }}">Create account?</a> | <a href="{{ route('welcome') }}">Back to Home</a>
                             </div>
-                        </div></form>
-                    <a href="{{ route('welcome') }}">Back to Home</a>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    
+                   
                 </div>
             </div>
         </section>

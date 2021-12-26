@@ -298,23 +298,23 @@ class AdminController extends Controller
                     $requestMonth=new Request();
                     $requestMonth->replace(['month'=>$logic]);
                     $data = json_decode($this->monthlyFinance($requestMonth)->getContent());
-                    $pdf = PDF::loadView('administrator/finance/report',compact('data'));
-                    return $pdf->download('REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    return $pdf->download('MONTHLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
             case 'Annually':
                     $requestYear=new Request();
                     $requestYear->replace(['year'=>$logic]);
                     $data = json_decode($this->annuallyFinance($requestYear)->getContent());
-                    $pdf = PDF::loadView('administrator/finance/report',compact('data'));
-                    return $pdf->download('REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    return $pdf->download('ANUALLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
             case 'Date_Range':
                      $data = explode("_",$logic);
                      $requestDateRange=new Request();
                      $requestDateRange->replace(['from'=>$data[0],'to'=>$data[1]]);
                     $data = json_decode($this->dateRangeFinance($requestDateRange)->getContent());
-                    $pdf = PDF::loadView('administrator/finance/report',compact('data'));
-                    return $pdf->download('REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    return $pdf->download('DATE-RANGE-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                  break;
             default:
                      return false;
