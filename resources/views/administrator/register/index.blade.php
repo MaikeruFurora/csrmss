@@ -114,9 +114,9 @@
                        render:function(data){
                           return `
                           <button class="btn btn-sm btn-success changeStatus pl-2 pr-2"  value="${data.id}_Approved">Approve</button>
-                          <button class="btn btn-sm btn-danger delete_pending pl-3 pr-3" value="${data.id}">Delete</button>
                           `;
                        }
+                        //   <button class="btn btn-sm btn-danger delete_pending pl-3 pr-3" value="${data.id}">Delete</button>
                   },
   
               ],

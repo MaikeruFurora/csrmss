@@ -213,7 +213,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart2"  width="80" height="80"></canvas>
+                        <canvas id="myChart2"  width="40%" height="30%" ></canvas>
                     </div>
                 </div>
             </div>
