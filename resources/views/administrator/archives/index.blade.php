@@ -49,7 +49,7 @@
                         </div>
                         <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="">
+                                <table class="table table-striped" id="userTable"  style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -77,6 +77,7 @@
 <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 <script>
+    $("#userTable").DataTable()
     let priestTable= $("#priestTable").DataTable({
         pageLength: 5,
         lengthMenu: [ 5,10, 25, 50, 75, 100 ],

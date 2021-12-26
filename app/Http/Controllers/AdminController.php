@@ -6,6 +6,7 @@ use App\Models\Baptism;
 use App\Models\Burial;
 use App\Models\Confirmation;
 use App\Models\Mass;
+use App\Models\RegisterService;
 use App\Models\SystemProfile;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
@@ -46,11 +47,12 @@ class AdminController extends Controller
         ->groupBy('status')
         ->get();
 
+        $Piedata = RegisterService::select('service',DB::raw('count(status) as total'))->groupBy('service')->get();
         // $startDate = date('Y-m-d', strtotime($from));
         // $endDate = date('Y-m-d', strtotime($to));
         // $event = Wedding::whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate)->where('status','Approved')->get();
         $event=$this->getAvailableDate();
-        return view('administrator/dashboard',compact('baptismStat','weddingStat','burialStat','massStat','confirmationStat','event'));
+        return view('administrator/dashboard',compact('baptismStat','weddingStat','burialStat','massStat','confirmationStat','event','Piedata'));
     }
 
 
