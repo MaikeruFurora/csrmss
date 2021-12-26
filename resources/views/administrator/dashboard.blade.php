@@ -205,7 +205,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header">
                         <h4>No. of client request service</h4>
                         <div class="card-header-action">
