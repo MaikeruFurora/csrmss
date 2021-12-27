@@ -20,14 +20,14 @@
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                 <div class="dropdown-header">Notifications
                 <div class="float-right">
-                    <a href="#">Mark All As Read</a>
+                    <a href="{{ route('admin.markAsRead') }}">Mark All As Read</a>
                 </div>
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
                     @forelse (auth()->user()->notifications()->take(4)->get() as $item)
                     <a href="{{ whereIgo($item->data['request']['status']) }}" class="dropdown-item @if ($item->read_at == null) dropdown-item-unread @endif ">
                         <div class="dropdown-item-icon bg-primary text-white">
-                          <i class="fas {{ $item->data['request']['icon'] }}"></i>
+                          <i class="fas {{ $item->data['request']['icon'] }} mt-3"></i>
                         </div>
                         <div class="dropdown-item-desc">
                          {{ $item->data['request']['bodyMessage'] }}
@@ -40,7 +40,7 @@
             
                 </div>
                 <div class="dropdown-footer text-center">
-                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                <a href="{{ route('admin.notification.list') }}">View All <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </li>

@@ -371,4 +371,7 @@ class AdminController extends Controller
        
     }
 
+    public function notificationList(){
+        return view('administrator/notifications/index');
+    }
 }

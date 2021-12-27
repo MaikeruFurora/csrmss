@@ -110,4 +110,9 @@ class ClientController extends Controller
             'data'=>$data
         ]);
     }
+
+    public function notificationList(){
+        return view('client/notification');
+    }
+
 }

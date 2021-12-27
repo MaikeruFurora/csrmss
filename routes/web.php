@@ -55,6 +55,16 @@ Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefi
     Route::delete('register/delete/{registerService}',[ClientController::class,'deleteReuqestService']);
     Route::get('request',[ClientController::class,'requestClient'])->name('requestClient');
     Route::get('request/list',[ClientController::class,'requestList'])->name('requestList');
+    //notification
+    Route::get('/notification/list',[ClientController::class,'notificationList'])->name('notification.list');
+    Route::get('markAsRead',function(){
+      auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('markAsRead');
+    Route::get('deleteNotification',function(){
+        auth()->user()->notifications()->delete();
+        return redirect()->back();
+    })->name('deleteNotification');
 });
 
 Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('admin/')->group(function () {
@@ -172,6 +182,17 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
       // system log
       Route::get('/systemlog',[AdminController::class,'systemlog'])->name('systemlog');
       Route::get('/activity/log/{from}/{to}', [AdminController::class, 'searchByDate']);
+      
+      //notification
+      Route::get('/notification/list',[AdminController::class,'notificationList'])->name('notification.list');
+      Route::get('markAsRead',function(){
+        auth()->user()->unreadNotifications->markAsRead();
+          return redirect()->back();
+      })->name('markAsRead');
+      Route::get('deleteNotification',function(){
+          auth()->user()->notifications()->delete();
+          return redirect()->back();
+      })->name('deleteNotification');
 
 });
 
