@@ -52,6 +52,7 @@ Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefi
     Route::get('register/form/{type}',[ClientController::class,'registerForm'])->name('registerForm');
     Route::post('register/store',[ClientController::class,'registerStore'])->name('registerStore');
     Route::get('register/slip/{registerService}',[ClientController::class,'registerSlip'])->name('registerSlip');
+    Route::delete('register/delete/{registerService}',[ClientController::class,'deleteReuqestService']);
     Route::get('request',[ClientController::class,'requestClient'])->name('requestClient');
     Route::get('request/list',[ClientController::class,'requestList'])->name('requestList');
 });
@@ -82,8 +83,9 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
      Route::delete('user/delete/{user}',[UserController::class,'destroy']);
      Route::post('user/update/profile/{user}',[UserController::class,'updateProfile']);
      Route::post('user/change/password',[UserController::class,'changePassword']);
- 
- 
+     
+     Route::get('user/list/client',[ClientController::class,'clientList']);
+     
      //manage schedule
      Route::get('/schedule',[AdminController::class,'schedule'])->name('schedule');
      Route::get('/schedule/list/available',[ScheduleController::class,'getAvailableList']);

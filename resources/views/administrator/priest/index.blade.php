@@ -161,7 +161,7 @@ $(document).on("click", ".edit", function () {
     })
         .done(function (data) {
             $(".btnCancel").show();
-            $(".edit_" + id).html(`Edit`);
+            $(".edit_" + id).html(`<i class="far fa-edit"></i> Edit`);
             $(".btnSave").html("Update priest");
             $("input[name='id']").val(data.id);
             $("input[name='fullname']").val(data.fullname);

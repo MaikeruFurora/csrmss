@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 @endsection
+@include('administrator/partial/DeleteConfirmation')
 <section class="section">
 
     <div class="section-body">
@@ -87,7 +88,7 @@
                             <td>
                                 ${
                                     element.status=="Pending"?
-                                    `<button class="btn btn-danger">Decline</button>
+                                    `<button class="btn btn-danger delete" value="${element.id}">Decline</button>
                                      <a target="_blank" href="register/slip/${element.id}" class="btn btn-info">Trans. slip</a>`
                                     :''
                                 }
@@ -102,6 +103,50 @@
             });
         }
         requestList()
+
+
+        
+        $(document).on("click", ".delete", function () {
+            let id = $(this).val();
+            $("#deleteModal").modal("show")
+            $(".yesConfirm").val(id)
+        
+        });
+
+
+        $('.yesConfirm').on('click', function () {
+            $.ajax({
+                url: "/client/register/delete/" + $(this).val(),
+                type: "DELETE",
+                data: { _token: $('input[name="_token"]').val() },
+                beforeSend: function () {
+                    $(".yesConfirm")
+                        .html(
+                            `
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>`
+                        )
+                        .attr("disabled", true);
+                },
+            })
+                .done(function (response) {
+                    $(".yesConfirm")
+                        .html(`Yes`)
+                        .attr("disabled", false);
+                        // eventTable.ajax.reload();
+                    $("#deleteModal").modal("hide")
+                    requestList()   
+                    
+                })
+                .fail(function (jqxHR, textStatus, errorThrown) {
+                    $(".yesConfirm")
+                        .html("Save")
+                        .attr("disabled", false);
+                    console.log(jqxHR, textStatus, errorThrown);
+                    getToast("error", "Eror", errorThrown);
+                });
+        })
 
     </script>
 

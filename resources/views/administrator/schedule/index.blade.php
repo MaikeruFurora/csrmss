@@ -131,6 +131,7 @@
     <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
     <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 <script>
+setTimeout(() => {
     $("#myEvent").fullCalendar({
         header:{
             left:'prev,next,today',
@@ -353,5 +354,6 @@ $('.yesConfirm').on('click', function () {
             getToast("error", "Eror", errorThrown);
         });
 })
+}, 2000);
 </script>
 @endsection

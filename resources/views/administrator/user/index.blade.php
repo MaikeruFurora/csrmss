@@ -1,74 +1,115 @@
 @extends('../layout/app')
 @section('title','Manage User')
+@section('moreCss')
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+@endsection
 @section('content')
 @include('administrator/partial/DeleteConfirmation')
 @include('administrator/partial/UpdateUserProfile')
 @include('administrator/partial/changeUserPassword')
+
 <section class="section">
     <h2 class="section-title">Manage User</h2>
     <div class="section-body">
-        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                       <h4>User list</h4>
+       <div class="card card-primary shadow">
+           <div class="card-body">
+            <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                <li class="nav-item"><a class="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home" aria-selected="true">CLIENT USER</a></li>
+                <li class="nav-item"><a class="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-selected="false">ADMIN USER</a></li>
+            </ul>
+            <div class="tab-content tab-bordered" id="myTab3Content">
+                <div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
+                    {{--  --}}
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="clientTable">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">#</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Contact No.</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Date Registered</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    {{--  --}}
+                </div>
+                <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+                    {{--  admin --}}
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12">
+                            <div class="card card-primary shadow">
+                                <div class="card-header">
+                                   <h4>User list</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">#</th>
+                                                <th>Fullname</th>
+                                                <th>Email</th>
+                                                <th>Username</th>
+                                                <th width="25%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableUser">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-8 col-sm-12">
+                            <div class="card card-primary shadow">
+                                <div class="card-header">
+                                    <h4>User Form</h4>
+                                </div>
+                                <div class="card-body">
+                                   <form id="userForm"> @csrf
+                                    <input type="hidden" name="id">
+                                    <div class="form-group">
+                                        <label >Fullname</label>
+                                        <input class="form-control" type="text" required name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Email</label>
+                                        <input class="form-control" type="email" required name="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Username</label>
+                                        <input class="form-control" type="text" required name="username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Password</label>
+                                        <input class="form-control" type="password" required name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Confirm Password</label>
+                                        <input class="form-control" type="password" required name="confirm_password">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-info btn-lg btnSave">Add user</button>
+                                        <button type="button" class="btn btn-block btn-warning btn-lg btnCancel">Cancel</button>
+                                    </div>
+                                   </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th width="10%">#</th>
-                                    <th>Fullname</th>
-                                    <th>Email</th>
-                                    <th>Username</th>
-                                    <th width="25%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableUser">
-                                
-                            </tbody>
-                        </table>
-                    </div>
+                    {{--  admin --}}
                 </div>
             </div>
-            <div class="col-lg-4 col-md-8 col-sm-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h4>User Form</h4>
-                    </div>
-                    <div class="card-body">
-                       <form id="userForm"> @csrf
-                        <input type="hidden" name="id">
-                        <div class="form-group">
-                            <label >Fullname</label>
-                            <input class="form-control" type="text" required name="name">
-                        </div>
-                        <div class="form-group">
-                            <label >Email</label>
-                            <input class="form-control" type="email" required name="email">
-                        </div>
-                        <div class="form-group">
-                            <label >Username</label>
-                            <input class="form-control" type="text" required name="username">
-                        </div>
-                        <div class="form-group">
-                            <label >Password</label>
-                            <input class="form-control" type="password" required name="password">
-                        </div>
-                        <div class="form-group">
-                            <label >Confirm Password</label>
-                            <input class="form-control" type="password" required name="confirm_password">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-info btn-lg btnSave">Add user</button>
-                            <button type="button" class="btn btn-block btn-warning btn-lg btnCancel">Cancel</button>
-                        </div>
-                       </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+           </div>
+       </div>
+       
     </div>
     
 
@@ -76,7 +117,36 @@
 @endsection
 
 @section('moreJs')
+<script src="{{ asset('assets/modules/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+<script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 <script>
+
+
+    $("#clientTable").DataTable({
+        pageLenth: 10,
+        processing: true,
+        language: {
+            processing: `
+                <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>`,
+        },
+
+        ajax: `user/list/client`,
+        columns: [
+            { data: "id" },
+            { data: "fullname" },
+            { data: "address" },
+            { data: "contact_no" },
+            { data: "email" },
+            { data: "username" },
+            { data: "date_registered" },
+        ],
+    })
+
+    //----------------------------- ADMIN FUNCTION-------------------------//
         let user_id = $("input[name='user_id']").val();
         let tableUser=()=>{
             let meHOld='';

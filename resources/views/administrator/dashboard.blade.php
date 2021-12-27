@@ -225,7 +225,7 @@
 <script src="{{ asset('js/chart/chart.min.js') }}"></script>
 <script>
     let feedData = JSON.parse('<?php echo json_encode($Piedata,JSON_NUMERIC_CHECK); ?>');
-    let populationByGradeLevel = (b,c,m,w,br) => {
+    let populationByRequestService = (b,c,m,w,br) => {
     let ctx = document.getElementById("myChart2").getContext("2d");
     
 
@@ -249,11 +249,11 @@
         },
     });
 };
-let b = (feedData[0].total ?? 0);
-let br = (feedData[1].total ?? 0);
-let c = (feedData[2].total ?? 0);
-let m = (feedData[3].total ?? 0);
-let w = (feedData[4].total ?? 0);
-populationByGradeLevel(b,c,m,w,br)
+let b = (feedData[0]?.total ?? 0);
+let br = (feedData[1]?.total ?? 0);
+let c = (feedData[2]?.total ?? 0);
+let m = (feedData[3]?.total ?? 0);
+let w = (feedData[4]?.total ?? 0);
+populationByRequestService(b,c,m,w,br)
 </script>
 @endsection

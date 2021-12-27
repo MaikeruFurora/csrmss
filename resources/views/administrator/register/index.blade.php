@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/summernote-bs4.css') }}">
 @endsection
 @include('administrator/partial/approvedConfirmation')
 @include('administrator/partial/DeleteConfirmation')
+@include('administrator/partial/sendEmail')
 @section('content')
 <section class="section">
 
@@ -89,6 +91,7 @@
       <script src="{{ asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
       <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
       <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
+      <script src="{{ asset('js/summernote-bs4.js') }}"></script>
   
       <script>
           let registerClientPending = $("#registerClientPending").DataTable({
@@ -144,13 +147,10 @@
                        data: null,
                        render:function(data){
                           return `
-                          ${ 
-                            data.baptized==null?
-                            `<button class="btn btn-sm btn-warning changeStatus pl-3 pr-3" value="${data.id}_Pending">Reject</button>`
-                            :''
-                        }
-                          <button class="btn btn-sm btn-danger delete_pending pl-3 pr-3" value="${data.id}">Delete</button>
+                            <button class="btn btn-sm btn-warning changeStatus pl-2 pr-2" value="${data.id}_Pending">Reject</button>
+                            <button class="btn btn-sm btn-success sendEmail pl-3 pr-3" value="${data.id}"><i class="far fa-paper-plane"></i> Send Email</button>
                           `;
+                            // <button class="btn btn-sm btn-danger delete_pending pl-3 pr-3" value="${data.id}">Delete</button>
                        }
                   },
   
@@ -231,6 +231,15 @@
                       console.log(jqxHR, textStatus, errorThrown);
                       getToast("error", "Eror", errorThrown);
                   });
+          })
+
+          $(document).on('click','.sendEmail',function(){
+              $("#sendEmailModal").modal("show")
+          })
+
+          $(".sendCancel").on('click', function () {
+            $("textarea[name='bodyEmail']").summernote('reset')
+            $("input[name='to']").val('')
           })
   
       </script>

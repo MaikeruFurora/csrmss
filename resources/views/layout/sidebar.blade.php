@@ -15,10 +15,10 @@
            
             <li class="menu-header">Management</li>
             <li class="{{ request()->is('admin/priest')?'active':'' }}"><a class="nav-link" href="{{ route('admin.priest') }}"><i class="fas fa-holly-berry"></i> <span>Priest</span></a></li>
-            <li class="{{ request()->is('admin/schedule')?'active':'' }}"><a class="nav-link" href="{{ route('admin.schedule') }}"><i class="fas fa-calendar-check"></i> <span>Schedule</span></a></li>
             <li class="{{ request()->is('admin/user')?'active':'' }}"><a class="nav-link" href="{{ route('admin.user') }}"><i class="fas fa-users"></i> <span>Users</span></a></li>
             <li class="{{ request()->is('admin/registered/client')?'active':'' }}"><a class="nav-link" href="{{ route('admin.registered.client') }}"><i class="fas fa-registered"></i> <span>Client Request</span></a></li>
             <li class="{{ request()->is('admin/profile')?'active':'' }}"><a class="nav-link" href="{{ route('admin.profile') }}"><i class="fas fa-users"></i> <span>System Profile</span></a></li>
+            <li class="{{ request()->is('admin/schedule')?'active':'' }}"><a class="nav-link" href="{{ route('admin.schedule') }}"><i class="fas fa-calendar-check"></i> <span>Schedule</span></a></li>
             
             <li class="menu-header">Financial Report</li>
             <li class="{{ request()->is('admin/finance')?'active':'' }}"><a class="nav-link" href="{{ route('admin.finance') }}"><i class="fas fa-users"></i> <span>Financial Report</span></a></li>

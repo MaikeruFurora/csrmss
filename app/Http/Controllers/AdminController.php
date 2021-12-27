@@ -149,6 +149,8 @@ class AdminController extends Controller
     public function user(){
         return view('administrator/user/index');
     }
+    
+  
 
     public function schedule(){
         return view('administrator/schedule/index');

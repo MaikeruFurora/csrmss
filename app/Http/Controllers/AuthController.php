@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Client;
+use App\Models\User;
+use App\Notifications\NotifyAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\StatusNotifiation;
+use Illuminate\Support\Facades\Notification;
 
 class AuthController extends Controller
 {
@@ -53,7 +57,7 @@ class AuthController extends Controller
         $request->validate([
             'confirm_password'=>'same:password',
         ]);
-        Client::create([
+        $registerClient  = Client::create([
             'fullname'=>$request->fullname,
             'contact_no'=>$request->contact_no,
             'email'=>$request->email,
@@ -61,6 +65,16 @@ class AuthController extends Controller
             'address'=>$request->address,
             'password'=>Hash::make($request->password),
         ]);
+        $data['for']='admin';
+        $data['title']="New register user";
+        $data['bodyMessage']="Hi, Admin you have new register user, ".$registerClient->fullname;
+        $data['status']='new';
+        $data['icon']='fa-user';
+        $data['updated_at']=$registerClient->updated_at;
+        $admins = User::all();
+        $notifications = new NotifyAdmin($data);
+        Notification::send($admins,$notifications);
+        // $client->notify(new StatusNotifiation($data));
 
         if (Auth::guard('client')->attempt($request->only('username','password'))) {
             return redirect()->route('client.home'); //if admin
