@@ -9,15 +9,16 @@
 
 <!-- General CSS Files -->
 <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
+<link rel="stylesheet" href="{{ asset('css/toast/iziToast.css') }}">
+<link rel="stylesheet" href="{{ asset('datepicker/jquery-ui.css') }}">
 
 <!-- CSS Libraries -->
 
 <!-- Template CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/components.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/toast/iziToast.css') }}">    
-<link rel="stylesheet" href="{{ asset('datepicker/jquery-ui.css') }}">
+@yield('moreCss')
 </head>
 
 <body class="layout-3">
@@ -49,8 +50,8 @@
 
 <!-- Template JS File -->
 <script src="{{ asset('js/scripts.js') }}"></script>
-{{-- <script src="js/custom.js"></script> --}}
-{{-- <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script> --}}
+<script src="{{ asset('js/global.js') }}"></script>
+<script src="{{ asset('js/custom.js') }}"></script>
 <script src="{{ asset('datepicker/jquery-ui.js') }}"></script>
 @yield('moreJs')
 </body>

@@ -7,6 +7,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item {{ request()->is('client')?'active':'' }}"><a href="{{ route('client.home') }}" class="nav-link">Services</a></li>
                 <li class="nav-item {{ request()->is('client/request')?'active':'' }}"><a href="{{ route('client.requestClient') }}" class="nav-link">Request Status</a></li>
+                <li class="nav-item {{ request()->is('client/church/calendar')?'active':'' }}"><a href="{{ route('client.church.calendar') }}" class="nav-link">Church Calendar</a></li>
             </ul>
         </div>
      

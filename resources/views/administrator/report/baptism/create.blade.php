@@ -176,7 +176,31 @@
                         </form>  
                     </div>
                 </div>
-            </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Event Schedule on <span style="font-size: 11px" class="badge badge-info showDateSelected"></span></h4>
+                  </div>
+                  <div class="card-body">
+                     <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Service</th>
+                            <th>Time Start</th>
+                            <th>Time End</th>
+                          </tr>
+                        </thead>
+                        <tbody id="showAvailability">
+                            <tr>
+                              <td colspan="4" class="text-center">No data</td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                     </div>
+                  </div>
+                </div>
+              </div>
           
         </div>
     </div>
@@ -187,12 +211,46 @@
 
 @section('moreJs')
 <script>
-    $( "#datepicker" ).datepicker({
-      dateFormat: "yy-mm-dd",
-      minDate: +1,  
+$( "#datepicker" ).datepicker({
+  dateFormat: "yy-mm-dd",
+  minDate: +1,  
+});
+$("#datepicker").on("change",function(){
+let hold='';
+$('.showDateSelected').text($(this).val())
+    $.ajax({
+      url: "/admin/get/all/occupied/"+$(this).val(),
+      type: "GET",
+      beforeSend: function () {
+            $("#showAvailability")
+                .html(
+                    `<div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>`
+                );
+        },
+    }).done(function(data){
+       if (data.length!=0) {
+        data.forEach((element,i) => {
+            hold+=` <tr>
+                      <th>${++i}</th>
+                      <th>${element.service}</th>
+                      <th>${element.start}</th>
+                      <th>${element.end}</th>
+                    </tr>`;
+        });
+       } else {
+         hold=` <tr>
+                  <td colspan="4" class="text-center">No data</td>
+                </tr>`;
+       }
+        $("#showAvailability").html(hold);
+    }).fail(function (jqxHR, textStatus, errorThrown) {
+        getToast("error", "Eror", errorThrown);
+        $(".btnSave").html("Register").attr("disabled", false);
     });
-</script>
-<script>
+});
+
 $("#baptismForm").on('submit',function(e){
   e.preventDefault();
   $.ajax({

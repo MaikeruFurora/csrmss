@@ -366,27 +366,31 @@
                     return false;
                     break;
             }
-           $.ajax({
-                url:'report/pdf/'+type+"/"+myData,
-                type:'GET',
-                beforeSend: function () {
-                    $(".gPDF")
-                        .html(
-                            `Donwloading ...
-                            <div class="spinner-border spinner-border-sm" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>`
-                        )
-                        .attr("disabled", true);
-                },
-           }) .done(function (data) {
-                $(".gPDF").html("Download report (PDF format)").attr("disabled", false);
+
+
+            window.open(`report/pdf/${type}/${myData}`,'_blank')
+
+        //    $.ajax({
+        //         url:'report/pdf/'+type+"/"+myData,
+        //         type:'GET',
+        //         beforeSend: function () {
+        //             $(".gPDF")
+        //                 .html(
+        //                     `Donwloading ...
+        //                     <div class="spinner-border spinner-border-sm" role="status">
+        //                         <span class="sr-only">Loading...</span>
+        //                     </div>`
+        //                 )
+        //                 .attr("disabled", true);
+        //         },
+        //    }) .done(function (data) {
+        //         $(".gPDF").html("Download report (PDF format)").attr("disabled", false);
              
-            })
-            .fail(function (jqxHR, textStatus, errorThrown) {
-                // getToast("error", "Eror", errorThrown);
-                $(".gPDF").html("Download report (PDF format)").attr("disabled", false);
-            });
+        //     })
+        //     .fail(function (jqxHR, textStatus, errorThrown) {
+        //         // getToast("error", "Eror", errorThrown);
+        //         $(".gPDF").html("Download report (PDF format)").attr("disabled", false);
+        //     });
        })
 
     </script>

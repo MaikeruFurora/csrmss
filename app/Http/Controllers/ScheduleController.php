@@ -112,47 +112,77 @@ class ScheduleController extends Controller
     $output = array_merge($output1,$output2,$output3,$output4,$output5,$output6);
     return response()->json($output);
 
-    // $lastDayOfMonth = $this->days_in_month(strval($month), date("Y"));
-    // $lastDateOfMonth = "12/" . $lastDayOfMonth . date("/Y");
-    // $firstDateOfMonth = date('m/') . "01" . date('/Y'); //, strtotime(' +1 day')
-    // $currentDateNow = date("m/d/Y");
-    // $data = Appointment::select('set_date as start', DB::raw('COUNT(set_date) as title')) //
-    //     // ->where('set_date', '>=', $firstDateOfMonth)
-    //     // ->where('set_date', '<=', $lastDateOfMonth)
-    //     ->whereBetween('set_date', [$firstDateOfMonth, $lastDateOfMonth])
-    //     ->groupBy('set_date')
-    //     ->orderBy('set_date', 'asc')
-    //     ->get();
-    // $dataHoliday = Holiday::select("holi_date_from", "holi_date_to", "description")->get();
-    // $arrayData0 = array();
-    // foreach ($dataHoliday as  $value) {
-    //     $arr = array();
-    //     $dateFrom = strval($value->holi_date_from . ' ' . date("Y"));
-    //     $dateTo = strval($value->holi_date_to . ' ' . date("Y"));
-    //     $arr['start'] = date('Y-m-d', strtotime($dateFrom));
-    //     if ($value->holi_date_to != null) {
-    //         $arr['end'] =  date('Y-m-d', strtotime($dateTo . '+1 days'));
-    //     }
-    //     $arr['title'] = $value->description;
-    //     $arr['backgroundColor'] = "#9999ff";
-    //     $arr['borderColor'] = "rgba(0, 255, 0, 0)";
-    //     $arr['textColor'] = "white";
-    //     $arr['className'] = "holiday";
-    //     $arrayData0[] = $arr;
-    // }
+ 
+   }
 
-    // $arrayData1 = array();
 
-    // foreach ($data as $value) {
-    //     $arr = array();
-    //     $arr['start'] = date('Y-m-d', strtotime(strval($value->start)));
-    //     $arr['title'] = "Total - " . $value->title;
-    //     $arr['backgroundColor'] = $value->title >= 100 ? "rgba(0, 255, 0, 0)" : "#66cc66";
-    //     $arr['borderColor'] = "rgba(0, 255, 0, 0)";
-    //     $arr['textColor'] =  $value->title >= 100 ? "white" : "black";
-    //     $arr['className'] = $value->title >= 100 ? "full" : "vacant";
-    //     $arrayData1[] = $arr;
-    // }
-    // return response()->json(array_merge($arrayData0, $arrayData1));
+   public function getAvilbleSelectedDate($dateSelected){
+     $output1 = array();
+        $output2 = array();
+        $output3 = array();
+        $output4 = array();
+        $output5 = array();
+        $output6 = array();
+    
+        $wedding=Wedding::select('start_date','end_date','start_time','end_time')->where('start_date','=', $dateSelected)->get();
+        foreach ($wedding as $key => $value) {
+            $arr1=array();
+            $arr1['service'] =  'Wedding';
+            $arr1['start'] =  $value->start_time;
+            $arr1['end'] =  $value->end_time;
+            $output1[]=$arr1;
+        }
+        $burial=Burial::select('start_date','end_date','start_time','end_time')->where('start_date','=', $dateSelected)->get();
+        foreach ($burial as $key => $value) {
+            $arr2=array();
+            $arr2['service'] =  'Burial';
+            $arr2['start'] =  $value->start_time;
+            $arr2['end'] =  $value->end_time;
+            $output2[]=$arr2;
+        }
+    
+        $baptism=Baptism::select('start_date','end_date','start_time','end_time')->where('start_date','=', $dateSelected)->get();
+        foreach ($baptism as $key => $value) {
+            $arr3=array();
+            $arr3['service'] =  'Batism';
+            $arr3['start'] =  $value->start_time;
+            $arr3['end'] =  $value->end_time;
+            $output3[]=$arr3;
+        }
+    
+        $mass=Mass::select('start_date','end_date','start_time','end_time')->where('start_date','=', $dateSelected)->get();
+        foreach ($mass as $key => $value) {
+            $arr4=array();
+            $arr4['service'] =  'Mass';
+            $arr4['start'] =  $value->start_time;
+            $arr4['end'] =  $value->end_time;
+            $output4[]=$arr4;
+        }
+    
+        $confirmation=Confirmation::select('start_date','end_date','start_time','end_time')->where('start_date','=', $dateSelected)->get();
+        foreach ($confirmation as $key => $value) {
+            $arr5=array();
+            $arr5['service'] =  'Confirmation';
+            $arr5['start'] =  $value->start_time;
+            $arr5['end'] =  $value->end_time;
+            $output5[]=$arr5;
+        }
+    
+        // $evenDate = Event::select("date_from", "date_to", "event")->where('status',1)->where('start_date','=', $dateSelected)->get();
+        // foreach ($evenDate as  $value) {
+        //     $arr6 = array();
+        //     $dateFrom = strval($value->date_from . ' ' . date("Y"));
+        //     $dateTo = strval($value->date_to . ' ' . date("Y"));
+        //     $arr6['start'] = date('Y-m-d', strtotime($dateFrom));
+        //     if ($value->date_to != null) {
+        //         $arr6['end'] =  date('Y-m-d', strtotime($dateTo . '+1 days'));
+        //     }
+        //     $arr6['title'] = $value->event;
+        //     $output6[] = $arr6;
+        // }
+    
+        $output = array_merge($output1,$output2,$output3,$output4,$output5);
+        return response()->json($output);
+
    }
 }

@@ -49,15 +49,15 @@ Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
 Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefix('client/')->group(function () {
     Route::get('/',[ClientController::class,'index'])->name('home');
-    Route::get('register/form/{type}',[ClientController::class,'registerForm'])->name('registerForm');
-    Route::post('register/store',[ClientController::class,'registerStore'])->name('registerStore');
-    Route::get('register/slip/{registerService}',[ClientController::class,'registerSlip'])->name('registerSlip');
-    Route::delete('register/delete/{registerService}',[ClientController::class,'deleteReuqestService']);
-    Route::get('request',[ClientController::class,'requestClient'])->name('requestClient');
-    Route::get('request/list',[ClientController::class,'requestList'])->name('requestList');
+    Route::get('/register/form/{type}',[ClientController::class,'registerForm'])->name('registerForm');
+    Route::post('/register/store',[ClientController::class,'registerStore'])->name('registerStore');
+    Route::get('/register/slip/{registerService}',[ClientController::class,'registerSlip'])->name('registerSlip');
+    Route::delete('/register/delete/{registerService}',[ClientController::class,'deleteReuqestService']);
+    Route::get('/request',[ClientController::class,'requestClient'])->name('requestClient');
+    Route::get('/request/list',[ClientController::class,'requestList'])->name('requestList');
     //notification
     Route::get('/notification/list',[ClientController::class,'notificationList'])->name('notification.list');
-    Route::get('markAsRead',function(){
+    Route::get('/markAsRead',function(){
       auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
     })->name('markAsRead');
@@ -65,6 +65,8 @@ Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefi
         auth()->user()->notifications()->delete();
         return redirect()->back();
     })->name('deleteNotification');
+    Route::get('/church/calendar',[ClientController::class,'churchCalendar'])->name('church.calendar');
+    Route::get('/schedule/list/available',[ClientController::class,'getAvailableList']);
 });
 
 Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('admin/')->group(function () {
@@ -99,6 +101,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
      //manage schedule
      Route::get('/schedule',[AdminController::class,'schedule'])->name('schedule');
      Route::get('/schedule/list/available',[ScheduleController::class,'getAvailableList']);
+     Route::get('/get/all/occupied/{dateSelected}',[ScheduleController::class,'getAvilbleSelectedDate']);
      
      //manage event
      Route::post('/schedule/event/store',[EventController::class,'store']);

@@ -59,84 +59,82 @@ class AdminController extends Controller
 
 
     public function getAvailableDate(){
-    $output1 = array();
-    $output2 = array();
-    $output3 = array();
-    $output4 = array();
-    $output5 = array();
+        $output1 = array();
+        $output2 = array();
+        $output3 = array();
+        $output4 = array();
+        $output5 = array();
 
-    $wedding=Wedding::select('bride_first_name','groom_first_name','start_date','end_date','start_time','end_time')
-    ->where('start_date','>=', date('Y-m-d'))
-    ->where('status','Pending')
-    ->get();
-    foreach ($wedding as $key => $value) {
-        $arr1=array();
-        $arr1['name'] =  'Wedding of '.$value->groom_first_name.' and '. $value->bride_first_name;
-        $arr1['icon'] =  'fa-female';
-        $arr1['textColor'] =  'white';
-        $arr1['start'] =  $value->start_date;
-        $arr1['time'] =  $value->start_time . ' - ' . $value->end_time;
-        $output1[]=$arr1;
-    }
-    $burial=Burial::select('burial_first_name','start_date','end_date','start_time','end_time')
-    ->where('start_date','>=', date('Y-m-d'))
-    ->where('status','Pending')
-    ->get();
-    foreach ($burial as $key => $value) {
-        $arr2=array();
-        $arr2['name'] =  'Burial Mass of '.$value->burial_first_name;
-        $arr2['icon'] =  'fa-cross';
-        $arr2['textColor'] =  'white';
-        $arr2['start'] =  $value->start_date;
-        $arr2['time'] =  $value->start_time . ' - ' . $value->end_time;
-        $output2[]=$arr2;
-    }
+        $wedding=Wedding::select('bride_first_name','groom_first_name','start_date','end_date','start_time','end_time')
+        ->where('start_date','>=', date('Y-m-d'))
+        ->where('status','Pending')
+        ->get();
+        foreach ($wedding as $key => $value) {
+            $arr1=array();
+            $arr1['name'] =  'Wedding of '.$value->groom_first_name.' and '. $value->bride_first_name;
+            $arr1['icon'] =  'fa-female';
+            $arr1['textColor'] =  'white';
+            $arr1['start'] =  $value->start_date;
+            $arr1['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $output1[]=$arr1;
+        }
+        $burial=Burial::select('burial_first_name','start_date','end_date','start_time','end_time')
+        ->where('start_date','>=', date('Y-m-d'))
+        ->where('status','Pending')
+        ->get();
+        foreach ($burial as $key => $value) {
+            $arr2=array();
+            $arr2['name'] =  'Burial Mass of '.$value->burial_first_name;
+            $arr2['icon'] =  'fa-cross';
+            $arr2['textColor'] =  'white';
+            $arr2['start'] =  $value->start_date;
+            $arr2['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $output2[]=$arr2;
+        }
 
-    $baptism=Baptism::select('child_first_name','child_last_name','child_middle_name','start_date','end_date','start_time','end_time')
-    ->where('start_date','>=', date('Y-m-d'))
-    ->where('status','Pending')
-    ->get();
-    foreach ($baptism as $key => $value) {
-        $arr3=array();
-        $arr3['name'] =  'Batism of '.$value->child_first_name.' '.$value->child_middle_name.' '.$value->child_last_name;
-        $arr3['icon'] =  'fa-baby';
-        $arr3['textColor'] =  'white';
-        $arr3['start'] =  $value->start_date;
-        $arr3['time'] =  $value->start_time . ' - ' . $value->end_time;
-        $output3[]=$arr3;
-    }
+        $baptism=Baptism::select('child_first_name','child_last_name','child_middle_name','start_date','end_date','start_time','end_time')
+        ->where('start_date','>=', date('Y-m-d'))
+        ->where('status','Pending')
+        ->get();
+        foreach ($baptism as $key => $value) {
+            $arr3=array();
+            $arr3['name'] =  'Batism of '.$value->child_first_name.' '.$value->child_middle_name.' '.$value->child_last_name;
+            $arr3['icon'] =  'fa-baby';
+            $arr3['textColor'] =  'white';
+            $arr3['start'] =  $value->start_date;
+            $arr3['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $output3[]=$arr3;
+        }
 
-    $mass=Mass::select('request_by','start_date','end_date','start_time','end_time')
-    ->where('start_date','>=', date('Y-m-d'))
-    ->where('status','Pending')
-    ->get();
-    foreach ($mass as $key => $value) {
-        $arr4=array();
-        $arr4['name'] =  'Mass of '.$value->request_by;
-        $arr4['icon'] =  'fa-church';
-        $arr4['textColor'] =  'white';
-        $arr4['start'] =  $value->start_date;
-        $arr4['time'] =  $value->start_time . ' - ' . $value->end_time;
-        $output4[]=$arr4;
-    }
+        $mass=Mass::select('request_by','start_date','end_date','start_time','end_time')
+        ->where('start_date','>=', date('Y-m-d'))
+        ->where('status','Pending')
+        ->get();
+        foreach ($mass as $key => $value) {
+            $arr4=array();
+            $arr4['name'] =  'Mass of '.$value->request_by;
+            $arr4['icon'] =  'fa-church';
+            $arr4['textColor'] =  'white';
+            $arr4['start'] =  $value->start_date;
+            $arr4['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $output4[]=$arr4;
+        }
 
-    $confirmation=Confirmation::select('confirmation_first_name','start_date','end_date','start_time','end_time')
-    ->where('start_date','>=', date('Y-m-d'))
-    ->where('status','Pending')
-    ->get();
-    foreach ($confirmation as $key => $value) {
-        $arr5=array();
-        $arr5['name'] =  'Confirmation of '.$value->confirmation_first_name;
-        $arr5['icon'] =  'fa-sun';
-        $arr5['textColor'] =  'white';
-        $arr5['start'] =  $value->start_date;
-        $arr5['time'] =  $value->start_time . ' ' . $value->end_time;
-        $output5[]=$arr5;
-    }
-
-
-    $output = array_merge($output1,$output2,$output3,$output4,$output5);
-    return $output;
+        $confirmation=Confirmation::select('confirmation_first_name','start_date','end_date','start_time','end_time')
+        ->where('start_date','>=', date('Y-m-d'))
+        ->where('status','Pending')
+        ->get();
+        foreach ($confirmation as $key => $value) {
+            $arr5=array();
+            $arr5['name'] =  'Confirmation of '.$value->confirmation_first_name;
+            $arr5['icon'] =  'fa-sun';
+            $arr5['textColor'] =  'white';
+            $arr5['start'] =  $value->start_date;
+            $arr5['time'] =  $value->start_time . ' ' . $value->end_time;
+            $output5[]=$arr5;
+        }
+        $output = array_merge($output1,$output2,$output3,$output4,$output5);
+        return $output;
     }
 
     public function registerClient(){
@@ -149,9 +147,6 @@ class AdminController extends Controller
     public function user(){
         return view('administrator/user/index');
     }
-    
-  
-
     public function schedule(){
         return view('administrator/schedule/index');
     }

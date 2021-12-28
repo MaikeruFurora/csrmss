@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-  </div>`
+  </div>
 <section class="section">
     <div class="section-body">
         <h2 class="section-title">Manage Schedule</h2>
@@ -222,54 +222,54 @@ setTimeout(() => {
     })
 
     let eventTable = $("#eventTable").DataTable({
-    pageLength: 3,
-    lengthMenu: [ 5,10, 25, 50, 75, 100 ],
-    // lengthChange: false,
-    processing: true,
-    language: {
-        processing: `
-            <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>`,
-    },
-    ajax: "/admin/schedule/event/list",
-    columns: [
-        { data: "event" },
-        {
-            data: null,
-            render: function (data) {
-                if (data.date_to == null) {
-                    return `${data.date_from}`;
-                } else {
-                    return `${data.date_from}-${
-                        data.date_to.split(" ")[1]
-                    }`;
-                }
+            pageLength: 3,
+            lengthMenu: [ 5,10, 25, 50, 75, 100 ],
+            // lengthChange: false,
+            processing: true,
+            language: {
+                processing: `
+                    <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>`,
             },
-        },
-        {
-            data: null,
-            render: function (data) {
-               if (data.status=='1') {
-                   return `<span class="badge badge-success pt-1 pb-1">Enabled</span>`;
-                } else {
-                   return `<span class="badge badge-warning text-dark pt-1 pb-1">Disabled</span>`;
-               }
-            },
-        },
-        {
-            data: null,
-            render: function (data) {
-                return `
-                <div class="btn-group" role="group" aria-label="Button group">
-                    <button class="btn pl-3 pr-3 btn-sm btn-info btnEdit btnload_${data.id}" value="${data.id}"><i class="far fa-edit"></i></button>
-                    <button class="btn pl-3 pr-3 btn-sm btn-danger btnDelete btnDLoad_${data.id}" value="${data.id}"><i class="far fa-trash-alt"></i></button>
-                </div>
-                `;
-            },
-        },
-    ],
-});
+            ajax: "/admin/schedule/event/list",
+            columns: [
+                { data: "event" },
+                {
+                    data: null,
+                    render: function (data) {
+                        if (data.date_to == null) {
+                            return `${data.date_from}`;
+                        } else {
+                            return `${data.date_from}-${
+                                data.date_to.split(" ")[1]
+                            }`;
+                        }
+                    },
+                },
+                {
+                    data: null,
+                    render: function (data) {
+                    if (data.status=='1') {
+                        return `<span class="badge badge-success pt-1 pb-1">Enabled</span>`;
+                        } else {
+                        return `<span class="badge badge-warning text-dark pt-1 pb-1">Disabled</span>`;
+                    }
+                    },
+                },
+                {
+                    data: null,
+                    render: function (data) {
+                        return `
+                        <div class="btn-group" role="group" aria-label="Button group">
+                            <button class="btn pl-3 pr-3 btn-sm btn-info btnEdit btnload_${data.id}" value="${data.id}"><i class="far fa-edit"></i></button>
+                            <button class="btn pl-3 pr-3 btn-sm btn-danger btnDelete btnDLoad_${data.id}" value="${data.id}"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        `;
+                    },
+                },
+            ],
+    });
 
 $(document).on("click", ".btnEdit", function () {
     let id = $(this).val();
