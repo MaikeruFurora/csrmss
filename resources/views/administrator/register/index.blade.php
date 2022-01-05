@@ -55,17 +55,17 @@
                             <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
                                {{-- tab two --}}
                                <div class="table-responsive">
-                                <table style="width: 100%;font-size:13px" class="table table-bordered table-striped" id="baptismTableApproved">
+                                <table style="width: 100%;font-size:12px" class="table table-bordered table-striped" id="baptismTableApproved">
                                     <thead>
                                         <tr>
                                             <th>Trans. No</th>
                                             <th>FullName</th>
                                             <th>Address</th>
-                                            <th>Contact No.</th>
-                                            <th>Service</th>
+                                            <th>Email</th>
+                                            <th width="4%">Service</th>
                                             <th>Scheduled date</th>
                                             <th>Date registered</th>
-                                            <th>Action</th>
+                                            <th width="20%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -94,6 +94,7 @@
       <script src="{{ asset('js/summernote-bs4.js') }}"></script>
   
       <script>
+          let ids = JSON.parse('<?php echo json_encode($data) ?>')
           let registerClientPending = $("#registerClientPending").DataTable({
               pageLength: 5,
               lengthMenu: [ 5,10, 25, 50, 75, 100 ],
@@ -134,7 +135,7 @@
                 { data:'transaction_no' },
                  { data:'fullname' },
                  { data:'address' },
-                 { data:'contact_no' },
+                 { data:'email' },
                  { data:'service' },
                  { data:'schedule_date' },
                   {
@@ -146,10 +147,88 @@
                   {
                        data: null,
                        render:function(data){
-                          return `
-                            <button class="btn btn-sm btn-warning changeStatus pl-2 pr-2" value="${data.id}_Pending">Reject</button>
-                            <button class="btn btn-sm btn-success sendEmail pl-3 pr-3" value="${data.id}"><i class="far fa-paper-plane"></i> Send Email</button>
-                          `;
+                        switch (data.service) {
+                            case 'Baptism':
+                                    
+                                    return  ids.filter(i=>(i==data.id))==''?`
+                                    <a href="/admin/resgistered/create/baptism/${data.id}" class="btn btn-sm btn-info text-white pl-1 pr-1" value="${data.id}">
+                                        Create Record
+                                    </a>
+                                    <button class="btn btn-sm btn-warning sendEmail pl-1 pr-1" value="${data.id}"><i class="far fa-paper-plane"></i> Send Email</button>
+                                    `:
+                                    `
+                                    <a href="/admin/resgistered/create/baptism/${data.id}" class="btn btn-sm btn-success text-white pl-1 pr-1" value="${data.id}">
+                                        Update Record
+                                    </a>
+                                    `;
+                                    
+                                break;
+                            case 'Wedding':
+                            return  ids.filter(i=>(i==data.id))==''?`
+                                    <a href="/admin/resgistered/create/wedding/${data.id}" class="btn btn-sm btn-info text-white pl-1 pr-1" value="${data.id}">
+                                        Create Record
+                                    </a>
+                                    <button class="btn btn-sm btn-warning sendEmail pl-1 pr-1" value="${data.id}"><i class="far fa-paper-plane"></i> Send Email</button>
+                                    `:
+                                    `
+                                    <a href="/admin/resgistered/create/wedding/${data.id}" class="btn btn-sm btn-success text-white pl-1 pr-1" value="${data.id}">
+                                        Update Record
+                                    </a>
+                                    `
+                                break;
+                            case 'Mass':
+                            return  ids.filter(i=>(i==data.id))==''?`
+                                    <a href="/admin/resgistered/create/mass/${data.id}" class="btn btn-sm btn-info text-white pl-1 pr-1" value="${data.id}">
+                                        Create Record
+                                    </a>
+                                    ${
+                                        data.email==null?``:
+                                        `<button class="btn btn-sm btn-warning sendEmail pl-1 pr-1" value="${data.email}"><i class="far fa-paper-plane"></i> Send Email</button>`
+                                    }
+                                    `:
+                                    `
+                                    <a href="/admin/resgistered/create/mass/${data.id}" class="btn btn-sm btn-success text-white pl-1 pr-1" value="${data.id}">
+                                        Update Record
+                                    </a>
+                                    `
+                                break;
+                            case 'Confirmation':
+                            return  ids.filter(i=>(i==data.id))==''?`
+                                    <a href="/admin/resgistered/create/confirmation/${data.id}" class="btn btn-sm btn-info text-white pl-1 pr-1" value="${data.id}">
+                                        Create Record
+                                    </a>
+                                    ${
+                                        data.email==null?``:
+                                        `<button class="btn btn-sm btn-warning sendEmail pl-1 pr-1" value="${data.email}"><i class="far fa-paper-plane"></i> Send Email</button>`
+                                    }
+                                    `:
+                                    `
+                                    <a href="/admin/resgistered/create/confirmation/${data.id}" class="btn btn-sm btn-success text-white pl-1 pr-1" value="${data.id}">
+                                        Update Record
+                                    </a>
+                                    `
+                                break;
+                            case 'Burial':
+                            return  ids.filter(i=>(i==data.id))==''?`
+                                    <a href="/admin/resgistered/create/burial/${data.id}" class="btn btn-sm btn-info text-white pl-1 pr-1" value="${data.id}">
+                                        Create Record
+                                    </a>
+                                    ${
+                                        data.email==null?``:
+                                        `<button class="btn btn-sm btn-warning sendEmail pl-1 pr-1" value="${data.email}"><i class="far fa-paper-plane"></i> Send Email</button>`
+                                    }
+                                    `:
+                                    `
+                                    <a href="/admin/resgistered/create/burial/${data.id}" class="btn btn-sm btn-success text-white pl-1 pr-1" value="${data.id}">
+                                        Update Record
+                                    </a>
+                                    `
+                                break;
+                            
+                            default:
+                                break;
+                        }
+                            // <button class="btn btn-sm btn-warning changeStatus pl-2 pr-2" value="${data.id}_Pending">Reject</button>
                             // <button class="btn btn-sm btn-danger delete_pending pl-3 pr-3" value="${data.id}">Delete</button>
                        }
                   },
@@ -157,6 +236,7 @@
               ],
           });
   
+       
           $(document).on('click','.delete_pending',function(){    
               $("#deleteModal").modal("show")
               $(".yesConfirm").val($(this).val())
@@ -235,12 +315,52 @@
 
           $(document).on('click','.sendEmail',function(){
               $("#sendEmailModal").modal("show")
+              $("input[name='to']").val($(this).val())
+              $("input[name='subject']").val('')
+              $("textarea[name='body']").summernote('reset')
           })
 
           $(".sendCancel").on('click', function () {
-            $("textarea[name='bodyEmail']").summernote('reset')
+            $("textarea[name='body']").summernote('reset')
             $("input[name='to']").val('')
           })
+
+          $("#sendEmailForm").submit(function(e){
+              e.preventDefault();
+              $.ajax({
+                url: "/admin/registered/client/sendEmail",
+                type: "POST",
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function () {
+                    $(".btnSendEmail")
+                        .html(
+                            `Sending ...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`
+                        )
+                        .attr("disabled", true);
+                },
+            })
+                .done(function (data) {
+                    if (data.msg) {
+                        getToast("warning", "Warning",data.msg);
+                    } else {
+                        $("#sendEmailModal").modal("hide")
+                        getToast("success", "Done", "Successsfuly Sent an email");
+                    }
+                    $(".btnSendEmail").html(`<i class="far fa-paper-plane"></i> Send`).attr("disabled", false);
+                })
+                .fail(function (jqxHR, textStatus, errorThrown) {
+                    getToast("error", "Eror", errorThrown);
+                    $(".btnSendEmail").html(`<i class="far fa-paper-plane"></i> Send`).attr("disabled", false);
+                });
+          })
+
+
   
       </script>
 @endsection

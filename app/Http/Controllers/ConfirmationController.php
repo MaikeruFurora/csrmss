@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Confirmation;
 use App\Models\Priest;
+use App\Models\RegisterService;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -18,9 +20,19 @@ class ConfirmationController extends Controller
         return view('administrator/report/confirmation/create');
     }
 
+    public function registerCreate(RegisterService $regiterservice){
+        $clientData = Client::find($regiterservice->client_id);
+        $data =Confirmation::join('register_services','confirmations.register_service_id','register_services.id')
+                ->join('clients','register_services.client_id','clients.id')
+                ->where('register_services.client_id',$clientData->id) 
+                ->first();
+        return view('administrator/register/partial/create-confirmation',compact('clientData','regiterservice','data'));
+    }
+
     public function store(Request $request){
         return Confirmation::updateorcreate(['id'=>$request->id],[
-
+            'register_service_id'=>$request->register_service_id,
+            
             'confirmation_first_name'=>$request->confirmation_first_name,
             'confirmation_middle_name'=>$request->confirmation_middle_name,
             'confirmation_last_name'=>$request->confirmation_last_name,

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Baptism;
+use App\Models\Client;
 use App\Models\Priest;
+use App\Models\RegisterService;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -19,8 +21,18 @@ class BaptismController extends Controller
         return view('administrator/report/baptism/create');
     }
 
+    public function registerCreate(RegisterService $regiterservice){
+        $clientData = Client::find($regiterservice->client_id);
+        $data =Baptism::join('register_services','baptisms.register_service_id','register_services.id')
+                ->join('clients','register_services.client_id','clients.id')
+                ->where('register_services.client_id',$clientData->id) 
+                ->first();
+        return view('administrator/register/partial/create-baptism',compact('clientData','regiterservice','data'));
+    }
+
     public function store(Request $request){
         return Baptism::updateorcreate(['id'=>$request->id],[
+            'register_service_id'=>$request->register_service_id,
             'child_first_name'=>$request->child_first_name,
             'child_middle_name'=>$request->child_middle_name,
             'child_last_name'=>$request->child_last_name,

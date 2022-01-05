@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Burial;
+use App\Models\Client;
 use App\Models\Priest;
+use App\Models\RegisterService;
 use Illuminate\Http\Request;
 use PDF;
 class BurialController extends Controller
@@ -16,10 +18,20 @@ class BurialController extends Controller
     public function create(){
         return view('administrator/report/burial/create');
     }
+    
+    public function registerCreate(RegisterService $regiterservice){
+        $clientData = Client::find($regiterservice->client_id);
+        $data =Burial::join('register_services','burials.register_service_id','register_services.id')
+                ->join('clients','register_services.client_id','clients.id')
+                ->where('register_services.client_id',$clientData->id) 
+                ->first();
+        return view('administrator/register/partial/create-burial',compact('clientData','regiterservice','data'));
+    }
 
     public function store(Request $request){
         return Burial::updateorcreate(['id'=>$request->id],[
-
+            'register_service_id'=>$request->register_service_id,
+            
             'burial_first_name'=>$request->burial_first_name,
             'burial_middle_name'=>$request->burial_middle_name,
             'burial_last_name'=>$request->burial_last_name,

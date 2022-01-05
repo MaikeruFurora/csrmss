@@ -15,6 +15,10 @@ class CreateBaptismsTable extends Migration
     {
         Schema::create('baptisms', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('register_service_id')->nullable();
+            $table->foreign('register_service_id')->references('id')->on('register_services');
+
             $table->string('child_first_name')->nullable();
             $table->string('child_middle_name')->nullable();
             $table->string('child_last_name')->nullable();

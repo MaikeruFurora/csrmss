@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Mass;
 use App\Models\Priest;
+use App\Models\RegisterService;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -17,10 +19,20 @@ class MassController extends Controller
     public function create(){
         return view('administrator/report/mass/create');
     }
+    
+    public function registerCreate(RegisterService $regiterservice){
+        $clientData = Client::find($regiterservice->client_id);
+        $data =Mass::join('register_services','masses.register_service_id','register_services.id')
+                ->join('clients','register_services.client_id','clients.id')
+                ->where('register_services.client_id',$clientData->id) 
+                ->first();
+        return view('administrator/register/partial/create-mass',compact('clientData','regiterservice','data'));
+    }
 
     public function store(Request $request){
         return Mass::updateorcreate(['id'=>$request->id],[
-
+            'register_service_id'=>$request->register_service_id,
+            
             'request_by'=>$request->request_by,
             'mass_first_name'=>$request->mass_first_name,
             'mass_middle_name'=>$request->mass_middle_name,

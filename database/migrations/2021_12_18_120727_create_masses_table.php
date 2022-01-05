@@ -15,6 +15,10 @@ class CreateMassesTable extends Migration
     {
         Schema::create('masses', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('register_service_id')->nullable();
+            $table->foreign('register_service_id')->references('id')->on('register_services');
+            
             $table->string('request_by')->nullable();
             $table->json('mass_first_name')->nullable();
             $table->json('mass_middle_name')->nullable();

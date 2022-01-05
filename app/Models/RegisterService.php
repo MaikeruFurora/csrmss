@@ -9,4 +9,5 @@ class RegisterService extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    
 }

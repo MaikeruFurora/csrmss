@@ -54,7 +54,7 @@ class UserController extends Controller
 
     public function changePassword(Request $request){
         $user=User::find(auth()->user()->id);
-        if (Hash::check($request->change_password,$user->password)) {
+        if (Hash::check($request->current_password,$user->password)) {
             $user->password=Hash::make($request->change_new_password);
             return $user->save();
         } else {

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Priest;
+use App\Models\RegisterService;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
 use PDF;
@@ -18,9 +20,19 @@ class WeddingController extends Controller
         return view('administrator/report/wedding/create');
     }
 
+    public function registerCreate(RegisterService $regiterservice){
+        $clientData = Client::find($regiterservice->client_id);
+        $data =Wedding::join('register_services','weddings.register_service_id','register_services.id')
+                ->join('clients','register_services.client_id','clients.id')
+                ->where('register_services.client_id',$clientData->id) 
+                ->first();
+        return view('administrator/register/partial/create-wedding',compact('clientData','regiterservice','data'));
+    }
+    
     public function store(Request $request){
         return Wedding::updateorcreate(['id'=>$request->id],[
-
+            'register_service_id'=>$request->register_service_id,
+            
             'bride_first_name'=>$request->bride_first_name,
             'bride_middle_name'=>$request->bride_middle_name,
             'bride_last_name'=>$request->bride_last_name,

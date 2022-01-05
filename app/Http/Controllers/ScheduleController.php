@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
+    
    public function avaiable(){
         $lastDayOfMonth = $this->days_in_month(date('m'), date("Y"));
         $lastDateOfMonth = date("m/") . $lastDayOfMonth . date("/Y");
@@ -25,8 +26,6 @@ class ScheduleController extends Controller
                 ->get()
         );
    } 
-
-  
 
    public function getAvailableList(){
 
@@ -128,16 +127,16 @@ class ScheduleController extends Controller
         foreach ($wedding as $key => $value) {
             $arr1=array();
             $arr1['service'] =  'Wedding';
-            $arr1['start'] =  $value->start_time;
-            $arr1['end'] =  $value->end_time;
+            $arr1['start'] =  date('h:i:s a', strtotime($value->start_time));
+            $arr1['end'] =  date('h:i:s a', strtotime($value->end_time));
             $output1[]=$arr1;
         }
         $burial=Burial::select('start_date','end_date','start_time','end_time')->where('start_date','=', $dateSelected)->get();
         foreach ($burial as $key => $value) {
             $arr2=array();
             $arr2['service'] =  'Burial';
-            $arr2['start'] =  $value->start_time;
-            $arr2['end'] =  $value->end_time;
+            $arr2['start'] =  date('h:i:s a', strtotime($value->start_time));
+            $arr2['end'] =  date('h:i:s a', strtotime($value->end_time));
             $output2[]=$arr2;
         }
     
@@ -145,8 +144,8 @@ class ScheduleController extends Controller
         foreach ($baptism as $key => $value) {
             $arr3=array();
             $arr3['service'] =  'Batism';
-            $arr3['start'] =  $value->start_time;
-            $arr3['end'] =  $value->end_time;
+            $arr3['start'] =  date('h:i:s a', strtotime($value->start_time));
+            $arr3['end'] =  date('h:i:s a', strtotime($value->end_time));
             $output3[]=$arr3;
         }
     
@@ -154,8 +153,8 @@ class ScheduleController extends Controller
         foreach ($mass as $key => $value) {
             $arr4=array();
             $arr4['service'] =  'Mass';
-            $arr4['start'] =  $value->start_time;
-            $arr4['end'] =  $value->end_time;
+            $arr4['start'] =  date('h:i:s a', strtotime($value->start_time));
+            $arr4['end'] =  date('h:i:s a', strtotime($value->end_time));
             $output4[]=$arr4;
         }
     
@@ -163,8 +162,8 @@ class ScheduleController extends Controller
         foreach ($confirmation as $key => $value) {
             $arr5=array();
             $arr5['service'] =  'Confirmation';
-            $arr5['start'] =  $value->start_time;
-            $arr5['end'] =  $value->end_time;
+            $arr5['start'] =  date('h:i:s a', strtotime($value->start_time));
+            $arr5['end'] =  date('h:i:s a', strtotime($value->end_time));
             $output5[]=$arr5;
         }
     

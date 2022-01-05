@@ -159,13 +159,13 @@
                 {
                      data: null,
                      render:function(data){
-                         return data.parent_mother_first_name+' '+data.parent_mother_middle_name +'. '+data.parent_mother_last_name +' & '+ data.parent_mother_contact_no   
+                         return data.parent_mother_first_name+' '+data.parent_mother_middle_name +'. '+data.parent_mother_last_name    
                      }
                 },
                 {
                      data: null,
                      render:function(data){
-                         return data.parent_father_first_name+' '+data.parent_father_middle_name +'. '+data.parent_father_last_name +' & '+ data.parent_father_contact_no   
+                         return data.parent_father_first_name+' '+data.parent_father_middle_name +'. '+data.parent_father_last_name   
                      }
                 },
                 {
@@ -182,7 +182,7 @@
                      data: null,
                      render:function(data){
                         return `
-                        <button class="btn btn-sm btn-success changeStatus"  value="${data.id}_Approved">Approve</button>
+                        <button class="btn btn-sm btn-success changeStatus"  value="${data.id}_Approved">Complete</button>
                         <a href="/admin/report/baptism/view/${data.id}" class="btn btn-sm btn-info view">View</a>
                         
                         `;
@@ -206,13 +206,13 @@
                 {
                      data: null,
                      render:function(data){
-                         return data.parent_mother_first_name+' '+data.parent_mother_middle_name +'. '+data.parent_mother_last_name +' & '+ data.parent_mother_contact_no   
+                         return data.parent_mother_first_name+' '+data.parent_mother_middle_name +'. '+data.parent_mother_last_name   
                      }
                 },
                 {
                      data: null,
                      render:function(data){
-                         return data.parent_father_first_name+' '+data.parent_father_middle_name +'. '+data.parent_father_last_name +' & '+ data.parent_father_contact_no   
+                         return data.parent_father_first_name+' '+data.parent_father_middle_name +'. '+data.parent_father_last_name   
                      }
                 },
                 {
@@ -229,12 +229,9 @@
                      data: null,
                      render:function(data){
                         return `
-                        ${ 
-                            data.baptized==null?
-                            `<button class="btn btn-sm btn-warning changeStatus pl-3 pr-3" value="${data.id}_Pending">Reject</button>`
-                            :
-                            `<button class="btn btn-sm btn-primary print" value="${data.id}">Certificate</button>`
-                        }
+                        <button class="btn btn-sm btn-warning changeStatus pl-3 pr-3" value="${data.id}_Pending">Reject</button>
+                        <button class="btn btn-sm btn-primary print" value="${data.id}">Certificate</button>
+                        
                         <a href="/admin/report/baptism/view/${data.id}" class="btn btn-sm btn-info view pl-4 pr-4">View</a>
                         
                         `;

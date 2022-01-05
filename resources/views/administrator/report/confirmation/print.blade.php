@@ -94,7 +94,7 @@
                 <p style="margin-top: 50px;font-size:18px;" class="">
                     This Certifies that <b><u>{{ $confirmation->fullname }}</u></b> Having already been reborn
                     in Baptism, was sealed with the Holy Spirit in Confirmation and
-                    recieve the Holy Eucharist for the first time. On the Day of {{ $confirmation->confirm }}
+                    recieve the Holy Eucharist for the first time. On the Day of {{ $confirmation->start_date }}
                 </p>
                  <br><br>
                     <p style="font-size: 15px">Date: {{ date("Y-m-d") }}</p>

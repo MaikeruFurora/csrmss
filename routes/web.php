@@ -15,6 +15,7 @@ use App\Http\Controllers\RegisterServicesController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingController;
+use App\Models\Baptism;
 use App\Models\Confirmation;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -79,7 +80,16 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
      Route::get('registered/client/list/approved',[RegisterServiceController::class,'approved']);
      Route::post('/registered/client/change/status/{registerService}/{status}',[RegisterServiceController::class,'yesApproved']);
      Route::delete('/registered/client/delete/{registerService}',[RegisterServiceController::class,'destroy']);
+     Route::post('/registered/client/sendEmail',[AdminController::class,'sendEmail']);
  
+
+     //create record per service-------------
+     Route::get('resgistered/create/baptism/{regiterservice}',[BaptismController::class,'registerCreate']);
+     Route::get('resgistered/create/wedding/{regiterservice}',[WeddingController::class,'registerCreate']);
+     Route::get('resgistered/create/burial/{regiterservice}',[BurialController::class,'registerCreate']);
+     Route::get('resgistered/create/mass/{regiterservice}',[MassController::class,'registerCreate']);
+     Route::get('resgistered/create/confirmation/{regiterservice}',[ConfirmationController::class,'registerCreate']);
+
      //manage priest--------
      Route::get('priest',[AdminController::class,'priest'])->name('priest');
      Route::get('priest/list',[PriestController::class,'index']);

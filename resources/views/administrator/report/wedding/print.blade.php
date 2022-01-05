@@ -91,7 +91,7 @@
                 <h3 style="margin-top: 50px"><u><b>CERTIFICATE OF MARRIAGE</b></u></h3>
                 <h4 style="margin-top: 50px"><u><b>-o0o- THIS IS TO CERTIFY -o0o- </b></u></h4>
                 <p style="margin-top: 50px;font-size:18px" class=" parag">
-                    THAT <b><u>{{ $wedding->bride_fullname }}</u></b> AND <b><u>{{ $wedding->groom_fullname }}</u></b> WERE LAWFULLY MARRIED ON THE DAY OF <b><u>{{ $wedding->married }}</u></b>  . </p>
+                    THAT <b><u>{{ $wedding->bride_fullname }}</u></b> AND <b><u>{{ $wedding->groom_fullname }}</u></b> WERE LAWFULLY MARRIED ON THE DAY OF <b><u>{{ $wedding->start_date }}</u></b>  . </p>
                 <h4 class="mt-5"><u><b>According to the Right of Roman Catholic Church <br>
                     and in conformity of the laws of</b></u></h4><br>
                 <h4>By the {{ $priest }}</h4><br>

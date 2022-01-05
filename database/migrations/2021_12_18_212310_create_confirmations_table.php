@@ -15,6 +15,10 @@ class CreateConfirmationsTable extends Migration
     {
         Schema::create('confirmations', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('register_service_id')->nullable();
+            $table->foreign('register_service_id')->references('id')->on('register_services');
+            
             $table->string('confirmation_first_name')->nullable();
             $table->string('confirmation_middle_name')->nullable();
             $table->string('confirmation_last_name')->nullable();

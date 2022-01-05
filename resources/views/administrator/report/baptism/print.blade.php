@@ -92,7 +92,7 @@
                 <h4 style="margin-top: 50px"><u><b>  THIS IS TO CERTIFY </b></u></h4>
                 <h3 ><u><b>  {{ $baptism->fullname }} </b></u></h3>
                 <p style="margin-top: 50px;font-size:18px" class=" parag">
-                    THAT  <u><b>{{ $baptism->fulname }}</b></u> CHILD OF <u><b>{{ $baptism->mother_fullname }}</b></u> AND <u><b>{{ $baptism->father_fullname }}</b></u> BORN ON THE DAY OF <u><b>{{ $baptism->child_date_of_birth }}</b></u> WAS SOLEMNLY BAPTIZED ON THE DAY OF {{ $baptism->baptized }}.
+                    THAT  <u><b>{{ $baptism->fulname }}</b></u> CHILD OF <u><b>{{ $baptism->mother_fullname }}</b></u> AND <u><b>{{ $baptism->father_fullname }}</b></u> BORN ON THE DAY OF <u><b>{{ $baptism->child_date_of_birth }}</b></u> WAS SOLEMNLY BAPTIZED ON THE DAY OF {{ $baptism->start_date }}.
                 </p>
                 <h4 class="mt-5"><u><b>ACCORDING TO THE RITE OF THE <br>
                     ROMAN CATHOLIC CHURCH</b></u></h4><br>

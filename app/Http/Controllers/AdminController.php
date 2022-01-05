@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
+use App\Mail\MailNotify;
 use App\Models\ActivityLog;
 use App\Models\Baptism;
 use App\Models\Burial;
+use App\Models\Client;
 use App\Models\Confirmation;
 use App\Models\Mass;
 use App\Models\RegisterService;
@@ -14,6 +16,7 @@ use App\Models\Wedding;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 class AdminController extends Controller
@@ -67,7 +70,6 @@ class AdminController extends Controller
 
         $wedding=Wedding::select('bride_first_name','groom_first_name','start_date','end_date','start_time','end_time')
         ->where('start_date','>=', date('Y-m-d'))
-        ->where('status','Pending')
         ->get();
         foreach ($wedding as $key => $value) {
             $arr1=array();
@@ -80,7 +82,6 @@ class AdminController extends Controller
         }
         $burial=Burial::select('burial_first_name','start_date','end_date','start_time','end_time')
         ->where('start_date','>=', date('Y-m-d'))
-        ->where('status','Pending')
         ->get();
         foreach ($burial as $key => $value) {
             $arr2=array();
@@ -94,7 +95,6 @@ class AdminController extends Controller
 
         $baptism=Baptism::select('child_first_name','child_last_name','child_middle_name','start_date','end_date','start_time','end_time')
         ->where('start_date','>=', date('Y-m-d'))
-        ->where('status','Pending')
         ->get();
         foreach ($baptism as $key => $value) {
             $arr3=array();
@@ -108,7 +108,6 @@ class AdminController extends Controller
 
         $mass=Mass::select('request_by','start_date','end_date','start_time','end_time')
         ->where('start_date','>=', date('Y-m-d'))
-        ->where('status','Pending')
         ->get();
         foreach ($mass as $key => $value) {
             $arr4=array();
@@ -122,7 +121,6 @@ class AdminController extends Controller
 
         $confirmation=Confirmation::select('confirmation_first_name','start_date','end_date','start_time','end_time')
         ->where('start_date','>=', date('Y-m-d'))
-        ->where('status','Pending')
         ->get();
         foreach ($confirmation as $key => $value) {
             $arr5=array();
@@ -138,7 +136,35 @@ class AdminController extends Controller
     }
 
     public function registerClient(){
-        return view('administrator/register/index');
+         $data1 = Baptism::select('register_service_id')->pluck('register_service_id');
+         $data2 = Wedding::select('register_service_id')->pluck('register_service_id');
+         $data3 = Confirmation::select('register_service_id')->pluck('register_service_id');
+         $data4 = Burial::select('register_service_id')->pluck('register_service_id');
+         $data5 = Mass::select('register_service_id')->pluck('register_service_id');
+         $data = array_merge(json_decode($data1),json_decode($data2),json_decode($data3),json_decode($data4),json_decode($data5));
+        return view('administrator/register/index',compact('data'));
+    }
+
+
+    public function sendEmail(Request $request){
+        // return $request->all();
+        if ($this->isOnline()) {
+            return Mail::to($request->to)->send(new MailNotify($request));
+        } else {
+            return response()->json([
+                'msg'=>'No internet connection, Please check your internet'
+            ]);
+        }
+        
+    }
+
+    public function isOnline(){
+        if (@fopen('https://www.google.com/',"r")) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     public function priest(){

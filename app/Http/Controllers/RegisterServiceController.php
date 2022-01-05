@@ -21,7 +21,7 @@ class RegisterServiceController extends Controller
     public function approved(){
         return response()->json(
           [
-              'data'=>  RegisterService::select('transaction_no','register_services.id','clients.fullname','clients.address','clients.contact_no','register_services.service','register_services.schedule_date','register_services.status','register_services.created_at')
+              'data'=>  RegisterService::select('transaction_no','register_services.id','clients.email','clients.fullname','clients.address','clients.contact_no','register_services.service','register_services.schedule_date','register_services.status','register_services.created_at')
               ->join('clients','register_services.client_id','clients.id')
               ->where('register_services.status','Approved')
               ->get()
