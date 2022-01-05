@@ -48,7 +48,7 @@ class CreateBaptismsTable extends Migration
             $table->string('god_mother_last_name')->nullable();
             $table->string('god_mother_contact_no')->nullable();
             $table->string('god_mother_complete_address')->nullable();
-            $table->string('baptized')->nullable();
+            // $table->string('baptized')->nullable();
             
             // $table->string('scheduled_date')->nullable();
             // $table->string('scheduled_time_form')->nullable();

@@ -45,7 +45,7 @@ class ConfirmationController extends Controller
             'start_time'=>$request->scheduled_time_form,
             'end_date'=>$request->scheduled_date,
             'end_time'=>$request->scheduled_time_to,
-            'confirm'=>$request->confirm,
+            // 'confirm'=>$request->confirm,
             
         ]);
     }

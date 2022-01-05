@@ -45,7 +45,7 @@ class WeddingController extends Controller
             'groom_last_name'=>$request->groom_last_name,
             'groom_contact_no'=>$request->groom_contact_no,
             'groom_complete_address'=>$request->groom_complete_address,
-            'married'=>$request->married,
+            // 'married'=>$request->married,
 
             
             'start_date'=>$request->scheduled_date,

@@ -62,7 +62,7 @@ class BaptismController extends Controller
             'god_mother_last_name'=>$request->god_mother_last_name,
             'god_mother_contact_no'=>$request->god_mother_contact_no,
             'god_mother_complete_address'=>$request->god_mother_complete_address,
-            'baptized'=>$request->baptized,
+            // 'baptized'=>$request->baptized,
             
 
             'start_date'=>$request->scheduled_date,

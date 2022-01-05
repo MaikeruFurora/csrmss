@@ -77,7 +77,7 @@ class AdminController extends Controller
             $arr1['icon'] =  'fa-female';
             $arr1['textColor'] =  'white';
             $arr1['start'] =  $value->start_date;
-            $arr1['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $arr1['time'] =  date('h:i:s a', strtotime($value->start_time)) . ' - ' . date('h:i:s a', strtotime($value->end_time));
             $output1[]=$arr1;
         }
         $burial=Burial::select('burial_first_name','start_date','end_date','start_time','end_time')
@@ -89,7 +89,7 @@ class AdminController extends Controller
             $arr2['icon'] =  'fa-cross';
             $arr2['textColor'] =  'white';
             $arr2['start'] =  $value->start_date;
-            $arr2['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $arr2['time'] =  date('h:i:s a', strtotime($value->start_time)) . ' - ' . date('h:i:s a', strtotime($value->end_time));
             $output2[]=$arr2;
         }
 
@@ -102,7 +102,7 @@ class AdminController extends Controller
             $arr3['icon'] =  'fa-baby';
             $arr3['textColor'] =  'white';
             $arr3['start'] =  $value->start_date;
-            $arr3['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $arr3['time'] =  date('h:i:s a', strtotime($value->start_time)) . ' - ' . date('h:i:s a', strtotime($value->end_time));
             $output3[]=$arr3;
         }
 
@@ -115,7 +115,7 @@ class AdminController extends Controller
             $arr4['icon'] =  'fa-church';
             $arr4['textColor'] =  'white';
             $arr4['start'] =  $value->start_date;
-            $arr4['time'] =  $value->start_time . ' - ' . $value->end_time;
+            $arr4['time'] =  date('h:i:s a', strtotime($value->start_time)) . ' - ' . date('h:i:s a', strtotime($value->end_time));
             $output4[]=$arr4;
         }
 
@@ -128,7 +128,7 @@ class AdminController extends Controller
             $arr5['icon'] =  'fa-sun';
             $arr5['textColor'] =  'white';
             $arr5['start'] =  $value->start_date;
-            $arr5['time'] =  $value->start_time . ' ' . $value->end_time;
+            $arr5['time'] =  date('h:i:s a', strtotime($value->start_time)) . ' - ' . date('h:i:s a', strtotime($value->end_time));
             $output5[]=$arr5;
         }
         $output = array_merge($output1,$output2,$output3,$output4,$output5);

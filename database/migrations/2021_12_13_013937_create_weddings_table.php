@@ -28,7 +28,7 @@ class CreateWeddingsTable extends Migration
             $table->string('groom_last_name')->nullable();
             $table->string('groom_contact_no')->nullable();
             $table->string('groom_complete_address')->nullable();
-            $table->string('married')->nullable();
+            // $table->string('married')->nullable();
            
             // $table->string('scheduled_date')->nullable();
             // $table->string('scheduled_time_form')->nullable();

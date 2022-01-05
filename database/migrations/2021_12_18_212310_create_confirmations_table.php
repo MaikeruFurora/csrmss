@@ -31,7 +31,7 @@ class CreateConfirmationsTable extends Migration
             $table->string('start_time')->nullable();
             $table->string('end_date')->nullable();
             $table->string('end_time')->nullable();
-            $table->string('confirm')->nullable();
+            // $table->string('confirm')->nullable();
             $table->string('status')->default('Pending');
             $table->timestamps();
         });
