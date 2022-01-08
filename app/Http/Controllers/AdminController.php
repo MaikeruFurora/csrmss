@@ -187,6 +187,7 @@ class AdminController extends Controller
         $data = $request->validate([
             'church_name' => 'required',
             'church_address' => 'required',
+            'church_body' => 'required',
             // 'school_logo' => '',
         ]);
 
@@ -199,6 +200,17 @@ class AdminController extends Controller
         } else {
             $resData = SystemProfile::find($request->id);
             $data["church_logo"] = !empty($resData->church_logo) ? $resData->church_logo : null;
+        }
+
+        if ($request->hasFile('church_image')) {
+            $this->deleteOldImage();
+            $imageI = $request->file('church_image');
+            $imageIName = rand(100,1000).rand(100,1000) . '.' . $imageI->getClientOriginalExtension();
+            $imageI->move(public_path('image/'), $imageIName);
+            $data["church_image"] = $imageIName;
+        } else {
+            $resData = SystemProfile::find($request->id);
+            $data["church_image"] = !empty($resData->church_image) ? $resData->church_image : null;
         }
 
          SystemProfile::updateOrCreate(['id' => $request->id], $data);
@@ -238,23 +250,23 @@ class AdminController extends Controller
 
     public function monthlyFinance($request){
         $monthCount=array();
-        $bap = Baptism::selectRaw('COUNT(*) as count, MONTH(start_date) month')
-        ->groupBy('month')->where('status','Approved')->get();
-        $wed = Wedding::selectRaw('COUNT(*) as count, MONTH(start_date) month')
-        ->groupBy('month')->where('status','Approved')->get();
-        $con = Confirmation::selectRaw('COUNT(*) as count, MONTH(start_date) month')
-        ->groupBy('month')->where('status','Approved')->get();
-        $bur = Burial::selectRaw('COUNT(*) as count, MONTH(start_date) month')
-        ->groupBy('month')->where('status','Approved')->get();
-        $mas = Mass::selectRaw('COUNT(*) as count, MONTH(start_date) month')
-        ->groupBy('month')->where('status','Approved')->get();
+        $bap = Baptism::selectRaw('COUNT(*) as count, MONTH(start_date) month, YEAR(start_date) year')
+        ->groupBy('month','year')->where('status','Approved')->get();
+        $wed = Wedding::selectRaw('COUNT(*) as count, MONTH(start_date) month, YEAR(start_date) year')
+        ->groupBy('month','year')->where('status','Approved')->get();
+        $con = Confirmation::selectRaw('COUNT(*) as count, MONTH(start_date) month, YEAR(start_date) year')
+        ->groupBy('month','year')->where('status','Approved')->get();
+        $bur = Burial::selectRaw('COUNT(*) as count, MONTH(start_date) month, YEAR(start_date) year')
+        ->groupBy('month','year')->where('status','Approved')->get();
+        $mas = Mass::selectRaw('COUNT(*) as count, MONTH(start_date) month, YEAR(start_date) year')
+        ->groupBy('month','year')->where('status','Approved')->get();
         
 
-        $monthCount['baptism']=$this->whatMonth($bap,$request->month);
-        $monthCount['wedding']=$this->whatMonth($wed,$request->month);
-        $monthCount['confirmation']=$this->whatMonth($con,$request->month);
-        $monthCount['burial']=$this->whatMonth($bur,$request->month);
-        $monthCount['mass']=$this->whatMonth($mas,$request->month);
+        $monthCount['baptism']=$this->whatMonth($bap,$request->month,$request->year);
+        $monthCount['wedding']=$this->whatMonth($wed,$request->month,$request->year);
+        $monthCount['confirmation']=$this->whatMonth($con,$request->month,$request->year);
+        $monthCount['burial']=$this->whatMonth($bur,$request->month,$request->year);
+        $monthCount['mass']=$this->whatMonth($mas,$request->month,$request->year);
         return response()->json($monthCount);
     }
 
@@ -299,9 +311,9 @@ class AdminController extends Controller
         return response()->json($dataRangeCount);
     }
 
-    public function whatMonth($array,$month){
+    public function whatMonth($array,$month,$year){
         foreach ($array as $value) {
-            if ($value->month==$month) {
+            if ($value->month==$month && $value->year==$year) {
                 return $value->count;
             }
         }   
@@ -319,8 +331,9 @@ class AdminController extends Controller
 
         switch ($type) {
             case 'Monthly':
+                    $data = explode("_",$logic);
                     $requestMonth=new Request();
-                    $requestMonth->replace(['month'=>$logic]);
+                    $requestMonth->replace(['month'=>$data[0],'year'=>$data[1]]);
                     $data = json_decode($this->monthlyFinance($requestMonth)->getContent());
                     $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
                     Helper::myLog('export','financial monthly report');

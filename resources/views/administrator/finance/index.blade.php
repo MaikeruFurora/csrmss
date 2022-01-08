@@ -83,7 +83,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Type</label>
-                                <select class="custom-select" name="type">
+                                <select class="custom-select" name="type" required>
                                     <option value=""> Choose type... </option>
                                     <option value="Monthly">Monthly</option>
                                     <option value="Annually">Annually</option>
@@ -131,8 +131,10 @@
         
         switch ($(this).val()) {
             case 'Monthly':
+                  for(let i = 2021; i <= year; i++) { makeYear+=`<option value="${i}">${i}</option>`}
                     hold= `
-                    <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-group col-6">
                         <label>Select Month</label>
                         <select class="custom-select" name="month">
                             <option value="">Choose month..</option>
@@ -150,7 +152,18 @@
                             <option value="12">December</option>
                         </select>
                     </div>
+                    
+                    <div class="form-group col-6">
+                        <label>Select Year</label>
+                        <select class="custom-select" name="year">
+                            <option value="">Choose year..</option>
+                            ${makeYear}
+                        </select>
+                    </div>
+                    </div>
                     `;
+                    $(".show").html(hold)
+
                     $(".DateRange").hide();
                     $(".show").html(hold)
                 break;
@@ -263,16 +276,16 @@
        let MainFunction = (data) =>{
            let total = '';
            let amount = '';
-            total=parseInt(data.baptism)+parseInt(data.confirmation)+parseInt(data.wedding)+parseInt(data.mass)+parseInt(data.burial)
-            amount=(parseInt(data.baptism)*250)+(parseInt(data.confirmation)*150)+(parseInt(data.wedding)*500)+(parseInt(data.mass)*100)+(parseInt(data.burial)*100)
+            total=parseInt(data.baptism ?? 0)+parseInt(data.confirmation ?? 0)+parseInt(data.wedding ?? 0)+parseInt(data.mass ?? 0)+parseInt(data.burial ?? 0)
+            amount=(parseInt(data.baptism ?? 0)*250)+(parseInt(data.confirmation ?? 0)*150)+(parseInt(data.wedding ?? 0)*500)+(parseInt(data.mass ?? 0)*100)+(parseInt(data.burial ?? 0)*100)
 
             $(".showTotal").text(!isNaN(total)?total:'N/A')
-            $(".showAmount").text(!isNaN(amount)?'₱ '+amount.toString()+'.00':'N/A')
+            $(".showAmount").text(amount+'.00')
 
             if (data.baptism==null || data.baptism==0) {
                 // $('.btnBaptism').hide();
-                $('.showTotalBaptism').text('N/A')
-                $('.showAmountBaptism').text('N/A')
+                $('.showTotalBaptism').text('0')
+                $('.showAmountBaptism').text('0')
             } else {
                 $('.btnBaptism').show();
                 $('.showTotalBaptism').text(data.baptism)
@@ -289,8 +302,8 @@
 
             if (data.confirmation==null || data.confirmation==0) {
                 // $('.btnConfirmation').hide();
-                $('.showTotalConfirmation').text('N/A')
-                $('.showAmountConfirmation').text('N/A')
+                $('.showTotalConfirmation').text('0')
+                $('.showAmountConfirmation').text('0')
             } else {
                 $('.btnConfirmation').show();
                 $('.showTotalConfirmation').text(data.confirmation)
@@ -298,9 +311,9 @@
             }
 
             if (data.wedding==null || data.wedding==0) {
-                $('.showTotalWedding').text('N/A')
+                $('.showTotalWedding').text('0')
                 // $('.btnWedding').hide();
-                $('.showAmountWedding').text('N/A')
+                $('.showAmountWedding').text('0')
             } else {
                 $('.showTotalWedding').text(data.wedding)
                 $('.btnWedding').show();
@@ -308,9 +321,9 @@
             }
 
             if (data.mass==null || data.mass==0) {
-                $('.showTotalMass').text('N/A')
+                $('.showTotalMass').text('0')
                 // $('.btnMass').hide();
-                $('.showAmountMass').text('N/A')
+                $('.showAmountMass').text('0')
             } else {
                 $('.showTotalMass').text(data.mass)
                 $('.btnMass').show();
@@ -318,9 +331,9 @@
             }
 
             if (data.burial==null || data.burial==0) {
-                $('.showTotalBurial').text('N/A')
+                $('.showTotalBurial').text('0')
                 // $('.btnBurial').hide();
-                $('.showAmountBurial').text('N/A')
+                $('.showAmountBurial').text('0')
             } else {
                 $('.showTotalBurial').text(data.burial)
                 $('.btnBurial').show();
@@ -354,7 +367,7 @@
            let type=$('select[name="type"]').val();
             switch ($('select[name="type"]').val()) {
                 case 'Monthly':
-                    myData=$('select[name="month"]').val();
+                    myData=$('select[name="month"]').val()+'_'+$('select[name="year"]').val();
                     break;
                 case 'Annually':
                     myData=$('select[name="year"]').val();

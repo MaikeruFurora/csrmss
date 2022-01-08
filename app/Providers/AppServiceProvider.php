@@ -33,5 +33,9 @@ class AppServiceProvider extends ServiceProvider
         View::share('church_name', $logo->church_name);
         Config::set('church_address', $logo->church_address);
         View::share('church_address', $logo->church_address);
+        Config::set('church_image', $logo->church_image);
+        View::share('church_image', $logo->church_image);
+        Config::set('church_body', $logo->church_body);
+        View::share('church_body', $logo->church_body);
     }
 }

@@ -1,5 +1,8 @@
 @extends('../layout/app')
 @section('title','System Profile')
+@section('moreCss')
+     <link rel="stylesheet" href="{{ asset('css/summernote-bs4.css') }}">
+@endsection
 @section('content')
 <section class="section">
   <h2 class="section-title">System Profile</h2>
@@ -57,7 +60,18 @@
                                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                   </div>
                                 </div>
-                              
+                                <hr>
+                                <label for="">For landing Page | History</label>
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text bg-primary text-white" id="inputGroupFileAddon01">Church Image</span>
+                                  </div>
+                                  <div class="custom-file">
+                                    <input type="file"  name="church_image" accept=".jpg,.jpeg,.png"  class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                  </div>
+                                </div>
+                                <textarea name="church_body" class="summernote-simple"  data-height="30" required>{{ $data->church_body ?? '' }}</textarea>
                                 <button class="btn btn-block btn-info">Update Profile</button>
                            </form>
                       </div>
@@ -70,6 +84,15 @@
                         <label for=""><b>Current Logo</b></label>
                          <img width="70%" class="img-thumbnail" src="{{ isset($data->church_logo) ? asset('image/'.$data->church_logo):'' }}" alt="">
                       </div>
+
+                    </div>
+                    <div class="card card-primary">
+                   
+                      <div class="card-body text-center">
+                        <label for=""><b>Current Image</b></label>
+                         <img width="100%" class="img-thumbnail" src="{{ isset($data->church_image) ? asset('image/'.$data->church_image):'' }}" alt="">
+                      </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -78,4 +101,8 @@
        </div>
     </div>
 </section>
+@endsection
+@section('moreJs')
+<script src="{{ asset('js/summernote-bs4.js') }}"></script>
+
 @endsection

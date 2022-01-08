@@ -18,6 +18,8 @@ class CreateSystemProfilesTable extends Migration
             $table->string('church_name')->nullable();
             $table->string('church_address')->nullable();
             $table->string('church_logo')->nullable();
+            $table->string('church_image')->nullable();
+            $table->string('church_bodys')->nullable();
             $table->timestamps();
         });
     }

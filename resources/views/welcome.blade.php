@@ -116,24 +116,20 @@
             <div class="py-6">
                 <div class="row row-grid align-items-center">
                     <div class="col-lg-6 order-lg-2">
-                        <h5 class="h3">St. Paul The Apostle Parish</h5>
+                        <h5 class="h3">{{ $church_name ?? 'N/A' }}</h5>
                         <p class="lead my-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima veritatis architecto doloribus aspernatur sequi. Quisquam officiis quidem est necessitatibus. Facere veritatis sapiente laboriosam iure eius placeat earum fuga quod. Accusamus.
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore unde porro cupiditate. In beatae accusamus ducimus tempora at, placeat omnis odit iste eius, repellat dolor tenetur eveniet nihil esse quasi.   omnis odit iste eius, repellat dolor tenetur eveniet nihil esse quasi.   
+                            @php echo html_entity_decode($church_body) @endphp
                         </p>
                       
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="card mb-0">
                             <div class="card-body p-1">
-                                <img alt="Image placeholder" src="{{ asset('asset/img/bg.jpg') }}" class="img-fluid shadow rounded">
+                                <img alt="Image placeholder" src="{{ isset($church_image) ? asset('image/'.$church_image):'' }}" class="img-fluid shadow rounded">
                             </div>
                         </div>
                     </div>
                 </div>
-                <p class="lead">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolorem impedit libero et, iure aperiam nobis maiores. Minima saepe, nisi, delectus possimus enim veritatis quos numquam temporibus earum facere consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi laboriosam, omnis dicta doloremque deleniti atque eum qui fugit natus neque impedit voluptatum, asperiores sint blanditiis minima repellendus officiis, error dignissimos.
-                </p>
             </div>
             
         </div>

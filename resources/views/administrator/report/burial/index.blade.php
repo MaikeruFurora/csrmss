@@ -169,7 +169,7 @@
                  data: null,
                  render:function(data){
                     return `
-                    <button class="btn btn-sm btn-success changeStatus"  value="${data.id}_Approved">Approve</button>
+                    <button class="btn btn-sm btn-success changeStatus"  value="${data.id}_Approved">Complete</button>
                     <a href="/admin/report/burial/view/${data.id}" class="btn btn-sm btn-info view">View</a>
                    
                     `;

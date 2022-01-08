@@ -74,7 +74,7 @@
                           <div class="form-row">
                             <div class="col-md-4 mb-3">
                               <label for="">Date Selected</label>
-                              <input type="text" id="datepicker" class="form-control"   required name="scheduled_date" value="{{ $data->start_date ?? $regiterservice->schedule_date }}">
+                              <input type="text" id="datepicker" class="form-control"   required name="scheduled_date" value="{{ $data->start_date ?? date("Y- m-d",strtotime($regiterservice->schedule_date)) }}">
                             </div>
                             <div class="col-md-4 mb-3">
                               <label for="">Time from</label>
@@ -124,77 +124,90 @@
 
 @section('moreJs')
 <script>
+
+let getSched = (date_selected)=>{
+          if (date_selected!='') {
+            let hold='';
+            $.ajax({
+              url: "/admin/get/all/occupied/"+date_selected,
+              type: "GET",
+              beforeSend: function () {
+                      $("#showAvailability")
+                          .html(
+                              `<div class="spinner-border spinner-border-sm" role="status">
+                                  <span class="sr-only">Loading...</span>
+                              </div>`
+                          );
+                  },
+              }).done(function(data){
+              if (data.length!=0) {
+                  data.forEach((element,i) => {
+                      hold+=` <tr>
+                              <th>${++i}</th>
+                              <th>${element.service}</th>
+                              <th>${element.start}</th>
+                              <th>${element.end}</th>
+                              </tr>`;
+                  });
+              } else {
+                  hold=` <tr>
+                          <td colspan="4" class="text-center">No data</td>
+                          </tr>`;
+              }
+                  $("#showAvailability").html(hold);
+              }).fail(function (jqxHR, textStatus, errorThrown) {
+                  getToast("error", "Eror", errorThrown);
+                  $(".btnSave").html("Register").attr("disabled", false);
+              });
+          }
+        }
+        let current_date= $('input[name="scheduled_date"]').val();
+        getSched(current_date); 
+
         $( "#datepicker" ).datepicker({
         dateFormat: "yy-mm-dd",
         minDate: +1,  
         });
         $("#datepicker").on("change",function(){
-        let hold='';
-        $('.showDateSelected').text($(this).val())
-            $.ajax({
-            url: "/admin/get/all/occupied/"+$(this).val(),
-            type: "GET",
-            beforeSend: function () {
-                    $("#showAvailability")
-                        .html(
-                            `<div class="spinner-border spinner-border-sm" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>`
-                        );
-                },
-            }).done(function(data){
-            if (data.length!=0) {
-                data.forEach((element,i) => {
-                    hold+=` <tr>
-                            <th>${++i}</th>
-                            <th>${element.service}</th>
-                            <th>${element.start}</th>
-                            <th>${element.end}</th>
-                            </tr>`;
-                });
-            } else {
-                hold=` <tr>
-                        <td colspan="4" class="text-center">No data</td>
-                        </tr>`;
-            }
-                $("#showAvailability").html(hold);
-            }).fail(function (jqxHR, textStatus, errorThrown) {
-                getToast("error", "Eror", errorThrown);
-                $(".btnSave").html("Register").attr("disabled", false);
-            });
+            getSched($(this).val())
         });
 
         $("#weddingForm").on('submit',function(e){
-      e.preventDefault();
-      $.ajax({
-            url: "/admin/report/wedding/store",
-            type: "POST",
-            data: new FormData(this),
-            processData: false,
-            contentType: false,
-            cache: false,
-            beforeSend: function () {
-                $(".btnSave")
-                    .html(
-                        `Saving ...
-                        <div class="spinner-border spinner-border-sm" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>`
-                    )
-                    .attr("disabled", true);
-            },
-        })
-            .done(function (data) {
-                // document.getElementById("weddingForm").reset();
-                getToast("success", "Done", "Successsfuly Save new record");
-                $("input[name='id']").val("");
-                $(".btnSave").html("Update Record").attr("disabled", false);
-            })
-            .fail(function (jqxHR, textStatus, errorThrown) {
-                getToast("error", "Eror", errorThrown);
-                $(".btnSave").html("Update Record").attr("disabled", false);
-            });
-    })  
+            e.preventDefault();
+            $.ajax({
+                  url: "/admin/report/wedding/store",
+                  type: "POST",
+                  data: new FormData(this),
+                  processData: false,
+                  contentType: false,
+                  cache: false,
+                  beforeSend: function () {
+                      $(".btnSave")
+                          .html(
+                              `Saving ...
+                              <div class="spinner-border spinner-border-sm" role="status">
+                                  <span class="sr-only">Loading...</span>
+                              </div>`
+                          )
+                          .attr("disabled", true);
+                  },
+              })
+                  .done(function (data) {
+                    if (data.errTime) {
+                      getToast("warning", "Warning", data.errTime);
+                    } else {
+                      // document.getElementById("weddingForm").reset();
+                      getToast("success", "Done", "Successsfuly Save new record");
+                      // $("input[name='id']").val("");
+                      getSched($('input[name="scheduled_date"]').val())
+                    }
+                      $(".btnSave").html("Update Record").attr("disabled", false);
+                  })
+                  .fail(function (jqxHR, textStatus, errorThrown) {
+                      getToast("error", "Eror", errorThrown);
+                      $(".btnSave").html("Update Record").attr("disabled", false);
+                  });
+          })  
 
 </script>
 

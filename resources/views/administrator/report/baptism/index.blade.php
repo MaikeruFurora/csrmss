@@ -229,7 +229,6 @@
                      data: null,
                      render:function(data){
                         return `
-                        <button class="btn btn-sm btn-warning changeStatus pl-3 pr-3" value="${data.id}_Pending">Reject</button>
                         <button class="btn btn-sm btn-primary print" value="${data.id}">Certificate</button>
                         
                         <a href="/admin/report/baptism/view/${data.id}" class="btn btn-sm btn-info view pl-4 pr-4">View</a>
@@ -237,6 +236,7 @@
                         `;
                      }
                 },
+                        // <button class="btn btn-sm btn-warning changeStatus pl-3 pr-3" value="${data.id}_Pending">Reject</button>
 
             ],
         });
@@ -286,7 +286,7 @@
                 $(".yesApproved").text('Reject')
             }else{
                 $(".modal-body").text(" Are you sure you want to approve this record?")
-                $(".yesApproved").text('Approve')
+                $(".yesApproved").text('Complete')
             }
         })
 

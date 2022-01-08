@@ -38,7 +38,8 @@
         @if ($type=="Monthly")
         <tr>
             <td width="15%" class="text-left"><b>Month :</b></td>
-            <td  class="text-left">{{ date("F", mktime(0, 0, 0, $logic, 10)); }}</span></td>
+            <td  class="text-left">
+                {{ date("F", mktime(0, 0, 0, explode("_",$logic)[0], 10)) }} -  {{ explode("_",$logic)[1] }} </span></td>
         </tr>
         @elseif($type=="Annually")
         <tr>

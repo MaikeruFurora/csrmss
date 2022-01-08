@@ -11,7 +11,7 @@
            <p class="showText"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success yesApproved" >Yes, Approve</button>
+          <button type="button" class="btn btn-success yesApproved" >Yes, Complete</button>
           <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
         </div>
       </div>
