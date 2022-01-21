@@ -98,17 +98,19 @@
                                             <button type="submit" class="btn btn-block btn-primary btnSave">Save</button>
                                             <button type="button" class="btn btn-block btn-warning btn-lg btnCancel">Cancel</button>
                                           </form><hr>
-                                          <table class="table table-bordered" id="eventTable">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Event</th>
-                                                      <th width="40%">Date</th>
-                                                      <th width="10%">Status</th>
-                                                      <th width="20%">Action</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody></tbody>
-                                          </table>
+                                         <div class="table-responsive">
+                                            <table class="table table-bordered" id="eventTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Event</th>
+                                                        <th width="40%">Date</th>
+                                                        <th width="10%">Status</th>
+                                                        <th width="20%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                         </div>
                                     </div>
                                 </div>
                               

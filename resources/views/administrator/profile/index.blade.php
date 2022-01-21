@@ -101,50 +101,52 @@
                     <b>Services</b>
                   </div>
                   <div class="card-body">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Service</th>
-                          <th>Amount</th>
-                          <th>Updated at</th>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Service</th>
+                            <th>Amount</th>
+                            <th>Updated at</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($amount as $key => $item)
+                          <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>{{ $item->service }}</td>
+                            <td width="30%">
+                              <div class="input-group">
+                               
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text bg-info text-white" id="basic-addon1">₱</span>
+                                </div>
+                                <input type="text" class="form-control where input_{{ $item->id }}" value="{{ $item->amount }}" disabled>
+                                <div class="input-group-append">
+                                  
+                                  <button class="btn btn-primary edit edit_{{ $item->id }}" value="{{ $item->id }}" type="button"><i class="far fa-edit"></i> Edit</button>
+                                  <button class="btn btn-success update update_{{ $item->id }}" value="{{ $item->id }}" type="button"><i class="fas fa-pencil-alt"></i> Update</button>
+                                  <button class="btn btn-warning cancel cancel_{{ $item->id }}" type="button"><i class="far fa-window-close"></i> Cancel</button>
+                                  {{-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                  </div> --}}
+                                </div>
+                              </div>
+                            </td>
+                            <td width="25%">
+                              <span class="badge badge-primary"> {{ $item->updated_at->format("M, d Y") .'( '.$item->updated_at->diffForHumans().' )' }} </span>
+                            </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($amount as $key => $item)
-                        <tr>
-                          <td>{{ ++$key }}</td>
-                          <td>{{ $item->service }}</td>
-                          <td width="30%">
-                            <div class="input-group">
-                             
-                              <div class="input-group-prepend">
-                                <span class="input-group-text bg-info text-white" id="basic-addon1">₱</span>
-                              </div>
-                              <input type="text" class="form-control where input_{{ $item->id }}" value="{{ $item->amount }}" disabled>
-                              <div class="input-group-append">
-                                
-                                <button class="btn btn-primary edit edit_{{ $item->id }}" value="{{ $item->id }}" type="button"><i class="far fa-edit"></i> Edit</button>
-                                <button class="btn btn-success update update_{{ $item->id }}" value="{{ $item->id }}" type="button"><i class="fas fa-pencil-alt"></i> Update</button>
-                                <button class="btn btn-warning cancel cancel_{{ $item->id }}" type="button"><i class="far fa-window-close"></i> Cancel</button>
-                                {{-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
-                                <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                  <div role="separator" class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#">Separated link</a>
-                                </div> --}}
-                              </div>
-                            </div>
-                          </td>
-                          <td width="25%">
-                            <span class="badge badge-primary"> {{ $item->updated_at->format("M, d Y") .'( '.$item->updated_at->diffForHumans().' )' }} </span>
-                          </td>
-                      </tr>
-                        @endforeach
-                    </tbody>
-                    </table>
+                          @endforeach
+                      </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
            </div>

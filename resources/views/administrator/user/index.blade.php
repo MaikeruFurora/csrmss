@@ -50,20 +50,22 @@
                                    <h4>User list</h4>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th width="10%">#</th>
-                                                <th>Fullname</th>
-                                                <th>Email</th>
-                                                <th>Username</th>
-                                                <th width="25%">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tableUser">
-                                            
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th width="10%">#</th>
+                                                    <th>Fullname</th>
+                                                    <th>Email</th>
+                                                    <th>Username</th>
+                                                    <th width="25%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableUser">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

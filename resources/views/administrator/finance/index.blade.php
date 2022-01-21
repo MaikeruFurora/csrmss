@@ -10,36 +10,38 @@
                 <div class="card card-primary shadow">
                    
                     <div class="card-body">
-                         <table class="table table-striped mt-4 table-bordered text-center">
-                             <thead>
-                                 <tr class="bg-secondary">
-                                     <th>#</th>
-                                     <th>Service</th>
-                                     <th>Amount</th>
-                                     <th>Total</th>
-                                     <th>Total Amount</th>
-                                     {{-- <th>Report</th> --}}
-                                 </tr>
-                             </thead>
-                             <tbody>
-                                 @foreach ($amount as $key=> $item)
-                                 <tr>
-                                    <td>{{ ++$key }}</td>
-                                    <td>{{ $item->service }}</td>
-                                    <td><span class="badge badge-danger">₱ {{ $item->amount }}.00</span></td>
-                                    <td><span class="badge badge-primary showTotal{{ ucfirst($item->service) }}"></span></td>
-                                    <td><span class="badge badge-info showAmount{{ ucfirst($item->service) }}"></span></td>
-                                    </tr>    
-                                 @endforeach
-                                 
-                                <tr class="bg-secondary">
-                                    <td colspan="3" class="text-right text-dark"><b>TOTAL</b></td>
-                                    <td><span class="badge badge-dark showTotal"></span></td>
-                                    <td><span class="badge badge-dark showAmount"></span></td>
-                                    {{-- <td></td> --}}
-                                </tr>
-                             </tbody>
-                         </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped mt-4 table-bordered text-center">
+                                <thead>
+                                    <tr class="bg-secondary">
+                                        <th>#</th>
+                                        <th>Service</th>
+                                        <th>Amount</th>
+                                        <th>Total</th>
+                                        <th>Total Amount</th>
+                                        {{-- <th>Report</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($amount as $key=> $item)
+                                    <tr>
+                                       <td>{{ ++$key }}</td>
+                                       <td>{{ $item->service }}</td>
+                                       <td><span class="badge badge-danger">₱ {{ $item->amount }}.00</span></td>
+                                       <td><span class="badge badge-primary showTotal{{ ucfirst($item->service) }}"></span></td>
+                                       <td><span class="badge badge-info showAmount{{ ucfirst($item->service) }}"></span></td>
+                                       </tr>    
+                                    @endforeach
+                                    
+                                   <tr class="bg-secondary">
+                                       <td colspan="3" class="text-right text-dark"><b>TOTAL</b></td>
+                                       <td><span class="badge badge-dark showTotal"></span></td>
+                                       <td><span class="badge badge-dark showAmount"></span></td>
+                                       {{-- <td></td> --}}
+                                   </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
