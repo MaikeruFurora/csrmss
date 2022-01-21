@@ -363,8 +363,7 @@ class AdminController extends Controller
                     $requestYear->replace(['year'=>$logic]);
                     $data = json_decode($this->annuallyFinance($requestYear)->getContent());
                     $amount = Amount::all();
-                    return view('administrator/finance/report',compact('data','type','logic','amount'));
-                    // $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic','amount'));
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic','amount'));
                     Helper::myLog('export','financial yearly report');
                     return $pdf->download('ANUALLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
