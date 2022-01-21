@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Mail\MailNotify;
 use App\Models\ActivityLog;
+use App\Models\Amount;
 use App\Models\Baptism;
 use App\Models\Burial;
 use App\Models\Client;
@@ -179,7 +180,8 @@ class AdminController extends Controller
    
     public function profile(){
         $data = SystemProfile::find(1);
-        return view('administrator/profile/index',compact('data'));
+        $amount = Amount::all();
+        return view('administrator/profile/index',compact('data','amount'));
     }
 
     public function profileStore(Request $request){
@@ -192,7 +194,8 @@ class AdminController extends Controller
         ]);
 
         if ($request->hasFile('church_logo')) {
-            $this->deleteOldImage();
+            $resData = SystemProfile::find($request->id);
+            !empty($resData->church_image) ?$this->deleteOldImage($resData->church_name) : null;
             $image = $request->file('church_logo');
             $imageName = rand(100,1000).rand(100,1000) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('image/'), $imageName);
@@ -203,7 +206,9 @@ class AdminController extends Controller
         }
 
         if ($request->hasFile('church_image')) {
-            $this->deleteOldImage();
+            $resData = SystemProfile::find($request->id);
+            !empty($resData->church_image) ?$this->deleteOldImage($resData->church_image) : null;
+            
             $imageI = $request->file('church_image');
             $imageIName = rand(100,1000).rand(100,1000) . '.' . $imageI->getClientOriginalExtension();
             $imageI->move(public_path('image/'), $imageIName);
@@ -218,17 +223,30 @@ class AdminController extends Controller
          return back()->with('msg','System information updated successfully');
     }
 
-    protected function deleteOldImage()
+
+    public function UpdateAmount(Request $request, Amount $amount){
+        $amount->amount=$request->amount;
+        return $amount->save();
+    }
+
+    protected function deleteOldImage($name)
     {
-        $sprofile = SystemProfile::find(1);
-        if (!empty($sprofile->church_logo)) {
-            return unlink(public_path('image/'.$sprofile->church_logo));
+        if (!empty($nme)) {
+            return unlink(public_path('image/'.$nme));
         }
       
     }
+    
 
     public function finance(){
-        return view('administrator/finance/index',);
+        $amount = Amount::all();
+        $n = Amount::select('service','amount')->get();
+        $service=[];
+        foreach ($n as $key => $value) {
+            $service[$key]=$value;
+        }
+
+        return view('administrator/finance/index',compact('amount','service'));
     }
 
     public function financeResult(Request $request,$type){
@@ -335,7 +353,8 @@ class AdminController extends Controller
                     $requestMonth=new Request();
                     $requestMonth->replace(['month'=>$data[0],'year'=>$data[1]]);
                     $data = json_decode($this->monthlyFinance($requestMonth)->getContent());
-                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    $amount = Amount::all();
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic','amount'));
                     Helper::myLog('export','financial monthly report');
                     return $pdf->download('MONTHLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
@@ -343,7 +362,9 @@ class AdminController extends Controller
                     $requestYear=new Request();
                     $requestYear->replace(['year'=>$logic]);
                     $data = json_decode($this->annuallyFinance($requestYear)->getContent());
-                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    $amount = Amount::all();
+                    return view('administrator/finance/report',compact('data','type','logic','amount'));
+                    // $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic','amount'));
                     Helper::myLog('export','financial yearly report');
                     return $pdf->download('ANUALLY-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                 break;
@@ -352,7 +373,8 @@ class AdminController extends Controller
                      $requestDateRange=new Request();
                      $requestDateRange->replace(['from'=>$data[0],'to'=>$data[1]]);
                     $data = json_decode($this->dateRangeFinance($requestDateRange)->getContent());
-                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic'));
+                    $amount = Amount::all();
+                    $pdf = PDF::loadView('administrator/finance/report',compact('data','type','logic','amount'));
                     Helper::myLog('export','financial date selecteed');
                     return $pdf->download('DATE-RANGE-REPORT-GENERATE-DATE-'.date("F j, Y, g:i a").'.pdf');
                  break;

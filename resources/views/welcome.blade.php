@@ -76,7 +76,8 @@
                 <div class="col-12 col-md-5 col-lg-6 order-md-2 text-center">
                     <!-- Image -->
                     <figure class="w-100">
-                        <img alt="Image placeholder" src="{{ asset('landing_asset/img/svg/illustrations/illustration-5.svg') }}" class="img-fluid mw-md-120">
+                        {{-- <img alt="Image placeholder" src="{{ asset('landing_asset/img/svg/illustrations/illustration-5.svg') }}" class="img-fluid mw-md-120"> --}}
+                        <img alt="Image placeholder" src="{{ asset('landing_asset/img/church.png') }}" class="img-fluid mw-md-120" width="500%">
                     </figure>
                 </div>
                 <div class="col-12 col-md-7 col-lg-6 order-md-1 pr-md-5">
@@ -156,7 +157,7 @@
                         <ul class="nav justify-content-center justify-content-md-end mt-3 mt-md-0">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    Team Gladious
+                                    Team Amerllys
                                 </a>
                             </li>
 

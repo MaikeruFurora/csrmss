@@ -22,47 +22,16 @@
                                  </tr>
                              </thead>
                              <tbody>
+                                 @foreach ($amount as $key=> $item)
                                  <tr>
-                                     <td>1</td>
-                                     <td>Baptism</td>
-                                     <td><span class="badge badge-danger">₱ 250.00</span></td>
-                                     <td><span class="badge badge-primary showTotalBaptism"></span></td>
-                                     <td><span class="badge badge-info showAmountBaptism"></span></td>
-                                     {{-- <td><button class="btn btn-warning btnBaptism">Generate</button></td> --}}
-                                     
-                                 </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>Confirmation</td>
-                                    <td><span class="badge badge-danger">₱ 150.00</span></td>
-                                    <td><span class="badge badge-primary showTotalConfirmation"></span></td>
-                                    <td><span class="badge badge-info showAmountConfirmation"></span></td>
-                                     {{-- <td><button class="btn btn-warning btnConfirmation">Generate</button></td> --}}
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Wedding</td>
-                                    <td><span class="badge badge-danger">₱ 500.00</span></td>
-                                    <td><span class="badge badge-primary showTotalWedding"></span></td>
-                                    <td><span class="badge badge-info showAmountWedding"></span></td>
-                                     {{-- <td><button class="btn btn-warning btnWedding">Generate</button></td> --}}
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Mass</td>
-                                    <td><span class="badge badge-danger">₱ 100.00</span></td>
-                                    <td><span class="badge badge-primary showTotalMass"></span></td>
-                                    <td><span class="badge badge-info showAmountMass"></span></td>
-                                     {{-- <td><button class="btn btn-warning btnMass">Generate</button></td> --}}
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Burial</td>
-                                    <td><span class="badge badge-danger">₱ 100.00</span></td>
-                                    <td><span class="badge badge-primary showTotalBurial"></span></td>
-                                    <td><span class="badge badge-info showAmountBurial"></span></td>
-                                     {{-- <td><button class="btn btn-warning btnBurial">Generate</button></td> --}}
-                                </tr>
+                                    <td>{{ ++$key }}</td>
+                                    <td>{{ $item->service }}</td>
+                                    <td><span class="badge badge-danger">₱ {{ $item->amount }}.00</span></td>
+                                    <td><span class="badge badge-primary showTotal{{ ucfirst($item->service) }}"></span></td>
+                                    <td><span class="badge badge-info showAmount{{ ucfirst($item->service) }}"></span></td>
+                                    </tr>    
+                                 @endforeach
+                                 
                                 <tr class="bg-secondary">
                                     <td colspan="3" class="text-right text-dark"><b>TOTAL</b></td>
                                     <td><span class="badge badge-dark showTotal"></span></td>
@@ -108,7 +77,7 @@
                 <div class="card mt-2 shadow cardPDF">
                     <div class="card-body">
                         <span class="badge badge-secondary text-dark toBePrint"></span>
-                        <span class="badge badge-secondary text-dark text-right"><b>Generate</b>: {{ date("F j, Y"); }}</span><hr>
+                        <span class="badge badge-secondary text-dark text-right"><b>Generated</b>: {{ date("F j, Y"); }}</span><hr>
                         <button type="submit" class="btn btn-block btn-success mt-2 gPDF"><i class="far fa-file-pdf"></i> Download report (PDF format) </button>
                     </div>
                 </div>
@@ -121,6 +90,9 @@
 @section('moreJs')
 
     <script>
+
+        let myamount = JSON.parse(`<?=json_encode($service)?>`);
+
         $(".DateRange").hide();
         $("select[name='type']").on('change',function(){
         hold ='';
@@ -277,7 +249,13 @@
            let total = '';
            let amount = '';
             total=parseInt(data.baptism ?? 0)+parseInt(data.confirmation ?? 0)+parseInt(data.wedding ?? 0)+parseInt(data.mass ?? 0)+parseInt(data.burial ?? 0)
-            amount=(parseInt(data.baptism ?? 0)*250)+(parseInt(data.confirmation ?? 0)*150)+(parseInt(data.wedding ?? 0)*500)+(parseInt(data.mass ?? 0)*100)+(parseInt(data.burial ?? 0)*100)
+           
+            amount=
+            parseInt(parseInt(data.baptism ?? 0) * parseInt(myamount[0].amount))+
+            parseInt(parseInt(data.burial ?? 0) * parseInt(myamount[1].amount))+
+            parseInt(parseInt(data.confirmation ?? 0) * parseInt(myamount[2].amount))+
+            parseInt(parseInt(data.wedding ?? 0) * parseInt(myamount[3].amount))+
+            parseInt(parseInt(data.mass ?? 0) * parseInt(myamount[4].amount))
 
             $(".showTotal").text(!isNaN(total)?total:'N/A')
             $(".showAmount").text(amount+'.00')
@@ -285,11 +263,11 @@
             if (data.baptism==null || data.baptism==0) {
                 // $('.btnBaptism').hide();
                 $('.showTotalBaptism').text('0')
-                $('.showAmountBaptism').text('0')
+                $('.showAmountBaptism').text('₱ 0.00')
             } else {
                 $('.btnBaptism').show();
                 $('.showTotalBaptism').text(data.baptism)
-                $('.showAmountBaptism').text('₱ '+(parseInt(data.baptism)*parseInt(250)).toString()+'.00')
+                $('.showAmountBaptism').text('₱ '+(parseInt(data.baptism)*parseInt(myamount[0].amount)).toString()+'.00')
                 $('.btnBaptism').on('click',function(){
                     popupCenter({
                         url: "/admin/finance/report/print/dasda",
@@ -303,41 +281,41 @@
             if (data.confirmation==null || data.confirmation==0) {
                 // $('.btnConfirmation').hide();
                 $('.showTotalConfirmation').text('0')
-                $('.showAmountConfirmation').text('0')
+                $('.showAmountConfirmation').text('₱ 0.00')
             } else {
                 $('.btnConfirmation').show();
                 $('.showTotalConfirmation').text(data.confirmation)
-                $('.showAmountConfirmation').text('₱ '+(parseInt(data.confirmation)*parseInt(150)).toString()+'.00')
+                $('.showAmountConfirmation').text('₱ '+(parseInt(data.confirmation)*parseInt(myamount[2].amount)).toString()+'.00')
             }
 
             if (data.wedding==null || data.wedding==0) {
                 $('.showTotalWedding').text('0')
                 // $('.btnWedding').hide();
-                $('.showAmountWedding').text('0')
+                $('.showAmountWedding').text('₱ 0.00')
             } else {
                 $('.showTotalWedding').text(data.wedding)
                 $('.btnWedding').show();
-                $('.showAmountWedding').text('₱ '+(parseInt(data.wedding)*parseInt(500)).toString()+'.00')
+                $('.showAmountWedding').text('₱ '+(parseInt(data.wedding)*parseInt(myamount[3].amount)).toString()+'.00')
             }
 
             if (data.mass==null || data.mass==0) {
                 $('.showTotalMass').text('0')
                 // $('.btnMass').hide();
-                $('.showAmountMass').text('0')
+                $('.showAmountMass').text('₱ 0.00')
             } else {
                 $('.showTotalMass').text(data.mass)
                 $('.btnMass').show();
-                $('.showAmountMass').text('₱ '+(parseInt(data.mass)*parseInt(100)).toString()+'.00')
+                $('.showAmountMass').text('₱ '+(parseInt(data.mass)*parseInt(myamount[4].amount)).toString()+'.00')
             }
 
             if (data.burial==null || data.burial==0) {
                 $('.showTotalBurial').text('0')
                 // $('.btnBurial').hide();
-                $('.showAmountBurial').text('0')
+                $('.showAmountBurial').text('₱ 0.00')
             } else {
                 $('.showTotalBurial').text(data.burial)
                 $('.btnBurial').show();
-                $('.showAmountBurial').text('₱ '+(parseInt(data.burial)*parseInt(100)).toString()+'.00')
+                $('.showAmountBurial').text('₱ '+(parseInt(data.burial)*parseInt(myamount[1].amount)).toString()+'.00')
             }
 
             

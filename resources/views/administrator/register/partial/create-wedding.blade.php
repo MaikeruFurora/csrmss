@@ -75,7 +75,7 @@
                             <div class="form-row">
                               <div class="col-md-4 mb-3">
                                 <label >Date Selected</label>
-                                <input type="text" id="datepicker" class="form-control" required name="scheduled_date" value="{{ $data->start_date ?? date("Y- m-d",strtotime($regiterservice->schedule_date)) }}">
+                                <input type="text" id="datepicker" class="form-control" required name="scheduled_date" value="{{ $data->start_date ?? date("Y-m-d",strtotime($regiterservice->schedule_date)) }}">
                               </div>
                               <div class="col-md-4 mb-3">
                                 <label >Time from</label>

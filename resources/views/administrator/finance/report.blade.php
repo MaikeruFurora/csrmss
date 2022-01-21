@@ -64,43 +64,83 @@
             </tr>
         </thead>
         <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Baptism</td>
-                    <td><span class="badge badge-danger"> 250.00</span></td>
-                    <td><span class="badge badge-primary showTotalBaptism">{{ $data->baptism ?? 0  }}</span></td>
-                    <td><span class="badge badge-info showAmountBaptism">{{ empty($data->baptism)? 0 :($data->baptism * 250).'.00' }}</span></td>
-                    
-                </tr>
-                <tr>
-                   <td>2</td>
-                   <td>Confirmation</td>
-                   <td><span class="badge badge-danger"> 150.00</span></td>
-                   <td><span class="badge badge-primary showTotalConfirmation">{{ $data->confirmation ?? 0  }}</span></td>
-                   <td><span class="badge badge-info showAmountConfirmation">{{empty($data->confirmation)? 0 :($data->confirmation * 150).'.00'}}</span></td>
-               </tr>
-               <tr>
-                   <td>3</td>
-                   <td>Wedding</td>
-                   <td><span class="badge badge-danger"> 500.00</span></td>
-                   <td><span class="badge badge-primary showTotalWedding">{{ $data->wedding ?? 0  }}</span></td>
-                   <td><span class="badge badge-info showAmountWedding">{{ empty($data->wedding)? 0 :($data->wedding * 500).'.00' }}</span></td>
-               </tr>
-               <tr>
-                   <td>4</td>
-                   <td>Mass</td>
-                   <td><span class="badge badge-danger"> 100.00</span></td>
-                   <td><span class="badge badge-primary showTotalMass">{{ $data->mass ?? 0  }}</span></td>
-                   <td><span class="badge badge-info showAmountMass">{{ empty($data->mass)? 0 :($data->mass * 100).'.00' }}</span></td>
-               </tr>
-               <tr>
-                   <td>5</td>
-                   <td>Burial</td>
-                   <td><span class="badge badge-danger"> 100.00</span></td>
-                   <td><span class="badge badge-primary showTotalBurial">{{ $data->burial ?? 0  }}</span></td>
-                   <td><span class="badge badge-info showAmountBurial">{{ empty($data->burial)? 0 :($data->burial * 100).'.00' }}</span></td>
-               </tr>
-             
+            @php
+                function whatType($type,$data){
+                    switch($type){
+                        case 'Baptism':
+                            return $data->baptism;
+                        break;
+                        case 'Confirmation':
+                            return $data->confirmation;
+                        break;
+                        case 'Burial':
+                            return $data->burial;
+                        break;
+                        case 'Mass':
+                            return $data->mass;
+                        break;
+                        case 'Wedding':
+                            return $data->wedding;
+                        break;
+                        default:
+                            return false;
+                        break;
+                    }
+                }
+
+                function typeAmount($type,$data){
+                    switch($type->service){
+                        case 'Baptism':
+                            return empty($data->baptism)? 0 : $data->baptism*$type->amount;
+                        break;
+                        case 'Confirmation':
+                            return empty($data->confirmation)? 0 : $data->confirmation*$type->amount;
+                        break;
+                        case 'Burial':
+                            return empty($data->burial)? 0 : $data->burial*$type->amount;
+                        break;
+                        case 'Mass':
+                            return empty($data->mass)? 0 : $data->mass*$type->amount;
+                        break;
+                        case 'Wedding':
+                            return empty($data->wedding)? 0 : $data->wedding*$type->amount;
+                        break;
+                        default:
+                            return false;
+                        break;
+                    }
+                }
+
+                function computeMyAmount($type,$data){
+                    $sum=$bap=$mass=$con=$bur=$wed=0;
+                   b:foreach ($type as $key => $value) {
+                    if ($value->service=='Baptism') {
+                        $bap=empty($data->baptism)? 0 : $data->baptism*$value->amount;
+                    }elseif ($value->service=='Burial') {
+                        $bur=empty($data->burial)? 0 : $data->burial*$value->amount;
+                    } elseif ($value->service=='Mass') {
+                        $mass=empty($data->mass)? 0 : $data->mass*$value->amount;
+                    } elseif ($value->service=='Confirmation') {
+                        $con=empty($data->confirmation)? 0 : $data->confirmation*$value->amount;
+                    } elseif ($value->service=='Wedding') {
+                        $wed=empty($data->wedding)? 0 : $data->wedding*$value->amount;
+                    }
+                   }
+                   return $sum=intval($bap)+intval($mass)+intval($con)+intval($bur)+intval($wed);
+
+                }
+            @endphp
+            @foreach ($amount as $key=> $item)
+            <tr>
+                {{-- {{ dd($data->Baptism) }} --}}
+                <td>{{ ++$key }}</td>
+                <td>{{ $item->service }}</td>
+                <td><span class="badge badge-danger">{{ $item->amount }}.00</span></td>
+                <td><span class="badge badge-primary showTotalBaptism">{{ whatType($item->service,$data) ?? 0  }}</span></td>
+                <td><span class="badge badge-info showAmountBaptism">{{ typeAmount($item,$data).'.00' }}</span></td>
+            </tr>
+            
+            @endforeach
             <tr>
                 <td colspan="3" style="background: #BCDFF5;">
                     <small><b>Notes:</b></small><br>
@@ -108,7 +148,7 @@
                 </td>
                 <td colspan="2" style="background: #2065A8;color:white"><b>Total amount:</b><br>
                     {{-- <h1>₱ {{ $total.".00" }}</h1>     --}}
-                    <h1>{{  ($data->baptism * 250)+($data->confirmation * 150)+($data->wedding * 500)+($data->mass * 100)+($data->burial * 100) }}.00</h1>
+                    <h1>{{ computeMyAmount($amount,$data) }}.00</h1>
                 </td>
             </tr>
         </tbody>

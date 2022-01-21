@@ -43,6 +43,7 @@ Route::middleware(['guest'])->group(function(){
     Route::post('/login/post',[AuthController::class,'store'])->name('auth.login.post');
     Route::get('/register',[AuthController::class,'register'])->name('auth.register');
     Route::post('/register/post',[AuthController::class,'create'])->name('auth.register.post');
+    Route::get('/register/check/username/{username}',[AuthController::class,'checkUsername']);
 });
 
 //safe route ---------
@@ -123,6 +124,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
      //manage profile
       Route::get('/profile',[AdminController::class,'profile'])->name('profile');
       Route::post('/profile/store',[AdminController::class,'profileStore'])->name('profile.store');
+      Route::put('/amount/update/{amount}',[AdminController::class,'UpdateAmount']);
 
       //manage report-----------
       Route::get('/report/baptism',[BaptismController::class,'index'])->name('baptism');

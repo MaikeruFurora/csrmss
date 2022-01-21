@@ -61,7 +61,7 @@ class AuthController extends Controller
             'fullname'=>$request->fullname,
             'contact_no'=>$request->contact_no,
             'email'=>$request->email,
-            'username'=>$request->username,
+            'username'=>strtolower($request->username),
             'address'=>$request->address,
             'password'=>Hash::make($request->password),
         ]);
@@ -80,6 +80,16 @@ class AuthController extends Controller
             return redirect()->route('client.home'); //if admin
         }
         return back();
+        
+    }
+
+    public function checkUsername($username){
+        $data=Client::where('username',strtolower($username))->exists();
+        if ($data) {
+            return response()->json([
+                'msg'=>'This username is already exist'
+            ]);
+        }
         
     }
 

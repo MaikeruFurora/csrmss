@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/toast/iziToast.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toast/iziToast.css') }}">
     <style>
         .center-screen {
             display: flex;
@@ -47,7 +48,30 @@
 </head>
 
 <body>
+    <div class="modal fade" id="approvedModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="approvedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="approvedModalLabel">Term and Condition</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>A Terms and Conditions agreement acts as legal contracts between you (the company) who has the website or mobile app, and the user who accesses your website/app.
+                    Having a Terms and Conditions agreement is completely optional. No laws require you to have one. Not even the super-strict and wide-reaching General Data Protection Regulation (GDPR).
+                    Your Terms and Conditions agreement will be uniquely yours. While some clauses are standard and commonly seen in pretty much every Terms and Conditions agreement, it's up to you to set the rules and guidelines that the user must agree to.</p>
+                
+                <b>REPUBLIC ACT NO. 10173</b>
 
+                <p>AN ACT PROTECTING INDIVIDUAL PERSONAL INFORMATION IN INFORMATION AND COMMUNICATIONS SYSTEMS IN THE GOVERNMENT AND THE PRIVATE SECTOR, CREATING FOR THIS PURPOSE A NATIONAL PRIVACY COMMISSION, AND FOR OTHER PURPOSES</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <div id="app">
         <section class="section">
             <div class="container mt-2 center-screen">
@@ -84,6 +108,7 @@
                         <div class="form-group">
                             <label for="">Username</label>
                             <input id="" class="form-control" type="text" value="{{ old('username') }}" name="username" required placeholder="Enter your complete username">
+                            <span class="uniqueUsername"></span>
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
@@ -92,9 +117,17 @@
                         <div class="form-group">
                             <label for="">Confirm password</label>
                             <input id="" class="form-control" type="password" name="confirm_password" required placeholder="Enter your complete confirm password">
+                            <span class="text-danger confirmpass"></span>
                             @error('confirm_password')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group-toggle">
+                                {{-- <label class="btn btn-primary"> --}}
+                                    <input type="checkbox"> Terms and Condition | Data Privacy Act of 2012
+                                {{-- </label> --}}
+                            </div>
                         </div>
                         <div class="card-footer p-1">
                             <button type="submit" class="btn btn-block btn-primary btn-lg btnSave">Register</button>
@@ -118,14 +151,51 @@
     <script src="{{ asset('assets/js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/js/stisla.js') }}"></script>
-
+    <script src="{{ asset('js/toast/iziToast.js') }}"></script>
     <!-- JS Libraies -->
 
     <!-- Template JS File -->
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('js/global.js') }}"></script>
     <script>
-        // $('input[name="confirm_password"]').on
+        $('.btnSave').prop("disabled",true);
+        $('input[type="checkbox"]').on('click',function(){
+            if($(this).is(":checked")){
+                $("#approvedModal").modal("show")
+            }
+            $('.btnSave').prop("disabled", !$(this).is(":checked"));
+        })
+        
+        $("input[name='confirm_password']").on('blur',function(){
+            if($(this).val()==$('input[name="password"]').val()){
+                $(".confirmpass").text('');
+            }else{
+                $(".confirmpass").text("Confirm password didn't match");
+
+            }
+        })
+
+        $('input[name="username"]').on('blur',function(){
+            $.ajax({
+                url: "/register/check/username/" + $(this).val(),
+                type: "GET",
+            })
+                .done(function (response) {
+                    if(response.msg){
+                        $(".uniqueUsername").text(response.msg).addClass('text-danger');
+                        $('input[name="username"]').removeClass('is-valid').addClass('is-invalid');
+                        $('.btnSave').hide();
+                    }else{
+                        $(".uniqueUsername").text('Available').addClass('text-success');
+                        $('input[name="username"]'). removeClass('is-invalid').addClass('is-valid');
+                        $('.btnSave').show();
+                    }
+                })
+                .fail(function (jqxHR, textStatus, errorThrown) {
+                    console.log(jqxHR, textStatus, errorThrown);
+                    // getToast("error", "Eror", errorThrown);
+                });
+        });
     </script>
 </body>
 
