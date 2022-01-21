@@ -87,35 +87,36 @@
                             <span>St. Paul The Apostle Parish</span>
                             </div>
                             <div class="card-body">
+                        <small>* All fields marked with an asterisk are required</small>
                            <div class="form-group">
-                               <label for="">Fullname</label>
+                               <label for=""><span class="text-danger">*</span> Fullname</label>
                                <input id="" class="form-control" type="text" required value="{{ old('fullname') }}" name="fullname" placeholder="Enter your fullname">
                            </div>
                           <div class="form-row">
-                            <div class="form-group col-6">
-                                <label for="">Contact No.</label>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                <label for=""><span class="text-danger">*</span> Contact No.</label>
                                 <input id="" class="form-control" type="text" onkeypress="return numberOnly(event)"  maxlength="11" required value="{{ old('contact_no') }}" name="contact_no" placeholder="Enter your Contact No.">
                             </div>
-                            <div class="form-group col-6">
-                                <label for="">Email</label>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                <label for=""> Email</label>
                                 <input id="" class="form-control" type="email" value="{{ old('email') }}" name="email" placeholder="Enter your email">
                             </div>
                           </div>
                           <div class="form-group">
-                            <label for="">Address</label>
+                            <label for=""><span class="text-danger">*</span> Address</label>
                             <input id="" class="form-control" type="text" value="{{ old('address') }}" name="address" required placeholder="Enter your complete address">
                         </div>
                         <div class="form-group">
-                            <label for="">Username</label>
+                            <label for=""><span class="text-danger">*</span> Username</label>
                             <input id="" class="form-control" type="text" value="{{ old('username') }}" name="username" required placeholder="Enter your complete username">
                             <span class="uniqueUsername"></span>
                         </div>
                         <div class="form-group">
-                            <label for="">Password</label>
+                            <label for=""><span class="text-danger">*</span> Password</label>
                             <input id="" class="form-control" type="password" name="password" required placeholder="Enter your complete password">
                         </div>
                         <div class="form-group">
-                            <label for="">Confirm password</label>
+                            <label for=""><span class="text-danger">*</span> Confirm password</label>
                             <input id="" class="form-control" type="password" name="confirm_password" required placeholder="Enter your complete confirm password">
                             <span class="text-danger confirmpass"></span>
                             @error('confirm_password')

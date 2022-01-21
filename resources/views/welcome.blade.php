@@ -102,9 +102,9 @@
                             <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
                         </a>
                        @guest
-                       <a href="{{ route('auth.login') }}" class="btn btn-neutral btn-icon d-none d-lg-inline-block">Sign In</a>
+                       <a href="{{ route('auth.login') }}" class="btn btn-neutral btn-icon pl-4 pr-4  d-lg-inline-block">Sign In</a>
                         @else
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-neutral btn-icon d-none d-lg-inline-block">Go back</a>
+                        <a href="{{ route('admin.dashboard') }}" class="btn btn-neutral btn-icon pl-4 pr-4  d-lg-inline-block">Go back</a>
                        @endguest
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                         <ul class="nav justify-content-center justify-content-md-end mt-3 mt-md-0">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    Team Amerllys
+                                    Team Amaryllis
                                 </a>
                             </li>
 
