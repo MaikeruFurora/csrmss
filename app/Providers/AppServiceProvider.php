@@ -6,6 +6,7 @@ use App\Models\SystemProfile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
         $logo = SystemProfile::find(1);
         Config::set('church_logo', $logo->church_logo);
         View::share('church_logo', $logo->church_logo);
