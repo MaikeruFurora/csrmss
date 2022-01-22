@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Baptism;
 use App\Models\Burial;
 use App\Models\Confirmation;
-use App\Models\Event;
+use App\Models\Eventh;
 use App\Models\Mass;
 use App\Models\Wedding;
 use Illuminate\Http\Request;
@@ -91,7 +91,7 @@ class ScheduleController extends Controller
         $output5[]=$arr5;
     }
 
-    $evenDate = Event::select("date_from", "date_to", "event")->where('status',1)->get();
+    $evenDate = Eventh::select("date_from", "date_to", "event")->where('status',1)->get();
     foreach ($evenDate as  $value) {
         $arr6 = array();
         $dateFrom = strval($value->date_from . ' ' . date("Y"));

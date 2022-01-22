@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
+use App\Models\Eventh;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
     public function store(Request $request){
-        Event::updateorcreate(['id'=>$request->id],[
+        Eventh::updateorcreate(['id'=>$request->id],[
             'event'=>$request->event,
             'date_from'=>$request->date_from,
             'date_to'=>$request->date_to,
@@ -18,13 +18,13 @@ class EventController extends Controller
 
     public function list(){
         return response()->json([
-            'data'=>Event::all()
+            'data'=>Eventh::all()
         ]);
     }
-    public function edit(Event $event){
+    public function edit(Eventh $event){
         return response()->json($event);
     }
-    public function destroy(Event $event){
+    public function destroy(Eventh $event){
         return $event->delete();
     }
 }
