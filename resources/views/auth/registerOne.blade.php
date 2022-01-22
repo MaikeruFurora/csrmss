@@ -126,7 +126,7 @@
                         <div class="form-group">
                             <div class="btn-group-toggle">
                                 {{-- <label class="btn btn-primary"> --}}
-                                    <input type="checkbox"> Terms and Condition | Data Privacy Act of 2012
+                                    <input type="checkbox"> Terms and Condition
                                 {{-- </label> --}}
                             </div>
                         </div>
