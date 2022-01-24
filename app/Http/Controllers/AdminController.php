@@ -387,8 +387,8 @@ class AdminController extends Controller
         return view('administrator/archives/index');
     }
 
-    public function systemlog(){
-        return view('administrator/systemlog/index');
+    public function logsystem(){
+        return view('administrator/logsystem/index');
     }
 
     public function searchByDate($from,$to){

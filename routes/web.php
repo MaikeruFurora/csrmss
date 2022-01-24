@@ -195,7 +195,7 @@ Route::middleware(['auth:web', 'preventBackHistory'])->name('admin.')->prefix('a
       Route::delete('/archive/delete/priest/{priest}',[ArchiveController::class,'archivePriestDelete']);
 
       // system log
-      Route::get('/systemlog',[AdminController::class,'systemlog'])->name('systemlog');
+      Route::get('/logsystem',[AdminController::class,'logsystem'])->name('logsystem');
       Route::get('/activity/log/{from}/{to}', [AdminController::class, 'searchByDate']);
       
       //notification
