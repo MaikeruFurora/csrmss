@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Amount;
 use App\Models\Client;
 use App\Models\RegisterService;
 use App\Models\User;
@@ -40,22 +41,36 @@ class ClientController extends Controller
     }
 
     public function registerStore(Request $request){
-         $registerService = RegisterService::create([
-            'client_id'=>$request->client_id,
-            'transaction_no'=>rand(100,999).'-'.rand(100,999),
-            'service'=>$request->service,
-            'schedule_date'=>$request->schedule_date,
-        ]);
-        $data['for']='admin';
-        $data['title']="New register user";
-        $data['bodyMessage']="Hi, Admin; ".auth()->user()->fullname." register for ".$request->service." service.";
-        $data['status']='service';
-        $data['icon']=$this->myicon($request->service);
-        $data['updated_at']=$registerService->updated_at;
-        $admins = User::all();
-        $notifications = new NotifyAdmin($data);
-        Notification::send($admins,$notifications);
-        return redirect()->route('client.requestClient');
+
+         $ifHave=RegisterService::select('service','schedule_date','status')
+        ->join('clients','register_services.client_id','clients.id')
+        ->where('clients.id',auth()->user()->id)
+        ->where('service',$request->service)
+        ->where('status','Pending')
+        ->exists();
+
+        if ($ifHave) {
+           return back()->with(['msg'=>'Sorry you have pending request']);
+        } else {    
+            $registerService = RegisterService::create([
+               'client_id'=>$request->client_id,
+               'transaction_no'=>rand(100,999).'-'.rand(100,999),
+               'service'=>$request->service,
+               'schedule_date'=>$request->schedule_date,
+           ]);
+           $data['for']='admin';
+           $data['title']="New register user";
+           $data['bodyMessage']="Hi, Admin; ".auth()->user()->fullname." register for ".$request->service." service.";
+           $data['status']='service';
+           $data['icon']=$this->myicon($request->service);
+           $data['updated_at']=$registerService->updated_at;
+           $admins = User::all();
+           $notifications = new NotifyAdmin($data);
+           Notification::send($admins,$notifications);
+           return redirect()->route('client.requestClient');
+        }
+        
+
     }
 
     public function myicon($service){
@@ -95,7 +110,10 @@ class ClientController extends Controller
     }
     
     public function registerSlip(RegisterService $registerService){
-        return view('client/slip',compact('registerService'));
+
+        $amount = Amount::select('amount')->where('service',strtolower($registerService->service))->first();
+
+        return view('client/slip',compact('registerService','amount'));
     }
 
     public function clientList(){

@@ -4,8 +4,14 @@
 
     <div class="section-body">
         <h2 class="section-title">REGISTER FORM</h2>
-       <div class="row">
+     
+        <div class="row">
         <div class="col-lg-8 col-md-8 col-sm 12">
+          @if (Session::has('msg'))
+          <div class="alert alert-warning" role="alert">
+                {{ Session::get('msg') }}
+            </div>
+          @endif
             <div class="card">
                 <div class="card-header">
                     <h4>Form</h4>

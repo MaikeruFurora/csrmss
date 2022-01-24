@@ -62,7 +62,7 @@
                                     <ul class="list-unstyled list-unstyled-border p-4">
                                        <div class="row">
                                            <div class="col-lg-6">
-                                            <li class="media">
+                                            <li class="media p-0">
                                                 <a href="#">
                                                     {{-- <img class=" width=" 50" src="{{ asset('image/avatar-1.png') }}" alt="product">
                                                     --}}
@@ -74,7 +74,7 @@
                                                     <div class="text-muted text-small">Name</div>
                                                 </div>
                                             </li>
-                                            <li class="media">
+                                            <li class="media p-0">
                                                 <a href="#">
                                                     <i class="mr-3 rounded fas fa-location-arrow mr-4 " style="font-size: 23px"></i>
                                                 </a>
@@ -85,8 +85,8 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                           
-                                            <li class="media">
+
+                                            <li class="media p-0">
                                                 <a href="#">
                                                     <i class="mr-3 rounded fas fa-calendar mr-4 " style="font-size: 23px"></i>
                                                 </a>
@@ -96,10 +96,22 @@
                                                     </div>
                                                 </div>
                                             </li>
+
+                                            <li class="media p-0">
+                                                <a href="#">
+                                                    <i class="mr-3 rounded mr-4 far fa-money-bill-alt" style="font-size: 23px"></i>
+                                                </a>
+                                                <div class="media-body">
+                                                   
+                                                    <div class="media-title">₱ {{ $amount->amount }}.00</div>
+                                                    <div class="text-muted text-small">Amount
+                                                    </div>
+                                                </div>
+                                            </li>
                                            </div>
                                            <div class="col-lg-6 text-center">
                                             <img class="img-fluid m-0 " src="{{ asset('asset/img/logo.png') }}"
-                                            alt="PNHS LOGO" width="80px">
+                                            alt="CSRMSS LOGO" width="80px">
                                             <br><br>
                                             <small class="">
                                                 <b>Note:</b> This will serve will serve as a proof of transaction and or appointment, 
