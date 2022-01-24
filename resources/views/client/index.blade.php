@@ -16,8 +16,7 @@
                         </div>
                     </div>
                     <div class="article-details">
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. </p>
+                        <p>Allow us to demonstrate our connection with Jesus and with our brothers and sisters in Christ </p>
                         <div class="article-cta">
                             <a href="{{ route('client.registerForm','Baptism') }}" class="btn btn-block btn-primary">Proceed</a>
                         </div>
@@ -34,8 +33,7 @@
                         </div>
                     </div>
                     <div class="article-details">
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. </p>
+                        <p>is the ceremony in which two people are united in marriage </p>
                         <div class="article-cta">
                             <a href="{{ route('client.registerForm','Wedding') }}" class="btn btn-block btn-primary">Proceed</a>
                         </div>
@@ -70,8 +68,7 @@
                         </div>
                     </div>
                     <div class="article-details">
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. </p>
+                        <p>Religious service of the Roman Catholic Church. which has as its central act the perfotmance of the sacrament of the Eucharist</p>
                         <div class="article-cta">
                             <a href="{{ route('client.registerForm','Mass') }}" class="btn btn-block btn-primary">Proceed</a>
                         </div>
@@ -88,8 +85,7 @@
                         </div>
                     </div>
                     <div class="article-details">
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. </p>
+                        <p>Is the completion of Baptism. Baptism marked the start if your relationships with christ. Your soul changed permanently and you were filled with grace from God. </p>
                         <div class="article-cta">
                             <a href="{{ route('client.registerForm','Confirmation') }}" class="btn btn-block btn-primary">Proceed</a>
                         </div>

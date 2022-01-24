@@ -29,27 +29,27 @@ class AdminController extends Controller
 
     public function index(){
          $baptismStat = Baptism::select('status',DB::raw('count(status) as total'))
-        ->orderBy('status', 'asc')
+
         ->groupBy('status')
         ->get();
 
-        $weddingStat = Wedding::select('status',DB::raw('count(status) as total'))
-        ->orderBy('status', 'asc')
+        $weddingStat = Wedding::select(DB::raw('count(status) as total, status '))
+        // ->orderBy('status', 'asc')
         ->groupBy('status')
         ->get();
 
         $burialStat = Burial::select('status',DB::raw('count(status) as total'))
-        ->orderBy('status', 'asc')
+
         ->groupBy('status')
         ->get();
 
         $massStat = Mass::select('status',DB::raw('count(status) as total'))
-        ->orderBy('status', 'asc')
+
         ->groupBy('status')
         ->get();
 
         $confirmationStat = Confirmation::select('status',DB::raw('count(status) as total'))
-        ->orderBy('status', 'asc')
+
         ->groupBy('status')
         ->get();
 

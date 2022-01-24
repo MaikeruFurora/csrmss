@@ -83,9 +83,11 @@
                 <div class="col-12 col-md-7 col-lg-6 order-md-1 pr-md-5">
                     <!-- Heading -->
                     <img src="{{ asset('image/'.$church_logo) }}" class="img-fluid" style="height: 100px;" alt="Illustration" />
-                    <h1 class=" text-center text-md-left mb-3 mt-2">
-                        <strong class="text-primary">CSRMSS:</strong>
-                        Church Services Record Management and Scheduling System
+                    <h1 class=" text-center text-md-left mb-3 mt-2" style="font-size: 30px">
+                        
+                        {{-- Church Services Record Management and Scheduling System --}}
+                        WEB BASED CHURCH SERVICES RECORD MANAGEMENT AND SCHEDULING SYSTEM OF 
+                        <strong class="text-primary text-uppercase">{{ $church_name ?? 'N/A' }}</strong>
                     </h1>
                     <!-- Text -->
                     <p class="lead text-center text-md-left text-muted">

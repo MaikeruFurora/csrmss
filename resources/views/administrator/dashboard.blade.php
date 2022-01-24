@@ -14,7 +14,7 @@
                             <div class="card-stats-title">Baptism Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $baptismStat[1]['total'] ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $baptismStat[0]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -22,7 +22,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $baptismStat[0]['total'] ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $baptismStat[1]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -47,15 +47,15 @@
                             <div class="card-stats-title">Wedding Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $weddingStat[1]['total'] ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $weddingStat[0]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
                                     <div class="card-stats-item-count">-</div>
                                     <div class="card-stats-item-label">-</div>
                                 </div>
-                                <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $weddingStat[0]['total'] ?? '0' }}</div>
+                                <div class="card-stats-item">                                     
+                                    <div class="card-stats-item-count">{{ $weddingStat[1]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                             <div class="card-stats-title">Mass Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $massStat[1]['total'] ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $massStat[0]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -90,7 +90,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $massStat[0]['total'] ?? '0' }}</div>
+                                    <div class="card-stats-item-count">{{ $massStat[1]['total'] ?? '0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                             <div class="card-stats-title">Burial Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $burialStat[1]['total'] ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $burialStat[0]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -123,7 +123,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $burialStat[0]['total'] ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $burialStat[1]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                             <div class="card-stats-title">Confirmation Statistics</div>
                             <div class="card-stats-items">
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $confirmationStat[1]['total'] ?? '0'}}</div>
+                                    <div class="card-stats-item-count">{{ $confirmationStat[0]['total'] ?? '0'}}</div>
                                     <div class="card-stats-item-label">Pending</div>
                                 </div>
                                 <div class="card-stats-item">
@@ -158,7 +158,7 @@
                                     <div class="card-stats-item-label">-</div>
                                 </div>
                                 <div class="card-stats-item">
-                                    <div class="card-stats-item-count">{{ $confirmationStat[0]['total'] ??'0' }}</div>
+                                    <div class="card-stats-item-count">{{ $confirmationStat[1]['total'] ??'0' }}</div>
                                     <div class="card-stats-item-label">Completed</div>
                                 </div>
                             </div>
