@@ -32,7 +32,7 @@
          
             <li class="menu-header">Archive Masterlist</li>
             <li class="{{ request()->is('admin/archive')?'active':'' }}"><a class="nav-link" href="{{ route('admin.archive') }}"><i class="fas fa-folder-open"></i> <span>Archive</span></a></li>
-            <li class="{{ request()->is('admin/systemlog')?'active':'' }}"><a class="nav-link" href="{{ route('admin.systemlog') }}"><i class="fas fa-exclamation-triangle"></i> <span>System Log</span></a></li>
+            <li class="{{ request()->is('admin/logsystem')?'active':'' }}"><a class="nav-link" href="{{ route('admin.logsystem') }}"><i class="fas fa-exclamation-triangle"></i> <span>System Log</span></a></li>
 
             {{-- <li class="{{ request()->is('admin/report')?'active':'' }}"><a class="nav-link" href="{{ route('admin.profile') }}"><i class="fas fa-file-word"></i> <span>Report</span></a></li>
             <li class="menu-header">Information</li> --}}
