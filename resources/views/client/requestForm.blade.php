@@ -43,8 +43,8 @@
                         <div class="form-group col-6">
                           <h6 for="" class="pl-3">Reminder</h6>
                           <p class="pl-3" style="text-align: justify;">
-                            Your appointment schedule is valid only for 3 days. If you do not appear on the said schedule,
-                             your appointment will expire in 3 days.
+                            This schedule is not official; you must go to church to finalize your requested date and to settle the time. Your appointment schedule is valid only for 3 days.
+                            If you do not appear on the said timeline, your appointment will be cancelled.
                           </p>
                         </div>
                       </div>
