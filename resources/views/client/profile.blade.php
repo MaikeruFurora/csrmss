@@ -43,7 +43,7 @@
                                <span class="uniqueUsername"></span>
                             </div>
                           </div>
-                          <button type="submit" class="btn btn-primary float-right">Update</button>
+                          <button type="submit" class="btn btn-primary float-right btnSave">Update</button>
                     </form>
                 </div>
             </div>
