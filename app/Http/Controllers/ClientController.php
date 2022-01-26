@@ -14,6 +14,7 @@ use App\Models\Mass;
 use App\Models\Wedding;
 use App\Notifications\NotifyAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
 class ClientController extends Controller
@@ -141,6 +142,56 @@ class ClientController extends Controller
 
     public function churchCalendar(){
         return view('client/churchCalendar');
+    }
+
+    public function profile(){
+        return view('client/profile');
+    }
+
+    public function profileAccount(Request $request){
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'required'
+        ]);
+        $user=Client::find(auth()->user()->id);
+        if (Hash::check($request->current_password,$user->password)) {
+            $user->password=Hash::make($request->new_password);
+            return $user->save();
+        } else {
+            return back()->with([
+                'msg'=>'Invalid Credentials'
+            ]);
+        }
+    }
+
+    public function profileInformation(Client $client,Request $request){
+        $request->validate([
+            'fullname' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'contact_no' => 'required',
+            'username' => 'required',
+        ]);
+        $client->fullname=$request->fullname;
+        $client->address=$request->address;
+        $client->email=$request->email;
+        $client->contact_no=$request->contact_no;
+        $client->username=$request->username;
+        $client->save();
+        return back()->with([
+            'msg'=>'Invalid Credentials'
+        ]);
+    }
+
+    public function checkUsername($username){
+        $data=Client::whereNotIn('id',[auth()->user()->id])->where('username',strtolower($username))->exists();
+        if ($data) {
+            return response()->json([
+                'msg'=>'This username is already exist'
+            ]);
+        }
+        
     }
 
     public function getAvailableList(){

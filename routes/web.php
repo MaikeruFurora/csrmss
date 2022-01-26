@@ -57,6 +57,12 @@ Route::middleware(['auth:client', 'preventBackHistory'])->name('client.')->prefi
     Route::delete('/register/delete/{registerService}',[ClientController::class,'deleteReuqestService']);
     Route::get('/request',[ClientController::class,'requestClient'])->name('requestClient');
     Route::get('/request/list',[ClientController::class,'requestList'])->name('requestList');
+    Route::get('/profile',[ClientController::class,'profile'])->name('profile');
+
+    Route::post('/profile/account',[ClientController::class,'profileAccount'])->name('profile.account');
+    Route::post('/profile/information/{client}',[ClientController::class,'profileInformation'])->name('profile.information');
+    Route::get('/profile/check/username/{username}',[ClientController::class,'checkUsername']);
+
     //notification
     Route::get('/notification/list',[ClientController::class,'notificationList'])->name('notification.list');
     Route::get('/markAsRead',function(){

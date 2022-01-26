@@ -176,20 +176,20 @@
             }
         })
 
-        $('input[name="username"]').on('blur',function(){
+        $('input[name="username"]').on('keyup',function(){
             $.ajax({
                 url: "/register/check/username/" + $(this).val(),
                 type: "GET",
             })
                 .done(function (response) {
                     if(response.msg){
-                        $(".uniqueUsername").text(response.msg).addClass('text-danger');
+                        $(".uniqueUsername").text(response.msg).removeClass('text-success').addClass('text-danger');
                         $('input[name="username"]').removeClass('is-valid').addClass('is-invalid');
-                        $('.btnSave').hide();
+                        $('.btnSave').attr('disabled',true);
                     }else{
-                        $(".uniqueUsername").text('Available').addClass('text-success');
+                        $(".uniqueUsername").text('Available').removeClass('text-danger').addClass('text-success');
                         $('input[name="username"]'). removeClass('is-invalid').addClass('is-valid');
-                        $('.btnSave').show();
+                        $('.btnSave').attr('disabled',false);
                     }
                 })
                 .fail(function (jqxHR, textStatus, errorThrown) {
